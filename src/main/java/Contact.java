@@ -17,6 +17,7 @@ public class Contact {
     void updateFirstName(String firstName) {
         FirstName = firstName;
     }
+
     String returnLastName() {
         return LastName;
     }

@@ -63,17 +63,17 @@ public class InputTest {
         assertFalse(input.validNumber("077D75643"));
     }
 
-    @Test
-    public void testValidateDOB() {
-        Input input = new Input();
-        assertTrue(input.validDOB("10/02/1999"));
-    }
+//    @Test
+//    public void testValidateDOB() {
+//        Input input = new Input();
+//        assertTrue(input.validDOB("10/02/1999"));
+//    }
 
-    @Test
-    public void testFailValidateDOB() {
-        Input input = new Input();
-        assertFalse(input.validDOB("10-02-99"));
-    }
+//    @Test
+//    public void testFailValidateDOB() {
+//        Input input = new Input();
+//        assertFalse(input.validDOB("10-02-99"));
+//    }
 
     @Test
     public void testValidateEmail() {

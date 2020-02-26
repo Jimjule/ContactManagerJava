@@ -12,14 +12,14 @@ public class Input {
 
     public String confirmInput(String detail) {
         String input = getInput(detail);
-        System.out.println("1. " + input);
-        Boolean validInput = validateInput(detail, input);
-        if (validInput.equals(false)) {
-            System.out.println("2. " + input);
-            confirmInput(detail);
-            input = "";
-        }
-        System.out.println("3. " + input);
+//        System.out.println("1. " + input);
+//        Boolean validInput = validateInput(detail, input);
+//        if (validInput.equals(false)) {
+//            System.out.println("2. " + input);
+//            confirmInput(detail);
+//            input = "";
+//        }
+//        System.out.println("3. " + input);
         return input;
     }
 
