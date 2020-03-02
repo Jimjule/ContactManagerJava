@@ -1,38 +1,39 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Input {
 
-    public void main(String[] args) {
+    public Input() {
     }
 
     public String confirmInput(String detail) {
-        String input = getInput(detail);
-//        System.out.println("1. " + input);
-//        Boolean validInput = validateInput(detail, input);
-//        if (validInput.equals(false)) {
-//            System.out.println("2. " + input);
-//            confirmInput(detail);
-//            input = "";
-//        }
-//        System.out.println("3. " + input);
-        return input;
+        Boolean validInput = false;
+        String userInput = null;
+        while (!validInput) {
+            userInput = getInput(detail);
+            validInput = validateInput(detail, userInput);
+        }
+        return userInput;
     }
 
-    public String getNewInput(String detail) {
-        Scanner newUserInput = new Scanner(System.in);
-        System.out.println("Please try again:");
-        String newInput = newUserInput.nextLine();
-        return newInput;
+    public int contactChoice() {
+        return Integer.parseInt(confirmInput("contact choice"));
     }
 
-    public Integer menuChoice() {
-        Scanner userInput = new Scanner(System.in);
-        String input = userInput.nextLine();
+    public int menuChoice() {
+        String input;
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            input = reader.readLine();
+        } catch (IOException e) {
+            return - 1;
+        }
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
@@ -40,14 +41,19 @@ public class Input {
         }
     }
 
-    public static String getInput(String detail) {
-        Scanner userInput = new Scanner(System.in);
+    public String getInput(String detail) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Please enter your " + detail + ":");
-        String input = userInput.nextLine();
+        String input = null;
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Cannot read line" + e);
+        }
         return input;
     }
 
-    public static Boolean validateInput(String detail, String input) {
+    public Boolean validateInput(String detail, String input) {
         switch (detail) {
             case "first name":
             case "last name":
@@ -59,16 +65,16 @@ public class Input {
         }
     }
 
-    public static Boolean validName(String name) {
+    public Boolean validName(String name) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
         return name.matches(String.valueOf(namePattern));
     }
-    public static Boolean validNumber(String phoneNumber) {
+    public Boolean validNumber(String phoneNumber) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
         return phoneNumber.matches(String.valueOf(phonePattern));
     }
 
-    public static Boolean validDOB(String dOB) {
+    public Boolean validDOB(String dOB) {
         SimpleDateFormat dayMonthYear = new SimpleDateFormat("dd/MM/yyyy");
         try {
             Date birthDate = dayMonthYear.parse(dOB);
@@ -80,12 +86,11 @@ public class Input {
             return cal1.before(cal2);
         } catch (
             ParseException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
-    public static Boolean validEmail(String email) {
+    public Boolean validEmail(String email) {
         Pattern emailPattern = Pattern.compile("^(.+@.+)$");
         return email.matches(String.valueOf(emailPattern));
     }

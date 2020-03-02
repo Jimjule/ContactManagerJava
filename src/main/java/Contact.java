@@ -1,26 +1,31 @@
+import java.util.Hashtable;
+
 public class Contact {
 
-    static String FirstName;
-    static String LastName;
-    static String Address;
-    static String PhoneNumber;
-    static String DOB;
-    static String Email;
+    private String FirstName;
+    private String LastName;
+    private String Address;
+    private String PhoneNumber;
+    private String DOB;
+    private String Email;
 
     public void main(String[] args) {
     }
 
-    String returnFirstName() {
-        return FirstName;
-    }
+   public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
+       this.FirstName = firstName;
+       this.LastName = lastName;
+       this.Address = address;
+       this.PhoneNumber = phoneNumber;
+       this.DOB = dOB;
+       this.Email = email;
+   }
 
-    void updateFirstName(String firstName) {
-        FirstName = firstName;
-    }
+    String returnFirstName() { return FirstName; }
 
-    String returnLastName() {
-        return LastName;
-    }
+    void updateFirstName(String firstName) { FirstName = firstName; }
+
+    String returnLastName() { return LastName; }
 
     void updateLastName(String lastName) {
         LastName = lastName;

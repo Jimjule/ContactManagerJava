@@ -27,3 +27,5 @@
 
 - Contains a .jar
 - Finished README
+- Menu recursion now a loop
+- Input validation recursion now a loop 
