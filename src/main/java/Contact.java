@@ -9,9 +9,6 @@ public class Contact {
     private String DOB;
     private String Email;
 
-    public void main(String[] args) {
-    }
-
    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
        this.FirstName = firstName;
        this.LastName = lastName;
