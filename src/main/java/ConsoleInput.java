@@ -3,13 +3,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class Input {
+public class ConsoleInput {
 
-    public Input() {
+    public ConsoleInput() {
     }
 
     public String confirmInput(String detail) {
@@ -75,17 +77,12 @@ public class Input {
     }
 
     public Boolean validDOB(String dOB) {
-        SimpleDateFormat dayMonthYear = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            Date birthDate = dayMonthYear.parse(dOB);
-            Date today = new Date();
-            Calendar cal1 = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
-            cal1.setTime(birthDate);
-            cal2.setTime(today);
-            return cal1.before(cal2);
-        } catch (
-            ParseException e) {
+            DateTimeFormatter dayMonthYear = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate birthDate = LocalDate.parse(dOB, dayMonthYear);
+            LocalDate today = LocalDate.now();
+            return birthDate.isBefore(today);
+        } catch (Exception e) {
             return false;
         }
     }

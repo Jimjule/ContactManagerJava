@@ -1,20 +1,20 @@
 import java.util.ArrayList;
 
-public class Main {
+public class ContactManager {
 
-    Input input = new Input();
+    ConsoleInput consoleInput = new ConsoleInput();
     ArrayList<Contact> contactList = new ArrayList<>();
 
     public static void main(String[] args) {
-        Main main = new Main();
-        main.showMenu();
+        ContactManager contactManager = new ContactManager();
+        contactManager.showMenu();
     }
 
     public void showMenu() {
         boolean complete = false;
         while (!complete) {
             printMenuOptions();
-            int userInput = input.menuChoice();
+            int userInput = consoleInput.menuChoice();
             switch (userInput) {
                 case 1: {
                     newContact();
@@ -45,14 +45,14 @@ public class Main {
     }
 
     void newContact() {
-        contactList.add(new Contact(input.confirmInput("first name"), input.confirmInput("last name"), input.confirmInput("address"), input.confirmInput("phone number"), input.confirmInput("DOB in dd/mm/yyyy format"), input.confirmInput("email")));
+        contactList.add(new Contact(consoleInput.confirmInput("first name"), consoleInput.confirmInput("last name"), consoleInput.confirmInput("address"), consoleInput.confirmInput("phone number"), consoleInput.confirmInput("DOB in dd/mm/yyyy format"), consoleInput.confirmInput("email")));
     }
 
     void updateExistingContact() {
         if (checkForContacts()) {
             displayContacts();
             try {
-                updateContactFields(contactList.get(Integer.parseInt(input.confirmInput("contact choice")) - 1));
+                updateContactFields(contactList.get(Integer.parseInt(consoleInput.confirmInput("contact choice")) - 1));
             } catch (Exception e) {
                 System.out.println("No such contact");
             }
@@ -70,17 +70,17 @@ public class Main {
 
     void updateContactFields(Contact contact) {
         System.out.println("Currently: " + contact.returnFirstName());
-        contact.updateFirstName(input.confirmInput("first name"));
+        contact.updateFirstName(consoleInput.confirmInput("first name"));
         System.out.println("Currently: " + contact.returnLastName());
-        contact.updateLastName(input.confirmInput("last name"));
+        contact.updateLastName(consoleInput.confirmInput("last name"));
         System.out.println("Currently: " + contact.returnAddress());
-        contact.updateAddress(input.confirmInput("address"));
+        contact.updateAddress(consoleInput.confirmInput("address"));
         System.out.println("Currently: " + contact.returnPhoneNumber());
-        contact.updatePhoneNumber(input.confirmInput("phone number"));
+        contact.updatePhoneNumber(consoleInput.confirmInput("phone number"));
         System.out.println("Currently: " + contact.returnDOB());
-        contact.updateDOB(input.confirmInput("DOB in dd/mm/yyyy format"));
+        contact.updateDOB(consoleInput.confirmInput("DOB in dd/mm/yyyy format"));
         System.out.println("Currently: " + contact.returnEmail());
-        contact.updateEmail(input.confirmInput("email"));
+        contact.updateEmail(consoleInput.confirmInput("email"));
     }
 
     void showContact() {
@@ -88,12 +88,11 @@ public class Main {
             displayContacts();
             Contact contact = null;
             try {
-                contact = contactList.get(input.contactChoice() - 1);
+                contact = contactList.get(consoleInput.contactChoice() - 1);
+                printContactDetails(contact);
             } catch (Exception e) {
-                System.out.println("No such contact");
-                showMenu();
+                System.out.println("No such contact, please try again by selecting one of the contacts shown");
             }
-            printContactDetails(contact);
         }
     }
 
