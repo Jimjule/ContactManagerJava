@@ -109,6 +109,7 @@ public class ContactManager {
         System.out.println("Please select a contact");
         for (int i = 0; i < contactList.size(); i++) {
             System.out.println(i + 1);
+            printContactDetails(contactList.get(i));
         }
     }
 }
