@@ -56,7 +56,7 @@ public class ConsoleInput {
             case "first name":
             case "last name":
                 return validName(input);
-            case "phone number": return validNumber(input);
+            case "phone number without spaces": return validNumber(input);
             case "DOB in dd/mm/yyyy format": return validDOB(input);
             case "email": return validEmail(input);
             default: return true;
@@ -79,6 +79,7 @@ public class ConsoleInput {
             LocalDate today = LocalDate.now();
             return birthDate.isBefore(today);
         } catch (Exception e) {
+            System.out.println("Invalid date, please try again");
             return false;
         }
     }
