@@ -5,11 +5,6 @@ public class ContactManager {
     ConsoleInput consoleInput = new ConsoleInput();
     ArrayList<Contact> contactList = new ArrayList<>();
 
-    public static void main(String[] args) {
-        ContactManager contactManager = new ContactManager();
-        contactManager.showMenu();
-    }
-
     public void showMenu() {
         boolean complete = false;
         while (!complete) {
