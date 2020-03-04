@@ -7,7 +7,7 @@ public class ConsoleInputTest {
     private ConsoleInput consoleInput;
 
     @Before
-    public void initialize() {
+    public void setUp() {
         this.consoleInput = new ConsoleInput(System.in, System.out);
     }
 

@@ -45,7 +45,14 @@ public class ContactManager {
     }
 
     public void newContact() {
-        Contact contact = new Contact(consoleInput.confirmInput("first name"), consoleInput.confirmInput("last name"), consoleInput.confirmInput("address"), consoleInput.confirmInput("phone number without spaces"), consoleInput.confirmInput("DOB in dd/mm/yyyy format"), consoleInput.confirmInput("email"));
+        Contact contact = new Contact(
+                consoleInput.confirmInput("first name"),
+                consoleInput.confirmInput("last name"),
+                consoleInput.confirmInput("address"),
+                consoleInput.confirmInput("phone number without spaces"),
+                consoleInput.confirmInput("DOB in dd/mm/yyyy format"),
+                consoleInput.confirmInput("email"
+                ));
         contactList.add(contact);
     }
 

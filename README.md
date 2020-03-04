@@ -3,28 +3,22 @@
 ## About
 
 - Save, view, and edit contact information in computer memory
-- Created in IntelliJ, with Gradle
+- Created in IntelliJ, with Gradle, navigate to the project root `ContactManagerJava/`
 
 ## Installation
 
 - Copy this repository to your target directory
 
+## Tests
+
+- In the root folder, run `gradle` or `./gradlew test`
+- You can view the test report by opening the HTML output file, located at ./build/reports/tests/test/index.html.
+
+
 ## Running
 
-To run this outside of an IDE, you will need to create a .jar file
-- In IntelliJ, go to `File - Project Structure`
-- In the `Artifacts` tab, click `+`, `jar`, `From modules with dependencies`, `Ok`
-- Click `Okay` to confirm everything
-- In the `Build` tab, click `Build/Rebuild Project`, `Build Artifacts`, and `Build`
-
-You should now have a .jar file in the project structure
-- Navigate the directory containing your jar e.g. `ContactManagerJava/out/artifacts/ContactManagerJava_jar`
-- Run `java -cp ContactManagerJava.jar ContactManager`
-
-## Dev Env
-
-- I recommend using IntelliJ to develop this project
-- Tests are included in src/test/java
+- Type gradle clean build or ./gradlew clean build to compile.
+- Type gradle --console plain run or ./gradlew --console plain run to run the game. 
 
 ## Contributing
 
@@ -32,7 +26,7 @@ You should now have a .jar file in the project structure
 
 ## Changelog
 
-- Contains a .jar
-- Finished README
-- Menu recursion now a loop
-- ConsoleInput validation recursion now a loop 
+- Adds dependency injection
+- Instructions for using gradle wrapper
+- 
+
