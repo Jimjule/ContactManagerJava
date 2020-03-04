@@ -1,64 +1,65 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class ConsoleInput {
 
-    public ConsoleInput() {
+    private final InputStream input;
+    private final OutputStream output;
+    private final BufferedReader reader;
+    private final PrintStream printer;
+
+    public ConsoleInput(InputStream input, OutputStream output) {
+        reader = new BufferedReader(new InputStreamReader(input));
+        printer = new PrintStream(output);
+        this.input = input;
+        this.output = output;
     }
 
-    public String confirmInput(String detail) {
+    public String confirmInput(String field) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
-            userInput = getInput(detail);
-            validInput = validateInput(detail, userInput);
+            userInput = getInput(field);
+            validInput = validateInput(field, userInput);
         }
         return userInput;
     }
 
-    public int contactChoice() {
-        return Integer.parseInt(confirmInput("contact choice"));
-    }
-
     public int menuChoice() {
-        String input;
+        String userInput;
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            input = reader.readLine();
+            userInput = reader.readLine();
         } catch (IOException e) {
             return - 1;
         }
         try {
-            return Integer.parseInt(input);
+            return Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
             return 0;
         }
     }
 
     public String getInput(String detail) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please enter your " + detail + ":");
-        String input = null;
+        printer.println("Please enter your " + detail + ":");
+        String userInput = null;
         try {
-            input = reader.readLine();
+            userInput = reader.readLine();
         } catch (IOException e) {
-            System.out.println("Cannot read line" + e);
+            printer.println("Cannot read line" + e);
         }
-        return input;
+        return userInput;
     }
 
-    public Boolean validateInput(String detail, String input) {
+    public Boolean validateInput(String detail, String userInput) {
         switch (detail) {
             case "first name":
             case "last name":
-                return validName(input);
-            case "phone number without spaces": return validNumber(input);
-            case "DOB in dd/mm/yyyy format": return validDOB(input);
-            case "email": return validEmail(input);
+                return validName(userInput);
+            case "phone number without spaces": return validNumber(userInput);
+            case "DOB in dd/mm/yyyy format": return validDOB(userInput);
+            case "email": return validEmail(userInput);
             default: return true;
         }
     }
@@ -79,7 +80,7 @@ public class ConsoleInput {
             LocalDate today = LocalDate.now();
             return birthDate.isBefore(today);
         } catch (Exception e) {
-            System.out.println("Invalid date, please try again");
+            printer.println("Invalid date, please try again");
             return false;
         }
     }

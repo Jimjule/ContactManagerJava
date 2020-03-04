@@ -16,45 +16,45 @@ public class Contact {
        this.Email = email;
    }
 
-    String returnFirstName() { return FirstName; }
+    public String returnFirstName() { return FirstName; }
 
-    void updateFirstName(String firstName) { FirstName = firstName; }
+    public void updateFirstName(String firstName) { FirstName = firstName; }
 
-    String returnLastName() { return LastName; }
+    public String returnLastName() { return LastName; }
 
-    void updateLastName(String lastName) {
+    public void updateLastName(String lastName) {
         LastName = lastName;
     }
 
-    String returnAddress() {
+    public String returnAddress() {
         return Address;
     }
 
-    void updateAddress(String address) {
+    public void updateAddress(String address) {
         Address = address;
     }
 
-    String returnPhoneNumber() {
+    public String returnPhoneNumber() {
         return PhoneNumber;
     }
 
-    void updatePhoneNumber(String phoneNumber) {
+    public void updatePhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 
-    String returnDOB() {
+    public String returnDOB() {
         return DOB;
     }
 
-    void updateDOB(String dOB) {
+    public void updateDOB(String dOB) {
         DOB = dOB;
     }
 
-    String returnEmail() {
+    public String returnEmail() {
         return Email;
     }
 
-    void updateEmail(String email) {
+    public void updateEmail(String email) {
         Email = email;
     }
 }

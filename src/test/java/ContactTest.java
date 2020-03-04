@@ -1,11 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class ContactTest {
 
@@ -13,10 +8,6 @@ public class ContactTest {
     @Before
     public void initialize() {
        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
-    }
-    @Test
-    public void testContactClassIsNotNull() {
-        assertNotNull(contact);
     }
 
     @Test
