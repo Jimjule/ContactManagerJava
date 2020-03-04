@@ -17,12 +17,12 @@ public class ConsoleInput {
         this.output = output;
     }
 
-    public String confirmInput(String field) {
+    public String confirmInput(String field, boolean update) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
             userInput = getInput(field);
-            validInput = validateInput(field, userInput);
+            validInput = validateInput(field, userInput, update);
         }
         return userInput;
     }
@@ -52,41 +52,45 @@ public class ConsoleInput {
         return userInput;
     }
 
-    public Boolean validateInput(String detail, String userInput) {
+    public Boolean validateInput(String detail, String userInput, boolean update) {
         switch (detail) {
             case "first name":
             case "last name":
-                return validName(userInput);
-            case "phone number without spaces": return validNumber(userInput);
-            case "DOB in dd/mm/yyyy format": return validDOB(userInput);
-            case "email": return validEmail(userInput);
+                return validName(userInput, update);
+            case "phone number without spaces": return validNumber(userInput, update);
+            case "DOB in dd/mm/yyyy format": return validDOB(userInput, update);
+            case "email": return validEmail(userInput, update);
             default: return true;
         }
     }
 
-    public Boolean validName(String name) {
+    public Boolean validName(String name, boolean update) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
-        return name.matches(String.valueOf(namePattern));
+        return name.matches(String.valueOf(namePattern)) || isBlank(name, update);
     }
-    public Boolean validNumber(String phoneNumber) {
+    public Boolean validNumber(String phoneNumber, boolean update) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
-        return phoneNumber.matches(String.valueOf(phonePattern));
+        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, update));
     }
 
-    public Boolean validDOB(String dOB) {
+    public Boolean validDOB(String dOB, boolean update) {
         try {
             DateTimeFormatter dayMonthYear = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate birthDate = LocalDate.parse(dOB, dayMonthYear);
             LocalDate today = LocalDate.now();
-            return birthDate.isBefore(today);
+            return (birthDate.isBefore(today) || isBlank(dOB, update));
         } catch (Exception e) {
-            printer.println("Invalid date, please try again");
-            return false;
+            return isBlank(dOB, update);
         }
     }
 
-    public Boolean validEmail(String email) {
+    public Boolean validEmail(String email, boolean update) {
         Pattern emailPattern = Pattern.compile("^(.+@.+)$");
-        return email.matches(String.valueOf(emailPattern));
+        return (email.matches(String.valueOf(emailPattern)) || isBlank(email, update));
+    }
+
+    public boolean isBlank(String userInput, boolean update) {
+        Pattern blankPattern = Pattern.compile("^$");
+        return (userInput.matches(String.valueOf(blankPattern)) && update);
     }
 }

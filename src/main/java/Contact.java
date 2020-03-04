@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 public class Contact {
 
     private String FirstName;
@@ -6,8 +8,9 @@ public class Contact {
     private String PhoneNumber;
     private String DOB;
     private String Email;
+    public Pattern blankPattern = Pattern.compile("^$");
 
-   public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
+    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
        this.FirstName = firstName;
        this.LastName = lastName;
        this.Address = address;
@@ -18,12 +21,18 @@ public class Contact {
 
     public String returnFirstName() { return FirstName; }
 
-    public void updateFirstName(String firstName) { FirstName = firstName; }
+    public void updateFirstName(String firstName) {
+       if (!firstName.matches(String.valueOf(blankPattern))) {
+           FirstName = firstName;
+       }
+   }
 
     public String returnLastName() { return LastName; }
 
     public void updateLastName(String lastName) {
-        LastName = lastName;
+        if (!lastName.matches(String.valueOf(blankPattern))) {
+            LastName = lastName;
+        }
     }
 
     public String returnAddress() {
@@ -31,7 +40,9 @@ public class Contact {
     }
 
     public void updateAddress(String address) {
-        Address = address;
+        if (!address.matches(String.valueOf(blankPattern))) {
+            Address = address;
+        }
     }
 
     public String returnPhoneNumber() {
@@ -39,7 +50,9 @@ public class Contact {
     }
 
     public void updatePhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+        if (!phoneNumber.matches(String.valueOf(blankPattern))) {
+            PhoneNumber = phoneNumber;
+        }
     }
 
     public String returnDOB() {
@@ -47,7 +60,9 @@ public class Contact {
     }
 
     public void updateDOB(String dOB) {
-        DOB = dOB;
+        if (!dOB.matches(String.valueOf(blankPattern))) {
+            DOB = dOB;
+        }
     }
 
     public String returnEmail() {
@@ -55,6 +70,8 @@ public class Contact {
     }
 
     public void updateEmail(String email) {
-        Email = email;
+        if (!email.matches(String.valueOf(blankPattern))) {
+            Email = email;
+        }
     }
 }

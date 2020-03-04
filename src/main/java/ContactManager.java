@@ -46,12 +46,12 @@ public class ContactManager {
 
     public void newContact() {
         Contact contact = new Contact(
-                consoleInput.confirmInput("first name"),
-                consoleInput.confirmInput("last name"),
-                consoleInput.confirmInput("address"),
-                consoleInput.confirmInput("phone number without spaces"),
-                consoleInput.confirmInput("DOB in dd/mm/yyyy format"),
-                consoleInput.confirmInput("email"
+                consoleInput.confirmInput("first name", false),
+                consoleInput.confirmInput("last name", false),
+                consoleInput.confirmInput("address", false),
+                consoleInput.confirmInput("phone number without spaces", false),
+                consoleInput.confirmInput("DOB in dd/mm/yyyy format", false) ,
+                consoleInput.confirmInput("email", false
                 ));
         contactList.add(contact);
     }
@@ -60,7 +60,7 @@ public class ContactManager {
         if (contactsExist()) {
             displayContacts();
             try {
-                updateContactFields(contactList.get(Integer.parseInt(consoleInput.confirmInput("contact choice")) - 1));
+                updateContactFields(contactList.get(Integer.parseInt(consoleInput.confirmInput("contact choice", true)) - 1));
             } catch (Exception e) {
                 System.out.println("No such contact");
             }
@@ -78,17 +78,17 @@ public class ContactManager {
 
     public void updateContactFields(Contact contact) {
         System.out.println("Currently: " + contact.returnFirstName());
-        contact.updateFirstName(consoleInput.confirmInput("first name"));
+        contact.updateFirstName(consoleInput.confirmInput("first name", true));
         System.out.println("Currently: " + contact.returnLastName());
-        contact.updateLastName(consoleInput.confirmInput("last name"));
+        contact.updateLastName(consoleInput.confirmInput("last name", true));
         System.out.println("Currently: " + contact.returnAddress());
-        contact.updateAddress(consoleInput.confirmInput("address"));
+        contact.updateAddress(consoleInput.confirmInput("address", true));
         System.out.println("Currently: " + contact.returnPhoneNumber());
-        contact.updatePhoneNumber(consoleInput.confirmInput("phone number"));
+        contact.updatePhoneNumber(consoleInput.confirmInput("phone number", true));
         System.out.println("Currently: " + contact.returnDOB());
-        contact.updateDOB(consoleInput.confirmInput("DOB in dd/mm/yyyy format"));
+        contact.updateDOB(consoleInput.confirmInput("DOB in dd/mm/yyyy format", true));
         System.out.println("Currently: " + contact.returnEmail());
-        contact.updateEmail(consoleInput.confirmInput("email"));
+        contact.updateEmail(consoleInput.confirmInput("email", true));
     }
 
     public void showContact() {

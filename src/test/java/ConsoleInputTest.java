@@ -14,52 +14,52 @@ public class ConsoleInputTest {
     @Test
     public void testValidatesInput() {
         String testInput = "077075643";
-        assertTrue(consoleInput.validNumber(testInput));
+        assertTrue(consoleInput.validNumber(testInput, false));
     }
 
     @Test
     public void testInvalidInput() {
-        assertFalse(consoleInput.validNumber("07d7075643"));
+        assertFalse(consoleInput.validNumber("07d7075643", false));
     }
 
     @Test
     public void testValidInput() {
-        assertTrue(consoleInput.validateInput("phone number","077075643"));
+        assertTrue(consoleInput.validateInput("phone number","077075643", false));
     }
 
     @Test
     public void testValidateNumber() {
-        assertTrue(consoleInput.validNumber("077075643"));
+        assertTrue(consoleInput.validNumber("077075643", false));
     }
 
 
     @Test
     public void testFailValidateNumber() {
-        assertFalse(consoleInput.validNumber("077D75643"));
+        assertFalse(consoleInput.validNumber("077D75643", false));
     }
 
     @Test
     public void testValidateDOB() {
-        assertTrue(consoleInput.validDOB("10/02/1999"));
+        assertTrue(consoleInput.validDOB("10/02/1999", false));
     }
 
     @Test
     public void testDOBInvalidInFuture() {
-        assertFalse(consoleInput.validDOB("10/02/2300"));
+        assertFalse(consoleInput.validDOB("10/02/2300", false));
     }
 
     @Test
     public void testFailValidateDOB() {
-        assertFalse(consoleInput.validDOB("10-02-99"));
+        assertFalse(consoleInput.validDOB("10-02-99", false));
     }
 
     @Test
     public void testValidateEmail() {
-        assertTrue(consoleInput.validEmail("this@that"));
+        assertTrue(consoleInput.validEmail("this@that", false));
     }
 
     @Test
     public void testFailValidateEmail() {
-        assertFalse(consoleInput.validEmail("thisatthat"));
+        assertFalse(consoleInput.validEmail("thisatthat", false));
     }
 }
