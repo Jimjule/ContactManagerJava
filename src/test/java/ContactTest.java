@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -8,75 +9,55 @@ import static org.junit.Assert.assertNotNull;
 
 public class ContactTest {
 
+    Contact contact;
+    @Before
+    public void initialize() {
+       contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+    }
     @Test
     public void testContactClassIsNotNull() {
-        Contact contact = new Contact();
         assertNotNull(contact);
     }
 
     @Test
+    public void testCanUpdateFirstName() {
+        assertEquals("Namey", contact.returnFirstName());
+        contact.updateFirstName("Elnamo");
+        assertEquals("Elnamo", contact.returnFirstName());
+    }
+
+    @Test
     public void testCanUpdateLastName() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnLastName());
-        String input = "Sir";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updateLastName(input);
+        assertEquals("Namerson", contact.returnLastName());
+        contact.updateLastName("Sir");
         assertEquals("Sir", contact.returnLastName());
     }
 
     @Test
-    public void testCanUpdateFirstName() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnLastName());
-        String input = "Name";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updateFirstName(input);
-        assertEquals("Name", contact.returnFirstName());
-    }
-
-    @Test
     public void testCanUpdateAddress() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnAddress());
-        String input = "7 Palace place";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updateAddress(input);
+        assertEquals("A Palace", contact.returnAddress());
+        contact.updateAddress("7 Palace place");
         assertEquals("7 Palace place", contact.returnAddress());
     }
 
     @Test
     public void testCanUpdatePhoneNumber() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnPhoneNumber());
-        String input = "01";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updatePhoneNumber(input);
+        assertEquals("130077", contact.returnPhoneNumber());
+        contact.updatePhoneNumber("01");
         assertEquals("01", contact.returnPhoneNumber());
     }
 
     @Test
     public void testCanUpdateDOB() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnDOB());
-        String input = "30/01/13";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updateDOB(input);
+        assertEquals("01/01/1999", contact.returnDOB());
+        contact.updateDOB("30/01/13");
         assertEquals("30/01/13", contact.returnDOB());
     }
 
     @Test
     public void testCanUpdateEmail() {
-        Contact contact = new Contact();
-        assertEquals(null, contact.returnEmail());
-        String input = "email@email.com";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-        contact.updateEmail(input);
         assertEquals("email@email.com", contact.returnEmail());
+        contact.updateEmail("new@email.com");
+        assertEquals("new@email.com", contact.returnEmail());
     }
 }
