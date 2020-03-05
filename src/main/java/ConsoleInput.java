@@ -93,4 +93,14 @@ public class ConsoleInput {
         Pattern blankPattern = Pattern.compile("^$");
         return (userInput.matches(String.valueOf(blankPattern)) && update);
     }
+
+    public void printMenuOptions() {
+        printer.println("Welcome to Contact Manager");
+        printer.println("Please select an option:");
+        printer.println("1. Create new Contact");
+        printer.println("2. Update Contact");
+        printer.println("3. Delete Contact");
+        printer.println("4. View Contacts");
+        printer.println("5. Exit");
+    }
 }

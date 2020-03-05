@@ -13,7 +13,7 @@ public class ContactManager {
     public void showMenu() {
         boolean complete = false;
         while (!complete) {
-            printMenuOptions();
+            consoleInput.printMenuOptions();
             int userInput = consoleInput.getNumberInput();
             switch (userInput) {
                 case 1: {
@@ -37,16 +37,6 @@ public class ContactManager {
                     break;
             }
         }
-    }
-
-    public void printMenuOptions() {
-        consoleInput.printer.println("Welcome to Contact Manager");
-        consoleInput.printer.println("Please select an option:");
-        consoleInput.printer.println("1. Create new Contact");
-        consoleInput.printer.println("2. Update Contact");
-        consoleInput.printer.println("3. Delete Contact");
-        consoleInput.printer.println("4. View Contacts");
-        consoleInput.printer.println("5. Exit");
     }
 
     public void newContact() {
