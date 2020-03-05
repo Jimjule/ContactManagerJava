@@ -8,7 +8,7 @@ public class ConsoleInput {
     private final InputStream input;
     private final OutputStream output;
     private final BufferedReader reader;
-    private final PrintStream printer;
+    public final PrintStream printer;
 
     public ConsoleInput(InputStream input, OutputStream output) {
         reader = new BufferedReader(new InputStreamReader(input));
