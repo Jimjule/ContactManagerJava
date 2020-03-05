@@ -26,7 +26,7 @@
 
 ## Changelog
 
-- Adds dependency injection
-- Instructions for using gradle wrapper
-- 
+- System.out.println() replaced with ConsoleIO's display method
+- Updates a single field instead of all fields
+- Uses switch statement to get and update fields
 

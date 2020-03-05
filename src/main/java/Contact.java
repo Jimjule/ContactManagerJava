@@ -10,14 +10,25 @@ public class Contact {
     private String Email;
     public Pattern blankPattern = Pattern.compile("^$");
 
-    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
+    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
        this.FirstName = firstName;
        this.LastName = lastName;
        this.Address = address;
        this.PhoneNumber = phoneNumber;
        this.DOB = dOB;
        this.Email = email;
-   }
+    }
+
+    public Object returnField(int field) {
+        switch (field) {
+            case 1: return FirstName;
+            case 2: return LastName;
+            case 3: return Address;
+            case 4: return PhoneNumber;
+            case 5: return DOB;
+            default: return Email;
+        }
+    }
 
     public String returnFirstName() { return FirstName; }
 

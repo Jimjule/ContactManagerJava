@@ -3,18 +3,22 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
-public class ConsoleInput {
+public class ConsoleIO {
 
     private final InputStream input;
     private final OutputStream output;
     private final BufferedReader reader;
     public final PrintStream printer;
 
-    public ConsoleInput(InputStream input, OutputStream output) {
+    public ConsoleIO(InputStream input, OutputStream output) {
         reader = new BufferedReader(new InputStreamReader(input));
         printer = new PrintStream(output);
         this.input = input;
         this.output = output;
+    }
+
+    public void display(String message) {
+        printer.println(message);
     }
 
     public String confirmInput(String field, boolean update) {
@@ -54,12 +58,13 @@ public class ConsoleInput {
 
     public Boolean validateInput(String detail, String userInput, boolean update) {
         switch (detail) {
-            case "first name":
-            case "last name":
+            case "First name":
+            case "Last name":
                 return validName(userInput, update);
-            case "phone number without spaces": return validNumber(userInput, update);
+            case "Phone number without spaces": return validNumber(userInput, update);
             case "DOB in dd/mm/yyyy format": return validDOB(userInput, update);
-            case "email": return validEmail(userInput, update);
+            case "Email": return validEmail(userInput, update);
+            case "Field": return validField(userInput);
             default: return true;
         }
     }
@@ -68,9 +73,15 @@ public class ConsoleInput {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
         return name.matches(String.valueOf(namePattern)) || isBlank(name, update);
     }
+
     public Boolean validNumber(String phoneNumber, boolean update) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
         return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, update));
+    }
+
+    public Boolean validField(String fieldNumber) {
+        Pattern fieldPattern = Pattern.compile("^[1-6]$");
+        return (fieldNumber.matches(String.valueOf(fieldPattern)));
     }
 
     public Boolean validDOB(String dOB, boolean update) {

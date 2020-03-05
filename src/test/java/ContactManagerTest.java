@@ -8,14 +8,14 @@ public class ContactManagerTest {
 
     ContactManager contactManager;
     ArrayList<Contact> contactList;
-    ConsoleInput consoleInput;
+    ConsoleIO consoleIO;
     Contact contact;
 
     @Before
     public void initialize() {
-        consoleInput = new ConsoleInput(System.in, System.out);
+        consoleIO = new ConsoleIO(System.in, System.out);
         contactList = new ArrayList<>();
-        contactManager = new ContactManager(consoleInput, contactList);
+        contactManager = new ContactManager(consoleIO, contactList);
         contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
         this.contactList.add(contact);
     }

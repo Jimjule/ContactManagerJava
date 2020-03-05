@@ -2,19 +2,19 @@ import java.util.ArrayList;
 
 public class ContactManager {
 
-    private ConsoleInput consoleInput;
+    private ConsoleIO consoleIO;
     private ArrayList<Contact> contactList;
 
-    public ContactManager(ConsoleInput consoleInput, ArrayList<Contact> contactList) {
-       this.consoleInput = consoleInput;
+    public ContactManager(ConsoleIO consoleIO, ArrayList<Contact> contactList) {
+       this.consoleIO = consoleIO;
        this.contactList = contactList;
     }
 
     public void showMenu() {
         boolean complete = false;
         while (!complete) {
-            consoleInput.printMenuOptions();
-            int userInput = consoleInput.getNumberInput();
+            consoleIO.printMenuOptions();
+            int userInput = consoleIO.getNumberInput();
             switch (userInput) {
                 case 1: {
                     newContact();
@@ -39,14 +39,56 @@ public class ContactManager {
         }
     }
 
+    public String getFieldName(int fieldNumber) {
+        switch (fieldNumber) {
+            case 1:
+                return "First name";
+            case 2:
+                return "Last name";
+            case 3:
+                return "Address";
+            case 4:
+                return "Phone number without spaces";
+            case 5:
+                return "DOB in dd/mm/yyyy format";
+            default:
+                return "Email";
+        }
+    }
+
+    public void updateField(Contact contact, int fieldNumber, String input) {
+        switch (fieldNumber) {
+            case 1:
+                contact.updateFirstName(input);
+                break;
+            case 2:
+                contact.updateLastName(input);
+                break;
+            case 3:
+                contact.updateAddress(input);
+                break;
+            case 4:
+                contact.updatePhoneNumber(input);
+                break;
+            case 5:
+                contact.updateDOB(input);
+                break;
+            case 6:
+                contact.updateEmail(input);
+                break;
+            default:
+                break;
+        }
+    }
+
     public void newContact() {
         Contact contact = new Contact(
-                consoleInput.confirmInput("first name", false),
-                consoleInput.confirmInput("last name", false),
-                consoleInput.confirmInput("address", false),
-                consoleInput.confirmInput("phone number without spaces", false),
-                consoleInput.confirmInput("DOB in dd/mm/yyyy format", false) ,
-                consoleInput.confirmInput("email", false
+                consoleIO.confirmInput("first name", false),
+                consoleIO.confirmInput("last name", false),
+                consoleIO.confirmInput("address", false),
+                consoleIO.confirmInput("phone number without spaces", false),
+                consoleIO.confirmInput("DOB in dd/mm/yyyy format", false) ,
+                consoleIO.confirmInput("email", false
                 ));
         contactList.add(contact);
     }
@@ -55,16 +97,16 @@ public class ContactManager {
         if (contactsExist()) {
             displayContacts();
             try {
-                updateContactFields(contactList.get(Integer.parseInt(consoleInput.confirmInput("contact choice", true)) - 1));
+                updateContactFields(contactList.get(Integer.parseInt(consoleIO.confirmInput("contact choice", true)) - 1));
             } catch (Exception e) {
-                consoleInput.printer.println("No such contact");
+                consoleIO.display("No such contact");;
             }
         }
     }
 
     public boolean contactsExist() {
         if (contactList.size() == 0) {
-            consoleInput.printer.println("There are no contacts yet");
+            consoleIO.display("There are no contacts yet");
             return false;
         } else {
             return true;
@@ -72,18 +114,10 @@ public class ContactManager {
     }
 
     public void updateContactFields(Contact contact) {
-        consoleInput.printer.println("Currently: " + contact.returnFirstName());
-        contact.updateFirstName(consoleInput.confirmInput("first name", true));
-        consoleInput.printer.println("Currently: " + contact.returnLastName());
-        contact.updateLastName(consoleInput.confirmInput("last name", true));
-        consoleInput.printer.println("Currently: " + contact.returnAddress());
-        contact.updateAddress(consoleInput.confirmInput("address", true));
-        consoleInput.printer.println("Currently: " + contact.returnPhoneNumber());
-        contact.updatePhoneNumber(consoleInput.confirmInput("phone number", true));
-        consoleInput.printer.println("Currently: " + contact.returnDOB());
-        contact.updateDOB(consoleInput.confirmInput("DOB in dd/mm/yyyy format", true));
-        consoleInput.printer.println("Currently: " + contact.returnEmail());
-        contact.updateEmail(consoleInput.confirmInput("email", true));
+        consoleIO.display("Please select a field to update: 1. First name 2. Last name 3. Address 4. Phone number 5. DOB, 6. Email");
+        int field = Integer.parseInt(consoleIO.confirmInput("field", false));
+        consoleIO.display(getFieldName(field) + " is currently: " + contact.returnField(field));
+        updateField(contact, field, consoleIO.confirmInput(getFieldName(field), true));
     }
 
     public void showContact() {
@@ -95,29 +129,29 @@ public class ContactManager {
     private void deleteContact() {
         if (contactsExist()) {
             displayContacts();
-            int index = this.consoleInput.getNumberInput();
+            int index = this.consoleIO.getNumberInput();
             try {
                 this.contactList.remove(index - 1);
-                System.out.println("Contact deleted");
+                consoleIO.display("Contact deleted");
             } catch (Exception e) {
-                System.out.println("No such contact");
+                consoleIO.display("No such contact");
             }
         }
     }
 
     public void printContactDetails(Contact contact) {
-        consoleInput.printer.println("First name is: " + contact.returnFirstName());
-        consoleInput.printer.println("Last name is: " + contact.returnLastName());
-        consoleInput.printer.println("Address is: " + contact.returnAddress());
-        consoleInput.printer.println("Phone number is: " + contact.returnPhoneNumber());
-        consoleInput.printer.println("Date of birth is: " + contact.returnDOB());
-        consoleInput.printer.println("Email is: " + contact.returnEmail());
+        consoleIO.printer.println("First name is: " + contact.returnFirstName());
+        consoleIO.printer.println("Last name is: " + contact.returnLastName());
+        consoleIO.printer.println("Address is: " + contact.returnAddress());
+        consoleIO.printer.println("Phone number is: " + contact.returnPhoneNumber());
+        consoleIO.printer.println("Date of birth is: " + contact.returnDOB());
+        consoleIO.printer.println("Email is: " + contact.returnEmail());
     }
 
     public void displayContacts() {
-        System.out.println("Please select a contact");
+        consoleIO.printer.println("Please select a contact");
         for (int i = 0; i < contactList.size(); i++) {
-            consoleInput.printer.println(i + 1);
+            consoleIO.printer.println(i + 1);
             printContactDetails(contactList.get(i));
         }
     }
