@@ -14,7 +14,7 @@ public class ContactManager {
         boolean complete = false;
         while (!complete) {
             printMenuOptions();
-            int userInput = consoleInput.menuChoice();
+            int userInput = consoleInput.getNumberInput();
             switch (userInput) {
                 case 1: {
                     newContact();
@@ -25,6 +25,10 @@ public class ContactManager {
                     break;
                 }
                 case 3: {
+                    deleteContact();
+                    break;
+                }
+                case 4: {
                     showContact();
                     break;
                 }
@@ -40,8 +44,9 @@ public class ContactManager {
         System.out.println("Please select an option:");
         System.out.println("1. Create new Contact");
         System.out.println("2. Update Contact");
-        System.out.println("3. View Contacts");
-        System.out.println("4. Exit");
+        System.out.println("3. Delete Contact");
+        System.out.println("4. View Contacts");
+        System.out.println("5. Exit");
     }
 
     public void newContact() {
@@ -94,6 +99,19 @@ public class ContactManager {
     public void showContact() {
         if (contactsExist()) {
             displayContacts();
+        }
+    }
+
+    private void deleteContact() {
+        if (contactsExist()) {
+            displayContacts();
+            int index = this.consoleInput.getNumberInput();
+            try {
+                this.contactList.remove(index - 1);
+                System.out.println("Contact deleted");
+            } catch (Exception e) {
+                System.out.println("No such contact");
+            }
         }
     }
 

@@ -27,10 +27,10 @@ public class ConsoleInput {
         return userInput;
     }
 
-    public int menuChoice() {
+    public int getNumberInput() {
         String userInput;
         try {
-            userInput = reader.readLine();
+             userInput = reader.readLine();
         } catch (IOException e) {
             return - 1;
         }

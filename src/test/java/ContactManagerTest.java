@@ -30,4 +30,10 @@ public class ContactManagerTest {
         this.contactList.get(0).updateFirstName("Updateyupdaterson");
         assertEquals("Updateyupdaterson", this.contactList.get(0).returnFirstName());
     }
+
+    @Test
+    public void testCanDeleteNewContact() {
+        this.contactList.remove(0);
+        assertTrue(this.contactList.size() == 0);
+    }
 }
