@@ -26,7 +26,4 @@
 
 ## Changelog
 
-- Removes unnecessary validField check
-- Clears screen after interactions
-- Adds clearScreen method to InputOutput interface
-- Shortens ContactManager methods
+- Refactors update methods to a single method

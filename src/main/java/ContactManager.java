@@ -70,57 +70,16 @@ public class ContactManager {
         }
     }
 
-    public void updateField(Contact contact, int fieldNumber, String input) {
-        switch (fieldNumber) {
-            case 1: updateFirstName(input, contact);
-                break;
-            case 2: updateLastName(input, contact);
-                break;
-            case 3: updateAddress(input, contact);
-                break;
-            case 4: updatePhoneNumber(input, contact);
-                break;
-            case 5: updateDOB(input, contact);
-                break;
-            case 6: updateEmail(input, contact);
-                break;
-            default: break;
-        }
-    }
-
-    public void updateFirstName(String firstName, Contact contact) {
-        if (!firstName.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.FirstName = firstName;
-        }
-    }
-
-    public void updateLastName(String lastName, Contact contact) {
-        if (!lastName.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.LastName = lastName;
-        }
-    }
-
-    public void updateAddress(String address, Contact contact) {
-        if (!address.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.Address = address;
-        }
-    }
-
-    public void updatePhoneNumber(String phoneNumber, Contact contact) {
-        if (!phoneNumber.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.PhoneNumber = phoneNumber;
-        }
-    }
-
-    public void updateDOB(String dOB, Contact contact) {
-        if (!dOB.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.DOB = dOB;
-        }
-    }
-
-    public void updateEmail(String email, Contact contact) {
-        if (!email.matches(String.valueOf(ValidateInput.blankString))) {
-            contact.Email = email;
+    public void updateField(String value, Contact contact, int field) {
+        if (!value.matches(String.valueOf(ValidateInput.blankString))) {
+            switch (field) {
+                case 1: contact.FirstName = value; break;
+                case 2: contact.LastName = value; break;
+                case 3: contact.Address = value; break;
+                case 4: contact.PhoneNumber = value; break;
+                case 5: contact.DOB = value; break;
+                default: contact.Email = value; break;
+            }
         }
     }
 
@@ -131,17 +90,19 @@ public class ContactManager {
                 updateContactFields(contactList.get(
                         Integer.parseInt(consoleIO.getStringInput("contact choice", true)) - 1));
             } catch (Exception e) {
+                consoleIO.clearScreen();
                 consoleIO.display("No such contact");;
             }
         }
     }
 
     public void updateContactFields(Contact contact) {
+        consoleIO.clearScreen();
         consoleIO.display("Select a field to update: 1. First name 2. Last name " +
                 "3. Address 4. Phone number 5. DOB, 6. Email");
         int field = Integer.parseInt(consoleIO.getStringInput("Field", false));
         consoleIO.display(getFieldName(field) + " is currently: " + returnFieldValue(contact, field));
-        updateField(contact, field, consoleIO.getStringInput(getFieldName(field), true));
+        updateField(consoleIO.getStringInput(getFieldName(field), true), contact, field);
         consoleIO.clearScreen();
     }
 
