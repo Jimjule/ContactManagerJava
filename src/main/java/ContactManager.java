@@ -1,9 +1,7 @@
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class ContactManager {
 
-    public Pattern blankPattern = Pattern.compile("^$");
     private ConsoleIO consoleIO;
     private ArrayList<Contact> contactList;
 
@@ -14,7 +12,7 @@ public class ContactManager {
 
     public void printMenuOptions() {
         consoleIO.display("Welcome to Contact Manager\nPlease select an option:\n1. New Contact\n2. Update Contact\n" +
-                "3. Delete Contact\n4. View Contacts\n5.Exit");
+                "3. Delete Contact\n4. View Contacts\n5. Exit");
     }
 
     public void showMenu() {
@@ -113,37 +111,37 @@ public class ContactManager {
 
 
     public void updateFirstName(String firstName, Contact contact) {
-        if (!firstName.matches(String.valueOf(blankPattern))) {
+        if (!firstName.matches(String.valueOf(ValidateInput.blankString))) {
             contact.FirstName = firstName;
         }
     }
 
     public void updateLastName(String lastName, Contact contact) {
-        if (!lastName.matches(String.valueOf(blankPattern))) {
+        if (!lastName.matches(String.valueOf(ValidateInput.blankString))) {
             contact.LastName = lastName;
         }
     }
 
     public void updateAddress(String address, Contact contact) {
-        if (!address.matches(String.valueOf(blankPattern))) {
+        if (!address.matches(String.valueOf(ValidateInput.blankString))) {
             contact.Address = address;
         }
     }
 
     public void updatePhoneNumber(String phoneNumber, Contact contact) {
-        if (!phoneNumber.matches(String.valueOf(blankPattern))) {
+        if (!phoneNumber.matches(String.valueOf(ValidateInput.blankString))) {
             contact.PhoneNumber = phoneNumber;
         }
     }
 
     public void updateDOB(String dOB, Contact contact) {
-        if (!dOB.matches(String.valueOf(blankPattern))) {
+        if (!dOB.matches(String.valueOf(ValidateInput.blankString))) {
             contact.DOB = dOB;
         }
     }
 
     public void updateEmail(String email, Contact contact) {
-        if (!email.matches(String.valueOf(blankPattern))) {
+        if (!email.matches(String.valueOf(ValidateInput.blankString))) {
             contact.Email = email;
         }
     }
