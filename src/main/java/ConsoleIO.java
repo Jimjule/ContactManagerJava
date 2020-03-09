@@ -52,4 +52,9 @@ public class ConsoleIO implements InputOutput{
         }
         return userInput;
     }
+
+    public void clearScreen() {
+        display("\033[H\033[2J");
+        printer.flush();
+    }
 }

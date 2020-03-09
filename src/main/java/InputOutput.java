@@ -8,4 +8,5 @@ interface InputOutput {
 
     public String getInput(String detail);
 
+    public void clearScreen();
 }

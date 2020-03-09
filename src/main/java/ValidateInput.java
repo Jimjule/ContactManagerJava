@@ -14,7 +14,6 @@ public class ValidateInput {
             case ContactFields.PhoneNumber: return ValidateInput.validNumber(userInput, isAnUpdate);
             case ContactFields.DOB: return ValidateInput.validDOB(userInput, isAnUpdate);
             case ContactFields.Email: return ValidateInput.validEmail(userInput, isAnUpdate);
-            case "Field": return ValidateInput.validField(userInput);
             default: return true;
         }
     }
@@ -27,11 +26,6 @@ public class ValidateInput {
     public static Boolean validNumber(String phoneNumber, boolean isAnUpdate) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
         return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, isAnUpdate));
-    }
-
-    public static Boolean validField(String fieldNumber) {
-        Pattern fieldPattern = Pattern.compile("^[1-6]$");
-        return (fieldNumber.matches(String.valueOf(fieldPattern)));
     }
 
     public static Boolean validDOB(String dOB, boolean isAnUpdate) {

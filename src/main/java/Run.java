@@ -5,6 +5,8 @@ public class Run {
         ConsoleIO consoleIO = new ConsoleIO(System.in, System.out);
         ArrayList<Contact> contactList = new ArrayList<>();
         ContactManager contactManager = new ContactManager(consoleIO, contactList);
+
+        consoleIO.clearScreen();
         contactManager.showMenu();
     }
 }

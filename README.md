@@ -26,5 +26,7 @@
 
 ## Changelog
 
-- Adds ValidateInput class, taking validation methods from ConsoleIO class
-- Adds InputOutput interface 
+- Removes unnecessary validField check
+- Clears screen after interactions
+- Adds clearScreen method to InputOutput interface
+- Shortens ContactManager methods
