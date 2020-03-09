@@ -26,6 +26,5 @@
 
 ## Changelog
 
-- Adds ValidateInput class, taking validation methods from ConsoleIO class 
-
-
+- Adds ValidateInput class, taking validation methods from ConsoleIO class
+- Adds InputOutput interface 

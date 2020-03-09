@@ -19,7 +19,7 @@ public class ContactManager {
         boolean complete = false;
         while (!complete) {
             printMenuOptions();
-            int userInput = consoleIO.getNumberInput();
+            int userInput = consoleIO.getMenuInput();
             switch (userInput) {
                 case 1: {
                     newContact();
@@ -46,12 +46,12 @@ public class ContactManager {
 
     public void newContact() {
         Contact contact = new Contact(
-                consoleIO.confirmInput(ContactFields.FirstName, false),
-                consoleIO.confirmInput(ContactFields.LastName,false),
-                consoleIO.confirmInput(ContactFields.Address,false),
-                consoleIO.confirmInput(ContactFields.PhoneNumber, false),
-                consoleIO.confirmInput(ContactFields.DOB, false) ,
-                consoleIO.confirmInput(ContactFields.Email,false
+                consoleIO.getStringInput(ContactFields.FirstName, false),
+                consoleIO.getStringInput(ContactFields.LastName,false),
+                consoleIO.getStringInput(ContactFields.Address,false),
+                consoleIO.getStringInput(ContactFields.PhoneNumber, false),
+                consoleIO.getStringInput(ContactFields.DOB, false) ,
+                consoleIO.getStringInput(ContactFields.Email,false
                 ));
         contactList.add(contact);
     }
@@ -151,7 +151,7 @@ public class ContactManager {
             displayContacts();
             try {
                 updateContactFields(contactList.get(
-                        Integer.parseInt(consoleIO.confirmInput("contact choice", true)) - 1));
+                        Integer.parseInt(consoleIO.getStringInput("contact choice", true)) - 1));
             } catch (Exception e) {
                 consoleIO.display("No such contact");;
             }
@@ -161,9 +161,9 @@ public class ContactManager {
     public void updateContactFields(Contact contact) {
         consoleIO.display("Please select a field to update: 1. First name 2. Last name " +
                 "3. Address 4. Phone number 5. DOB, 6. Email");
-        int field = Integer.parseInt(consoleIO.confirmInput("field", false));
+        int field = Integer.parseInt(consoleIO.getStringInput("field", false));
         consoleIO.display(getFieldName(field) + " is currently: " + returnFieldValue(contact, field));
-        updateField(contact, field, consoleIO.confirmInput(getFieldName(field), true));
+        updateField(contact, field, consoleIO.getStringInput(getFieldName(field), true));
     }
 
     public boolean contactsExist() {
@@ -184,7 +184,7 @@ public class ContactManager {
     }
 
     public void deleteSelectedContact() {
-        int index = this.consoleIO.getNumberInput();
+        int index = this.consoleIO.getMenuInput();
         try {
             this.contactList.remove(index - 1);
             consoleIO.display("Contact deleted");

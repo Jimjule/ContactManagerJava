@@ -18,17 +18,17 @@ public class ConsoleIO implements InputOutput{
         printer.println(message);
     }
 
-    public String confirmInput(String field, boolean isAnUpdate) {
+    public String getStringInput(String field, boolean isAnUpdate) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
             userInput = getInput(field);
-            validInput = validateInput(field, userInput, isAnUpdate);
+            validInput = ValidateInput.validateInput(field, userInput, isAnUpdate);
         }
         return userInput;
     }
 
-    public int getNumberInput() {
+    public int getMenuInput() {
         String userInput;
         try {
              userInput = reader.readLine();
@@ -43,26 +43,13 @@ public class ConsoleIO implements InputOutput{
     }
 
     public String getInput(String detail) {
-        printer.println("Please enter your " + detail + ":");
+        display("Please enter your " + detail + ":");
         String userInput = null;
         try {
             userInput = reader.readLine();
         } catch (IOException e) {
-            printer.println("Cannot read line" + e);
+            display("Cannot read line" + e);
         }
         return userInput;
-    }
-
-    public Boolean validateInput(String detail, String userInput, boolean isAnUpdate) {
-        switch (detail) {
-            case ContactFields.FirstName:
-            case ContactFields.LastName:
-                return ValidateInput.validName(userInput, isAnUpdate);
-            case ContactFields.PhoneNumber: return ValidateInput.validNumber(userInput, isAnUpdate);
-            case ContactFields.DOB: return ValidateInput.validDOB(userInput, isAnUpdate);
-            case ContactFields.Email: return ValidateInput.validEmail(userInput, isAnUpdate);
-            case "Field": return ValidateInput.validField(userInput);
-            default: return true;
-        }
     }
 }

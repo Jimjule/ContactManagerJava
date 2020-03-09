@@ -6,6 +6,19 @@ public class ValidateInput {
 
     public final static Pattern blankString = Pattern.compile("^$");
 
+    public static Boolean validateInput(String detail, String userInput, boolean isAnUpdate) {
+        switch (detail) {
+            case ContactFields.FirstName:
+            case ContactFields.LastName:
+                return ValidateInput.validName(userInput, isAnUpdate);
+            case ContactFields.PhoneNumber: return ValidateInput.validNumber(userInput, isAnUpdate);
+            case ContactFields.DOB: return ValidateInput.validDOB(userInput, isAnUpdate);
+            case ContactFields.Email: return ValidateInput.validEmail(userInput, isAnUpdate);
+            case "Field": return ValidateInput.validField(userInput);
+            default: return true;
+        }
+    }
+
     public static Boolean validName(String name, boolean isAnUpdate) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
         return name.matches(String.valueOf(namePattern)) || isBlank(name, isAnUpdate);

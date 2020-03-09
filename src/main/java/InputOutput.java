@@ -1,12 +1,11 @@
 interface InputOutput {
 
-     void display(String message);
+    public void display(String message);
 
-    String confirmInput(String field, boolean isAnUpdate);
+    public String getStringInput(String field, boolean isAnUpdate);
 
-    int getNumberInput();
+    public int getMenuInput();
 
-    String getInput(String detail);
+    public String getInput(String detail);
 
-    Boolean validateInput(String detail, String userInput, boolean isAnUpdate);
 }

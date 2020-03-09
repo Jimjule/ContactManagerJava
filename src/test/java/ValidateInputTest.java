@@ -50,4 +50,9 @@ public class ValidateInputTest {
     public void testFailValidateEmail() {
         assertFalse(ValidateInput.validEmail("thisatthat", false));
     }
+
+    @Test
+    public void testValidInput() {
+        assertTrue(ValidateInput.validateInput("phone number","077075643", false));
+    }
 }
