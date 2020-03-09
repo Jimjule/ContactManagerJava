@@ -21,12 +21,12 @@ public class ConsoleIO {
         printer.println(message);
     }
 
-    public String confirmInput(String field, boolean update) {
+    public String confirmInput(String field, boolean isAnUpdate) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
             userInput = getInput(field);
-            validInput = validateInput(field, userInput, update);
+            validInput = validateInput(field, userInput, isAnUpdate);
         }
         return userInput;
     }
@@ -56,27 +56,27 @@ public class ConsoleIO {
         return userInput;
     }
 
-    public Boolean validateInput(String detail, String userInput, boolean update) {
+    public Boolean validateInput(String detail, String userInput, boolean isAnUpdate) {
         switch (detail) {
-            case "First name":
-            case "Last name":
-                return validName(userInput, update);
-            case "Phone number without spaces": return validNumber(userInput, update);
-            case "DOB in dd/mm/yyyy format": return validDOB(userInput, update);
-            case "Email": return validEmail(userInput, update);
+            case ContactFields.FirstName:
+            case ContactFields.LastName:
+                return validName(userInput, isAnUpdate);
+            case ContactFields.PhoneNumber: return validNumber(userInput, isAnUpdate);
+            case ContactFields.DOB: return validDOB(userInput, isAnUpdate);
+            case ContactFields.Email: return validEmail(userInput, isAnUpdate);
             case "Field": return validField(userInput);
             default: return true;
         }
     }
 
-    public Boolean validName(String name, boolean update) {
+    public Boolean validName(String name, boolean isAnUpdate) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
-        return name.matches(String.valueOf(namePattern)) || isBlank(name, update);
+        return name.matches(String.valueOf(namePattern)) || isBlank(name, isAnUpdate);
     }
 
-    public Boolean validNumber(String phoneNumber, boolean update) {
+    public Boolean validNumber(String phoneNumber, boolean isAnUpdate) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
-        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, update));
+        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, isAnUpdate));
     }
 
     public Boolean validField(String fieldNumber) {
@@ -84,34 +84,24 @@ public class ConsoleIO {
         return (fieldNumber.matches(String.valueOf(fieldPattern)));
     }
 
-    public Boolean validDOB(String dOB, boolean update) {
+    public Boolean validDOB(String dOB, boolean isAnUpdate) {
         try {
             DateTimeFormatter dayMonthYear = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate birthDate = LocalDate.parse(dOB, dayMonthYear);
             LocalDate today = LocalDate.now();
-            return (birthDate.isBefore(today) || isBlank(dOB, update));
+            return (birthDate.isBefore(today) || isBlank(dOB, isAnUpdate));
         } catch (Exception e) {
-            return isBlank(dOB, update);
+            return isBlank(dOB, isAnUpdate);
         }
     }
 
-    public Boolean validEmail(String email, boolean update) {
+    public Boolean validEmail(String email, boolean isAnUpdate) {
         Pattern emailPattern = Pattern.compile("^(.+@.+)$");
-        return (email.matches(String.valueOf(emailPattern)) || isBlank(email, update));
+        return (email.matches(String.valueOf(emailPattern)) || isBlank(email, isAnUpdate));
     }
 
-    public boolean isBlank(String userInput, boolean update) {
+    public boolean isBlank(String userInput, boolean isAnUpdate) {
         Pattern blankPattern = Pattern.compile("^$");
-        return (userInput.matches(String.valueOf(blankPattern)) && update);
-    }
-
-    public void printMenuOptions() {
-        printer.println("Welcome to Contact Manager");
-        printer.println("Please select an option:");
-        printer.println("1. Create new Contact");
-        printer.println("2. Update Contact");
-        printer.println("3. Delete Contact");
-        printer.println("4. View Contacts");
-        printer.println("5. Exit");
+        return (userInput.matches(String.valueOf(blankPattern)) && isAnUpdate);
     }
 }

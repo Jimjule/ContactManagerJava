@@ -26,7 +26,10 @@
 
 ## Changelog
 
-- System.out.println() replaced with ConsoleIO's display method
-- Updates a single field instead of all fields
-- Uses switch statement to get and update fields
+- Contact fields public, moving methods out of Contact class
+- New ContactFields class stores field names for reference
+- Refactor displayContacts method
+- Refactor printMenuOptions method
+- `update` var now `isAnUpdate`
+
 
