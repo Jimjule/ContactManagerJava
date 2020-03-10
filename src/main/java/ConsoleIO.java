@@ -1,17 +1,13 @@
 import java.io.*;
 
-public class ConsoleIO implements InputOutput{
+public class ConsoleIO {
 
-    private final InputStream input;
-    private final OutputStream output;
     private final BufferedReader reader;
     public final PrintStream printer;
 
     public ConsoleIO(InputStream input, OutputStream output) {
-        reader = new BufferedReader(new InputStreamReader(input));
-        printer = new PrintStream(output);
-        this.input = input;
-        this.output = output;
+        this.reader = new BufferedReader(new InputStreamReader(input));
+        this.printer = new PrintStream(output);
     }
 
     public void display(String message) {
@@ -31,13 +27,9 @@ public class ConsoleIO implements InputOutput{
     public int getMenuInput() {
         String userInput;
         try {
-             userInput = reader.readLine();
-        } catch (IOException e) {
-            return - 1;
-        }
-        try {
+            userInput = reader.readLine();
             return Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return 0;
         }
     }

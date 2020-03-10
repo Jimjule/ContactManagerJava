@@ -26,4 +26,5 @@
 
 ## Changelog
 
-- Refactors update methods to a single method
+- Removes unnecessary instances
+- Renamed tests

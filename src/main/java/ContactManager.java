@@ -71,7 +71,7 @@ public class ContactManager {
     }
 
     public void updateField(String value, Contact contact, int field) {
-        if (!value.matches(String.valueOf(ValidateInput.blankString))) {
+        if (isBlank(value)) {
             switch (field) {
                 case 1: contact.FirstName = value; break;
                 case 2: contact.LastName = value; break;
@@ -83,15 +83,20 @@ public class ContactManager {
         }
     }
 
+    private boolean isBlank(String value) {
+        return !value.matches(String.valueOf(ValidateInput.blankString));
+    }
+
     public void updateContact() {
         if (contactsExist()) {
             displayContacts();
             try {
-                updateContactFields(contactList.get(
-                        Integer.parseInt(consoleIO.getStringInput("contact choice", true)) - 1));
+                String contactNumber = consoleIO.getStringInput("contact choice", true);
+                Contact contact = contactList.get(Integer.parseInt(contactNumber) - 1);
+                updateContactFields(contact);
             } catch (Exception e) {
                 consoleIO.clearScreen();
-                consoleIO.display("No such contact");;
+                consoleIO.display("No such contact");
             }
         }
     }
