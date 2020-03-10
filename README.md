@@ -26,7 +26,10 @@
 
 ## Changelog
 
-- Adds dependency injection
-- Instructions for using gradle wrapper
-- 
+- Contact fields public, moving methods out of Contact class
+- New ContactFields class stores field names for reference
+- Refactor displayContacts method
+- Refactor printMenuOptions method
+- `update` var now `isAnUpdate`
+
 
