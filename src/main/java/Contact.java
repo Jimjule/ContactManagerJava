@@ -1,5 +1,3 @@
-import java.util.regex.Pattern;
-
 public class Contact {
 
     public String FirstName;
@@ -8,7 +6,6 @@ public class Contact {
     public String PhoneNumber;
     public String DOB;
     public String Email;
-    public Pattern blankPattern = Pattern.compile("^$");
 
     public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
        this.FirstName = firstName;
