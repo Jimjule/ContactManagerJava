@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 public class Contact {
 
     private String FirstName;
@@ -6,8 +8,9 @@ public class Contact {
     private String PhoneNumber;
     private String DOB;
     private String Email;
+    public Pattern blankPattern = Pattern.compile("^$");
 
-   public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
+    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email){
        this.FirstName = firstName;
        this.LastName = lastName;
        this.Address = address;
@@ -16,45 +19,59 @@ public class Contact {
        this.Email = email;
    }
 
-    String returnFirstName() { return FirstName; }
+    public String returnFirstName() { return FirstName; }
 
-    void updateFirstName(String firstName) { FirstName = firstName; }
+    public void updateFirstName(String firstName) {
+       if (!firstName.matches(String.valueOf(blankPattern))) {
+           FirstName = firstName;
+       }
+   }
 
-    String returnLastName() { return LastName; }
+    public String returnLastName() { return LastName; }
 
-    void updateLastName(String lastName) {
-        LastName = lastName;
+    public void updateLastName(String lastName) {
+        if (!lastName.matches(String.valueOf(blankPattern))) {
+            LastName = lastName;
+        }
     }
 
-    String returnAddress() {
+    public String returnAddress() {
         return Address;
     }
 
-    void updateAddress(String address) {
-        Address = address;
+    public void updateAddress(String address) {
+        if (!address.matches(String.valueOf(blankPattern))) {
+            Address = address;
+        }
     }
 
-    String returnPhoneNumber() {
+    public String returnPhoneNumber() {
         return PhoneNumber;
     }
 
-    void updatePhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public void updatePhoneNumber(String phoneNumber) {
+        if (!phoneNumber.matches(String.valueOf(blankPattern))) {
+            PhoneNumber = phoneNumber;
+        }
     }
 
-    String returnDOB() {
+    public String returnDOB() {
         return DOB;
     }
 
-    void updateDOB(String dOB) {
-        DOB = dOB;
+    public void updateDOB(String dOB) {
+        if (!dOB.matches(String.valueOf(blankPattern))) {
+            DOB = dOB;
+        }
     }
 
-    String returnEmail() {
+    public String returnEmail() {
         return Email;
     }
 
-    void updateEmail(String email) {
-        Email = email;
+    public void updateEmail(String email) {
+        if (!email.matches(String.valueOf(blankPattern))) {
+            Email = email;
+        }
     }
 }

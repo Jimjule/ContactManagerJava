@@ -1,91 +1,96 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 public class ConsoleInput {
 
-    public ConsoleInput() {
+    private final InputStream input;
+    private final OutputStream output;
+    private final BufferedReader reader;
+    private final PrintStream printer;
+
+    public ConsoleInput(InputStream input, OutputStream output) {
+        reader = new BufferedReader(new InputStreamReader(input));
+        printer = new PrintStream(output);
+        this.input = input;
+        this.output = output;
     }
 
-    public String confirmInput(String detail) {
+    public String confirmInput(String field, boolean update) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
-            userInput = getInput(detail);
-            validInput = validateInput(detail, userInput);
+            userInput = getInput(field);
+            validInput = validateInput(field, userInput, update);
         }
         return userInput;
     }
 
-    public int contactChoice() {
-        return Integer.parseInt(confirmInput("contact choice"));
-    }
-
     public int menuChoice() {
-        String input;
+        String userInput;
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            input = reader.readLine();
+            userInput = reader.readLine();
         } catch (IOException e) {
             return - 1;
         }
         try {
-            return Integer.parseInt(input);
+            return Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
             return 0;
         }
     }
 
     public String getInput(String detail) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Please enter your " + detail + ":");
-        String input = null;
+        printer.println("Please enter your " + detail + ":");
+        String userInput = null;
         try {
-            input = reader.readLine();
+            userInput = reader.readLine();
         } catch (IOException e) {
-            System.out.println("Cannot read line" + e);
+            printer.println("Cannot read line" + e);
         }
-        return input;
+        return userInput;
     }
 
-    public Boolean validateInput(String detail, String input) {
+    public Boolean validateInput(String detail, String userInput, boolean update) {
         switch (detail) {
             case "first name":
             case "last name":
-                return validName(input);
-            case "phone number without spaces": return validNumber(input);
-            case "DOB in dd/mm/yyyy format": return validDOB(input);
-            case "email": return validEmail(input);
+                return validName(userInput, update);
+            case "phone number without spaces": return validNumber(userInput, update);
+            case "DOB in dd/mm/yyyy format": return validDOB(userInput, update);
+            case "email": return validEmail(userInput, update);
             default: return true;
         }
     }
 
-    public Boolean validName(String name) {
+    public Boolean validName(String name, boolean update) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
-        return name.matches(String.valueOf(namePattern));
+        return name.matches(String.valueOf(namePattern)) || isBlank(name, update);
     }
-    public Boolean validNumber(String phoneNumber) {
+    public Boolean validNumber(String phoneNumber, boolean update) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
-        return phoneNumber.matches(String.valueOf(phonePattern));
+        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, update));
     }
 
-    public Boolean validDOB(String dOB) {
+    public Boolean validDOB(String dOB, boolean update) {
         try {
             DateTimeFormatter dayMonthYear = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate birthDate = LocalDate.parse(dOB, dayMonthYear);
             LocalDate today = LocalDate.now();
-            return birthDate.isBefore(today);
+            return (birthDate.isBefore(today) || isBlank(dOB, update));
         } catch (Exception e) {
-            System.out.println("Invalid date, please try again");
-            return false;
+            return isBlank(dOB, update);
         }
     }
 
-    public Boolean validEmail(String email) {
+    public Boolean validEmail(String email, boolean update) {
         Pattern emailPattern = Pattern.compile("^(.+@.+)$");
-        return email.matches(String.valueOf(emailPattern));
+        return (email.matches(String.valueOf(emailPattern)) || isBlank(email, update));
+    }
+
+    public boolean isBlank(String userInput, boolean update) {
+        Pattern blankPattern = Pattern.compile("^$");
+        return (userInput.matches(String.valueOf(blankPattern)) && update);
     }
 }
