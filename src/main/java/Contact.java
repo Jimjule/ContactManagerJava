@@ -7,6 +7,13 @@ public class Contact {
     private String DOB;
     private String Email;
 
+    public static final String FirstNameField = "First Name";
+    public static final String LastNameField = "Last Name";
+    public static final String AddressField = "Address";
+    public static final String PhoneNumberField = "Phone Number (no spaces)";
+    public static final String DOBField = "Date of Birth (dd/MM/yyyy)";
+    public static final String EmailField = "Email";
+
     public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
        this.FirstName = firstName;
        this.LastName = lastName;
@@ -29,12 +36,12 @@ public class Contact {
 
     public static String getFieldName(int field) {
         switch (field) {
-            case 1: return "First Name";
-            case 2: return "Last Name";
-            case 3: return "Address";
-            case 4: return "Phone Number (no spaces)";
-            case 5: return "Date of Birth (dd/MM/yyyy)";
-            default: return "Email";
+            case 1: return FirstNameField;
+            case 2: return LastNameField;
+            case 3: return AddressField;
+            case 4: return PhoneNumberField;
+            case 5: return DOBField;
+            default: return EmailField;
         }
     }
 

@@ -26,5 +26,4 @@
 
 ## Changelog
 
-- Moves update to Contact
-- Get contact field names/values methods in contact class
+- Removed ContactFields, moves functionality to Contact

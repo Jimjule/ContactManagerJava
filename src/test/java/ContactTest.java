@@ -5,9 +5,10 @@ import static org.junit.Assert.assertEquals;
 public class ContactTest {
 
     Contact contact;
+
     @Before
     public void initialize() {
-       contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
     }
 
     @Test
@@ -34,7 +35,7 @@ public class ContactTest {
     @Test
     public void canUpdatePhoneNumber() {
         assertEquals("130077", contact.getFieldValue(4));
-        contact.updateField("01",  4);
+        contact.updateField("01", 4);
         assertEquals("01", contact.getFieldValue(4));
     }
 
@@ -50,5 +51,36 @@ public class ContactTest {
         assertEquals("email@email.com", contact.getFieldValue(6));
         contact.updateField("new@email.com", 6);
         assertEquals("new@email.com", contact.getFieldValue(6));
+    }
+
+    @Test
+    public void firstNameValue() {
+        assertEquals(Contact.getFieldName(1), "First Name");
+    }
+
+    @Test
+    public void lastNameValue() {
+        assertEquals(Contact.getFieldName(2), "Last Name");
+    }
+
+    @Test
+    public void addressValue() {
+        assertEquals(Contact.getFieldName(3), "Address");
+    }
+
+    @Test
+    public void phoneNumberValue() {
+        assertEquals(Contact.getFieldName(4), "Phone Number (no spaces)");
+    }
+
+    @Test
+    public void dOBValue() {
+        assertEquals(Contact.getFieldName(5), "Date of Birth (dd/MM/yyyy)");
+    }
+
+    @Test
+    public void emailValue() {
+        assertEquals(Contact.getFieldName(6), "Email");
+
     }
 }

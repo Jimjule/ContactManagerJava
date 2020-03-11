@@ -115,12 +115,12 @@ public class ContactManager {
     }
 
     public void printContactDetails(Contact contact) {
-        consoleIO.display(ContactFields.FirstName + ": " + contact.getFieldValue(1) + "\n" +
-                ContactFields.LastName + ": " + contact.getFieldValue(2) + "\n" +
-                ContactFields.Address + ": " + contact.getFieldValue(3) + "\n" +
-                ContactFields.PhoneNumber + ": " + contact.getFieldValue(4) + "\n" +
-                ContactFields.DOB + ": " + contact.getFieldValue(5) + "\n" +
-                ContactFields.Email + ": " + contact.getFieldValue(6)
+        consoleIO.display(Contact.getFieldName(1) + ": " + contact.getFieldValue(1) + "\n" +
+                Contact.getFieldName(2) + ": " + contact.getFieldValue(2) + "\n" +
+                Contact.getFieldName(3) + ": " + contact.getFieldValue(3) + "\n" +
+                Contact.getFieldName(4) + ": " + contact.getFieldValue(4) + "\n" +
+                Contact.getFieldName(5) + ": " + contact.getFieldValue(5) + "\n" +
+                Contact.getFieldName(6) + ": " + contact.getFieldValue(6)
                 );
     }
 
