@@ -26,4 +26,4 @@
 
 ## Changelog
 
-- Removed ContactFields, moves functionality to Contact
+- ValidateInput tests are more behaviour driven
