@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Removes unnecessary instances
-- Renamed tests
+- Moves update to Contact
+- Get contact field names/values methods in contact class

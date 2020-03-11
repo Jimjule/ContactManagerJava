@@ -14,17 +14,17 @@ public class ConsoleIO {
         printer.println(message);
     }
 
-    public String getStringInput(String field, boolean isAnUpdate) {
+    public String getStringInput(int field, String fieldName) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
-            userInput = getInput(field);
-            validInput = ValidateInput.validateInput(field, userInput, isAnUpdate);
+            userInput = getInput(fieldName);
+            validInput = ValidateInput.validateInput(field, userInput);
         }
         return userInput;
     }
 
-    public int getMenuInput() {
+    public int getNumberInput() {
         String userInput;
         try {
             userInput = reader.readLine();
@@ -34,8 +34,8 @@ public class ConsoleIO {
         }
     }
 
-    public String getInput(String detail) {
-        display("Please enter your " + detail + ":");
+    public String getInput(String fieldName) {
+        display("Please enter your " + fieldName + ":");
         String userInput = null;
         try {
             userInput = reader.readLine();
