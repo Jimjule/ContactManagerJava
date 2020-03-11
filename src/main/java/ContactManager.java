@@ -11,8 +11,7 @@ public class ContactManager {
     }
 
     public void printMenuOptions() {
-        consoleIO.display("Welcome to Contact Manager\nPlease select an option:\n1. New Contact\n2. Update Contact\n" +
-                "3. Delete Contact\n4. View Contacts\n5. Exit");
+        consoleIO.display(Constants.menuOptions);
     }
 
     public void showMenu() {
@@ -76,12 +75,13 @@ public class ContactManager {
 
     public void updateContactFields(Contact contact) {
         consoleIO.clearScreen();
-        consoleIO.display("Select a field to update: 1. First name 2. Last name " +
-                "3. Address 4. Phone number 5. DOB, 6. Email");
+        consoleIO.display(Constants.updateFields);
+
         int field = consoleIO.getNumberInput();
         consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
         String input = consoleIO.getStringInput(field, Contact.getFieldName(field));
         contact.updateField(input, field);
+
         consoleIO.clearScreen();
     }
 

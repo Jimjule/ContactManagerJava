@@ -26,4 +26,5 @@
 
 ## Changelog
 
-- ValidateInput tests are more behaviour driven
+- Adds Constant class
+- Options strings now constants
