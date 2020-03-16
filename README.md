@@ -17,8 +17,8 @@
 
 ## Running
 
-- Type gradle clean build or ./gradlew clean build to compile.
-- Type gradle --console plain run or ./gradlew --console plain run to run the game. 
+- Type `gradle clean build` or `./gradlew clean build` to compile.
+- Type `gradle --console plain run` or `./gradlew --console plain run` to run the game. 
 
 ## Contributing
 
@@ -26,5 +26,6 @@
 
 ## Changelog
 
-- Adds Constant class
-- Options strings now constants
+- Adds Database class with Postgres functionality
+- Adds ConsoleIO and Database spies
+- Adds ContactManager tests using spies

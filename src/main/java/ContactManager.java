@@ -4,10 +4,12 @@ public class ContactManager {
 
     private ConsoleIO consoleIO;
     private ArrayList<Contact> contactList;
+    private Database database;
 
-    public ContactManager(ConsoleIO consoleIO, ArrayList<Contact> contactList) {
+    public ContactManager(ConsoleIO consoleIO, ArrayList<Contact> contactList, Database database) {
        this.consoleIO = consoleIO;
        this.contactList = contactList;
+       this.database = database;
     }
 
     public void printMenuOptions() {
@@ -36,12 +38,46 @@ public class ContactManager {
                     displayContacts();
                     break;
                 }
+
+                case 5: {
+                    newContactDatabase();
+                    break;
+                }
+                case 6: {
+                    updateDatabase();
+                    break;
+                }
                 default:
                     complete = true;
                     break;
             }
         }
         consoleIO.clearScreen();
+    }
+
+    public void newContactDatabase() {
+        consoleIO.clearScreen();
+        int success = database.newContact(consoleIO.getStringInput(1, Contact.getFieldName(1)),
+                consoleIO.getStringInput(2, Contact.getFieldName(2)),
+                consoleIO.getStringInput(3, Contact.getFieldName(3)),
+                consoleIO.getStringInput(4, Contact.getFieldName(4)),
+                consoleIO.getStringInput(5, Contact.getFieldName(5)) ,
+                consoleIO.getStringInput(6, Contact.getFieldName(6)
+                ));
+        databaseSuccessMessage(success, "Add contact to database");
+    }
+
+    public void databaseSuccessMessage(int success, String operation) {
+        if (success == 1) {
+            consoleIO.display(operation + ": successful");
+        } else if (success == 0) {
+            consoleIO.display(operation + ": failed");
+        } else {
+            consoleIO.display(operation + ": error");
+        }
+    }
+
+    public void updateDatabase() {
     }
 
     public void newContact() {
@@ -73,7 +109,7 @@ public class ContactManager {
         }
     }
 
-    public void updateContactFields(Contact contact) {
+    private void updateContactFields(Contact contact) {
         consoleIO.clearScreen();
         consoleIO.display(Constants.updateFields);
 
@@ -95,7 +131,7 @@ public class ContactManager {
         }
     }
 
-    private void deleteContact() {
+    public void deleteContact() {
         if (contactsExist()) {
             displayContacts();
             consoleIO.display("Please select a contact");

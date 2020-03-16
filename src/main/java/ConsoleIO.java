@@ -49,4 +49,20 @@ public class ConsoleIO {
         display("\033[H\033[2J");
         printer.flush();
     }
+
+    public boolean getBoolean() {
+        String userInput;
+        try {
+            userInput = reader.readLine();
+            if (userInput == "y") {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            userInput = "error";
+        }
+        return userInput == "y";
+    }
 }
