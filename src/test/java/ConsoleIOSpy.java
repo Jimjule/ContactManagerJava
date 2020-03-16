@@ -8,24 +8,24 @@ public class ConsoleIOSpy extends ConsoleIO {
     public boolean getInputHasBeenCalled = false;
     public boolean getNumberInputHasBeenCalled = false;
     public boolean getStringInputHasBeenCalled = false;
+    public boolean getBooleanHasBeenCalled = false;
 
 
     public ConsoleIOSpy(InputStream input, OutputStream output) {
         super(input, output);
         BufferedReader bufferedReader = org.mockito.Mockito.mock(BufferedReader.class);
+        this.printer = new PrintStream(output);
         try {
             when(bufferedReader.readLine()).thenReturn("Firstname").thenReturn("Lastname").thenReturn("Address").thenReturn("012345").thenReturn("01/02/1934").thenReturn("test@place.org");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.printer = new PrintStream(output);
     }
 
     public void display(String message) {
         printer.println(message);
     }
 
-    @Override
     public String getStringInput(int field, String fieldName) {
         this.getStringInputHasBeenCalled = true;
         Boolean validInput = false;
@@ -53,6 +53,7 @@ public class ConsoleIOSpy extends ConsoleIO {
     }
 
     public boolean getBoolean() {
+        this.getBooleanHasBeenCalled = true;
         return true;
     }
 }

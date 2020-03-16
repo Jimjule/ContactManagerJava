@@ -1,6 +1,10 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class DatabaseTest {
@@ -9,7 +13,12 @@ public class DatabaseTest {
 
     @Before
     public void setUp() {
-        database = new DatabaseSpy();
+       ArrayList arrayList = new ArrayList();
+       String testString = "Testing";
+       InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
+       ConsoleIOSpy consoleIO = new ConsoleIOSpy(fixedInput, System.out);
+
+        database = new DatabaseSpy(arrayList, consoleIO);
     }
 
     @Test

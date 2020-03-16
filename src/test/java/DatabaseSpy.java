@@ -1,8 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.util.ArrayList;
 
-public class DatabaseSpy {
+public class DatabaseSpy extends Database {
 
     public String fetchNewFirstName;
     public String fetchNewLastName;
@@ -20,33 +20,40 @@ public class DatabaseSpy {
     public String fetchUpdateDOB;
     public String fetchUpdateEmail;
     public String fetchUpdateID;
+    public boolean displayContactsHasBeenCalled;
+    public boolean newContactHasBeenCalled;
+    public boolean updateContactHasBeenCalled;
+    public boolean deleteContactHasBeenCalled;
 
-    public int newContact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
+    public DatabaseSpy(ArrayList arrayList, ConsoleIO consoleIO) {
+        super(arrayList, consoleIO);
+    }
+
+    public void newContact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
+        System.out.println("Made it");
         Connection connection;
+        this.newContactHasBeenCalled = true;
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
             if (connection != null) {
                 connection.close();
-                fetchNewConnectionSuccessful = true;
-                fetchNewFirstName = firstName;
-                fetchNewLastName = lastName;
-                fetchNewAddress = address;
-                fetchNewPhoneNumber = phoneNumber;
-                fetchNewDOB = dOB;
-                fetchNewEmail = email;
-                return 1;
-            } else {
-                return 0;
+                this.fetchNewConnectionSuccessful = true;
+                this.fetchNewFirstName = firstName;
+                this.fetchNewLastName = lastName;
+                this.fetchNewAddress = address;
+                this.fetchNewPhoneNumber = phoneNumber;
+                this.fetchNewDOB = dOB;
+                this.fetchNewEmail = email;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return - 1;
         }
     }
 
-    public int updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
+    public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
         Connection connection;
+        updateContactHasBeenCalled = true;
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
@@ -60,32 +67,24 @@ public class DatabaseSpy {
                 fetchUpdatePhoneNumber = phoneNumber;
                 fetchUpdateDOB = dOB;
                 fetchUpdateEmail = email;
-                return 1;
-            } else {
-                return 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return - 1;
         }
 
     }
 
-    public int connectionTest() {
-        Connection connection = null;
-        Statement statement = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
-            if (connection != null) {
-                connection.close();
-                return 1;
-            } else {
-                return 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return - 1;
-        }
+    public void deleteContact() {
+        deleteContactHasBeenCalled = true;
+    }
+
+    public void displayContacts() {
+        displayContactsHasBeenCalled = true;
+    }
+
+    public boolean contactsExist() {
+        consoleIO.clearScreen();
+        consoleIO.display("Not yet implemented");
+        return false;
     }
 }

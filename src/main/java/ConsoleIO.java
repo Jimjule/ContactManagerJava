@@ -3,7 +3,7 @@ import java.io.*;
 public class ConsoleIO {
 
     private final BufferedReader reader;
-    public final PrintStream printer;
+    private final PrintStream printer;
 
     public ConsoleIO(InputStream input, OutputStream output) {
         this.reader = new BufferedReader(new InputStreamReader(input));
@@ -54,7 +54,7 @@ public class ConsoleIO {
         String userInput;
         try {
             userInput = reader.readLine();
-            if (userInput == "y") {
+            if (userInput.equals("y")) {
                 return true;
             } else {
                 return false;
