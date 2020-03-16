@@ -26,4 +26,5 @@
 
 ## Changelog
 
-- Refactors update methods to a single method
+- Adds Constant class
+- Options strings now constants

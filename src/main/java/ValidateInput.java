@@ -6,46 +6,46 @@ public class ValidateInput {
 
     public final static Pattern blankString = Pattern.compile("^$");
 
-    public static Boolean validateInput(String detail, String userInput, boolean isAnUpdate) {
-        switch (detail) {
-            case ContactFields.FirstName:
-            case ContactFields.LastName:
-                return ValidateInput.validName(userInput, isAnUpdate);
-            case ContactFields.PhoneNumber: return ValidateInput.validNumber(userInput, isAnUpdate);
-            case ContactFields.DOB: return ValidateInput.validDOB(userInput, isAnUpdate);
-            case ContactFields.Email: return ValidateInput.validEmail(userInput, isAnUpdate);
+    public static Boolean validateInput(int field, String userInput) {
+        switch (field) {
+            case 1:
+            case 2:
+                return validName(userInput);
+            case 4: return validNumber(userInput);
+            case 5: return validDOB(userInput);
+            case 6: return validEmail(userInput);
             default: return true;
         }
     }
 
-    public static Boolean validName(String name, boolean isAnUpdate) {
+    public static Boolean validName(String name) {
         Pattern namePattern = Pattern.compile("^[A-Z]'?[- a-zA-Z]+$");
-        return name.matches(String.valueOf(namePattern)) || isBlank(name, isAnUpdate);
+        return name.matches(String.valueOf(namePattern)) || isBlank(name);
     }
 
-    public static Boolean validNumber(String phoneNumber, boolean isAnUpdate) {
+    public static Boolean validNumber(String phoneNumber) {
         Pattern phonePattern = Pattern.compile("^[\\d]+$");
-        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber, isAnUpdate));
+        return (phoneNumber.matches(String.valueOf(phonePattern)) || isBlank(phoneNumber));
     }
 
-    public static Boolean validDOB(String dOB, boolean isAnUpdate) {
+    public static Boolean validDOB(String dOB) {
         try {
             DateTimeFormatter dayMonthYear = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate birthDate = LocalDate.parse(dOB, dayMonthYear);
             LocalDate today = LocalDate.now();
-            return (birthDate.isBefore(today) || isBlank(dOB, isAnUpdate));
+            return (birthDate.isBefore(today) || isBlank(dOB));
         } catch (Exception e) {
-            return isBlank(dOB, isAnUpdate);
+            return isBlank(dOB);
         }
     }
 
-    public static Boolean validEmail(String email, boolean isAnUpdate) {
+    public static Boolean validEmail(String email) {
         Pattern emailPattern = Pattern.compile("^(.+@.+)$");
-        return (email.matches(String.valueOf(emailPattern)) || isBlank(email, isAnUpdate));
+        return (email.matches(String.valueOf(emailPattern)) || isBlank(email));
     }
 
-    public static boolean isBlank(String userInput, boolean isAnUpdate) {
+    public static boolean isBlank(String userInput) {
         Pattern blankPattern = Pattern.compile("^$");
-        return (userInput.matches(String.valueOf(blankPattern)) && isAnUpdate);
+        return (userInput.matches(String.valueOf(blankPattern)));
     }
 }

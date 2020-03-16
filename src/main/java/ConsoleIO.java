@@ -1,49 +1,41 @@
 import java.io.*;
 
-public class ConsoleIO implements InputOutput{
+public class ConsoleIO {
 
-    private final InputStream input;
-    private final OutputStream output;
     private final BufferedReader reader;
     public final PrintStream printer;
 
     public ConsoleIO(InputStream input, OutputStream output) {
-        reader = new BufferedReader(new InputStreamReader(input));
-        printer = new PrintStream(output);
-        this.input = input;
-        this.output = output;
+        this.reader = new BufferedReader(new InputStreamReader(input));
+        this.printer = new PrintStream(output);
     }
 
     public void display(String message) {
         printer.println(message);
     }
 
-    public String getStringInput(String field, boolean isAnUpdate) {
+    public String getStringInput(int field, String fieldName) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
-            userInput = getInput(field);
-            validInput = ValidateInput.validateInput(field, userInput, isAnUpdate);
+            userInput = getInput(fieldName);
+            validInput = ValidateInput.validateInput(field, userInput);
         }
         return userInput;
     }
 
-    public int getMenuInput() {
+    public int getNumberInput() {
         String userInput;
         try {
-             userInput = reader.readLine();
-        } catch (IOException e) {
-            return - 1;
-        }
-        try {
+            userInput = reader.readLine();
             return Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return 0;
         }
     }
 
-    public String getInput(String detail) {
-        display("Please enter your " + detail + ":");
+    public String getInput(String fieldName) {
+        display("Please enter your " + fieldName + ":");
         String userInput = null;
         try {
             userInput = reader.readLine();
