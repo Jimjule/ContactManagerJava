@@ -26,6 +26,7 @@
 
 ## Changelog
 
-- Adds option to use DB instead of memory at beginning
-- Adds ContactList class, containing the ArrayList of Contacts
-- Adds ContactListSpy for ContactManager tests
+- More ContactManager testing
+- Refactor screen clearing placement
+- Refactor displayContacts method in ContactManager to be testable
+- DB catch message if bad data input

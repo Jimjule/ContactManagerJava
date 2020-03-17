@@ -44,9 +44,11 @@ public class ContactListSpy extends ContactList {
 
     public void displayContacts() {
         this.displayContactsHasBeenCalled = true;
-        for (int i = 0; i < contactArray.size(); i++) {
-            consoleIO.display(String.valueOf(i + 1));
-            printContactDetails((Contact) contactArray.get(i));
+        if (contactsExist()) {
+            for (int i = 0; i < contactArray.size(); i++) {
+                consoleIO.display(String.valueOf(i + 1));
+                printContactDetails((Contact) contactArray.get(i));
+            }
         }
     }
 
@@ -68,7 +70,6 @@ public class ContactListSpy extends ContactList {
             Contact contact = (Contact) contactArray.get((contactNumber) - 1);
             updateContactFields(contact);
         } catch (Exception e) {
-            consoleIO.clearScreen();
             consoleIO.display("No such contact");
         }
     }

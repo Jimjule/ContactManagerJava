@@ -55,4 +55,12 @@ public class ContactManagerTest {
         assertEquals(true, contactList.deleteContactHasBeenCalled);
         assertEquals(true, consoleIO.getNumberInputHasBeenCalled);
     }
+
+    @Test
+    public void viewContactsCallsCorrectMethods() {
+        contactManager.storage = contactList;
+        contactManager.displayContacts();
+        assertEquals(true, contactList.displayContactsHasBeenCalled);
+        assertEquals(true, contactList.contactsExistHasBeenCalled);
+    }
 }

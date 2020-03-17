@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -18,14 +19,19 @@ public class Database extends ContactList {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
-            if (connection != null) {
-                statement = connection.createStatement();
-                String sql = "INSERT INTO contactmanagerdb VALUES(DEFAULT, '" +
-                        firstName + "', '" + lastName + "', '" + address + "', '" + phoneNumber + "', '" + dOB + "', '" + email +
-                        "');";
-                statement.execute(sql);
-                statement.close();
-                connection.close();
+            try {
+                if (connection != null) {
+                    statement = connection.createStatement();
+                    String sql = "INSERT INTO contactmanagerdb VALUES(DEFAULT, '" +
+                            firstName + "', '" + lastName + "', '" + address + "', '" + phoneNumber + "', '" + dOB + "', '" + email +
+                            "');";
+                    statement.execute(sql);
+                    statement.close();
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                consoleIO.clearScreen();
+                consoleIO.display("Invalid data, please try again");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,13 +16,20 @@ public class ContactList extends ArrayList<Contact> {
     }
 
     public boolean contactsExist() {
-        return !(contactArray.size() == 0);
+        if (contactArray.size() == 0) {
+            consoleIO.display("No contacts yet");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void displayContacts() {
-        for (int i = 0; i < contactArray.size(); i++) {
-            consoleIO.display(String.valueOf(i + 1));
-            printContactDetails((Contact) contactArray.get(i));
+        if (contactsExist()) {
+            for (int i = 0; i < contactArray.size(); i++) {
+                consoleIO.display(String.valueOf(i + 1));
+                printContactDetails((Contact) contactArray.get(i));
+            }
         }
     }
 
@@ -42,7 +49,6 @@ public class ContactList extends ArrayList<Contact> {
             Contact contact = (Contact) contactArray.get((contactNumber) - 1);
             updateContactFields(contact);
         } catch (Exception e) {
-            consoleIO.clearScreen();
             consoleIO.display("No such contact");
         }
     }

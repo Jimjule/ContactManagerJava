@@ -13,6 +13,7 @@ public class ContactManager {
     }
 
     public ContactList selectStorageDestination() {
+        consoleIO.clearScreen();
         consoleIO.display("Would you like to save to the database? (y/N)");
         boolean useDatabase = consoleIO.getBoolean();
         consoleIO.clearScreen();
@@ -46,7 +47,7 @@ public class ContactManager {
                     break;
                 }
                 case 4: {
-                    storage.displayContacts();
+                    displayContacts();
                     break;
                 }
                 default:
@@ -67,10 +68,10 @@ public class ContactManager {
                 consoleIO.getStringInput(5, Contact.getFieldName(5)) ,
                 consoleIO.getStringInput(6, Contact.getFieldName(6))
         );
-        consoleIO.clearScreen();
     }
 
     public void updateContact() {
+        consoleIO.clearScreen();
         if (storage.contactsExist()) {
             storage.displayContacts();
             consoleIO.display("Please select a contact to update");
@@ -86,5 +87,10 @@ public class ContactManager {
             int index = this.consoleIO.getNumberInput();
             storage.deleteContact(index - 1);
         }
+    }
+
+    public void displayContacts() {
+        consoleIO.clearScreen();
+        storage.displayContacts();
     }
 }
