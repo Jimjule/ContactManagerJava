@@ -30,9 +30,6 @@ public class ContactManagerTest {
         contactManager.storage = contactList;
         contactManager.newContact();
         assertEquals(true, contactList.newContactHasBeenCalled);
-        assertEquals(true, consoleIO.getBooleanHasBeenCalled);
-        assertEquals(true, consoleIO.getStringInputHasBeenCalled);
-        assertEquals(true, consoleIO.getInputHasBeenCalled);
     }
 
     @Test
@@ -41,10 +38,6 @@ public class ContactManagerTest {
         contactManager.newContact();
         contactManager.updateContact();
         assertEquals(true, contactList.updateContactHasBeenCalled);
-        assertEquals(true, contactList.updateFieldsHasBeenCalled);
-        assertEquals(true, consoleIO.getNumberInputHasBeenCalled);
-        assertEquals(true, consoleIO.getStringInputHasBeenCalled);
-        assertEquals(true, consoleIO.getInputHasBeenCalled);
     }
 
     @Test
@@ -53,7 +46,6 @@ public class ContactManagerTest {
         contactManager.newContact();
         contactManager.deleteContact();
         assertEquals(true, contactList.deleteContactHasBeenCalled);
-        assertEquals(true, consoleIO.getNumberInputHasBeenCalled);
     }
 
     @Test
@@ -61,6 +53,5 @@ public class ContactManagerTest {
         contactManager.storage = contactList;
         contactManager.displayContacts();
         assertEquals(true, contactList.displayContactsHasBeenCalled);
-        assertEquals(true, contactList.contactsExistHasBeenCalled);
     }
 }
