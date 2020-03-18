@@ -29,15 +29,15 @@ public class ContactManagerTest {
     public void newContactGetsInputs() {
         contactManager.storage = contactList;
         contactManager.newContact();
-        assertEquals(true, contactList.newContactHasBeenCalled);
+        assertEquals(true, contactList.createContactHasBeenCalled);
     }
 
     @Test
-    public void updateCallsGetNumberInput() {
+    public void updateCallsStorageUpdate() {
         contactManager.storage = contactList;
         contactManager.newContact();
         contactManager.updateContact();
-        assertEquals(true, contactList.updateContactHasBeenCalled);
+        assertTrue(contactList.updateContactHasBeenCalled);
     }
 
     @Test

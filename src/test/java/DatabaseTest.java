@@ -3,46 +3,30 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class DatabaseTest {
 
-    DatabaseSpy database;
+    Database database;
+    Contact contact;
 
     @Before
     public void setUp() {
-       ArrayList arrayList = new ArrayList();
        String testString = "Testing";
        InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
        ConsoleIOSpy consoleIO = new ConsoleIOSpy(fixedInput, System.out);
 
-        database = new DatabaseSpy(arrayList, consoleIO);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        database = new Database(consoleIO);
     }
 
     @Test
     public void createsNewContact() {
-        database.newContact("First1", "Last2", "Addressing", "77787", "01/02/1934", "me@place.org");
-        assertTrue(database.fetchNewConnectionSuccessful);
-        assertEquals("First1", database.fetchNewFirstName);
-        assertEquals("Last2", database.fetchNewLastName);
-        assertEquals("Addressing", database.fetchNewAddress);
-        assertEquals("77787", database.fetchNewPhoneNumber);
-        assertEquals("01/02/1934", database.fetchNewDOB);
-        assertEquals("me@place.org", database.fetchNewEmail);
+        database.createContact(contact);
+
     }
 
     @Test
     public void updateContact() {
         database.updateContact("1","Update First", "Change Last", "Change of Address", "5550123", "30/12/2015", "much@improved.email");
-        assertTrue(database.fetchUpdateConnectionSuccessful);
-        assertEquals("1", database.fetchUpdateID);
-        assertEquals("Update First", database.fetchUpdateFirstName);
-        assertEquals("Change Last", database.fetchUpdateLastName);
-        assertEquals("Change of Address", database.fetchUpdateAddress);
-        assertEquals("5550123", database.fetchUpdatePhoneNumber);
-        assertEquals("30/12/2015", database.fetchUpdateDOB);
-        assertEquals("much@improved.email", database.fetchUpdateEmail);
     }
 }

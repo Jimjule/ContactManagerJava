@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class ContactList extends ArrayList<Contact> {
+public class ContactList implements Storage {
 
     private ArrayList contactArray;
     private ConsoleIO consoleIO;
@@ -10,9 +10,18 @@ public class ContactList extends ArrayList<Contact> {
         this.consoleIO = consoleIO;
     }
 
-    public void newContact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
-        Contact contact = new Contact(firstName, lastName, address, phoneNumber, dOB, email);
+    public void createContact(Contact contact) {
         contactArray.add(contact);
+    }
+
+    @Override
+    public void showContact(int index) {
+
+    }
+
+    @Override
+    public void showContacts() {
+
     }
 
     public boolean contactsExist() {

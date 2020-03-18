@@ -11,6 +11,7 @@ public class ContactListTest {
 
     ContactList contactList;
     ConsoleIOSpy consoleIO;
+    Contact contact;
 
     @Before
     public void setUp() {
@@ -18,12 +19,13 @@ public class ContactListTest {
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         consoleIO = new ConsoleIOSpy(fixedInput, System.out);
         ArrayList arrayList = new ArrayList<Contact>();
-        contactList = new ContactListSpy(arrayList, consoleIO);
+        contactList = new ContactList(arrayList, consoleIO);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
     }
 
     @Test
     public void savesNewContact() {
-        contactList.newContact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contactList.createContact(contact);
         assertTrue(contactList.contactsExist());
     }
 
@@ -35,7 +37,7 @@ public class ContactListTest {
 
     @Test
     public void deletesNewContact() {
-        contactList.newContact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contactList.createContact(contact);
         contactList.deleteContact(0);
         assertEquals(false, contactList.contactsExist());
     }
