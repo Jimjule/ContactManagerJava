@@ -7,12 +7,15 @@ public class Database implements Storage {
 
     ConsoleIO consoleIO;
     Connection connection;
+    Statement statement;
+    String dbName;
 
-    public Database(ConsoleIO consoleIO) {
+    public Database(ConsoleIO consoleIO, String databaseConnection, String dbName) {
         this.consoleIO = consoleIO;
+        this.dbName = dbName;
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
+            connection = DriverManager.getConnection(databaseConnection, "postgres", "contactManager1");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -20,16 +23,14 @@ public class Database implements Storage {
 
     @Override
     public void createContact(Contact contact) {
-        Statement statement;
         try {
             if (connection != null) {
                 statement = connection.createStatement();
-                String sql = "INSERT INTO contactmanagerdb VALUES(DEFAULT, '" +
+                String sql = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
                         contact.getFieldValue(1) + "', '" + contact.getFieldValue(2) + "', '" + contact.getFieldValue(3) + "', '" + contact.getFieldValue(4) + "', '" + contact.getFieldValue(5) + "', '" + contact.getFieldValue(6) +
                         "');";
                 statement.execute(sql);
                 statement.close();
-                connection.close();
             }
         } catch (SQLException e) {
             consoleIO.clearScreen();

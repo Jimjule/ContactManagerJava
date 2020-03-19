@@ -11,12 +11,12 @@ public class DatabaseSpy extends Database implements Storage {
     ConsoleIO consoleIO;
     Connection connection;
 
-    public DatabaseSpy (ConsoleIO consoleIO) {
-        super(consoleIO);
+    public DatabaseSpy (ConsoleIO consoleIO, String database, String dbName) {
+        super(consoleIO, Constants.testContactManagerDB, Constants.testDBName);
         this.consoleIO = consoleIO;
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/contactmanagerdb", "postgres", "contactManager1");
+            connection = DriverManager.getConnection(database, "postgres", "contactManager1");
         } catch (Exception e) {
             e.printStackTrace();
         }

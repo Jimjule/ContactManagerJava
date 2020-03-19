@@ -16,4 +16,13 @@ public final class Constants {
             "4. Phone number \n" +
             "5. DOB\n" +
             "6. Email";
+
+    public static final String prodContactManagerDB = "jdbc:postgresql://localhost:5432/contactmanagerdb";
+
+    public static final String testContactManagerDB = "jdbc:postgresql://localhost:5432/testContactManager";
+
+    public static final String prodDBName = "contactmanagerdb";
+
+    public static final String testDBName = "testContactManager";
+
 }
