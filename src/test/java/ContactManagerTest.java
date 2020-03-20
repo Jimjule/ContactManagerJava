@@ -2,10 +2,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ContactManagerTest {
 
@@ -13,12 +15,13 @@ public class ContactManagerTest {
     ContactListSpy contactList;
     ConsoleIOSpy consoleIO;
     DatabaseSpy database;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
-        consoleIO = new ConsoleIOSpy(fixedInput, System.out);
+        consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList arrayList = new ArrayList<Contact>();
         contactList = new ContactListSpy(arrayList, consoleIO);
 

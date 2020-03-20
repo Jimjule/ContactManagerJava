@@ -21,8 +21,6 @@ public final class Constants {
 
     public static final String testContactManagerDB = "jdbc:postgresql://localhost:5432/testContactManager";
 
-    public static final String prodDBName = "contactmanagerdb";
-
-    public static final String testDBName = "testContactManager";
+    public static final String DBName = "contactmanagerdb";
 
 }

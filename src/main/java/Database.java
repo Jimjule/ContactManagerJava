@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Database implements Storage {
 
@@ -24,14 +21,12 @@ public class Database implements Storage {
     @Override
     public void createContact(Contact contact) {
         try {
-            if (connection != null) {
-                statement = connection.createStatement();
-                String sql = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
-                        contact.getFieldValue(1) + "', '" + contact.getFieldValue(2) + "', '" + contact.getFieldValue(3) + "', '" + contact.getFieldValue(4) + "', '" + contact.getFieldValue(5) + "', '" + contact.getFieldValue(6) +
-                        "');";
-                statement.execute(sql);
-                statement.close();
-            }
+            statement = connection.createStatement();
+            String sql = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
+                    contact.getFieldValue(1) + "', '" + contact.getFieldValue(2) + "', '" + contact.getFieldValue(3) + "', '" + contact.getFieldValue(4) + "', '" + contact.getFieldValue(5) + "', '" + contact.getFieldValue(6) +
+                    "');";
+            statement.execute(sql);
+            statement.close();
         } catch (SQLException e) {
             consoleIO.clearScreen();
             consoleIO.display("Invalid data, please try again");
@@ -57,8 +52,23 @@ public class Database implements Storage {
     }
 
     @Override
-    public void showContact(int index) {
-
+    public Contact getContact(int index) throws SQLException {
+        Contact contact;
+            statement = connection.createStatement();
+            String getAtIndex = "SELECT * FROM " + dbName + " WHERE id = " + index + ";";
+            ResultSet setContact = statement.executeQuery(getAtIndex);
+            setContact.next();
+            contact = new Contact(
+                    setContact.getString("first_name"),
+                    setContact.getString("last_name"),
+                    setContact.getString("address"),
+                    setContact.getString("phone_number"),
+                    setContact.getString("dob"),
+                    setContact.getString("email"),
+                    consoleIO
+            );
+        statement.close();
+        return contact;
     }
 
     @Override

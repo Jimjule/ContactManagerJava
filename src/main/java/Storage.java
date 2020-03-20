@@ -6,7 +6,7 @@ public interface Storage {
 
     void updateContact();
 
-    void showContact(int index);
+    Contact getContact(int index) throws Exception;
 
     void showContacts();
 

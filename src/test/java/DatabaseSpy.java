@@ -3,7 +3,7 @@ import java.sql.DriverManager;
 
 public class DatabaseSpy extends Database implements Storage {
 
-    public boolean displayContactsHasBeenCalled;
+    public boolean getContactHasBeenCalled;
     public boolean newContactHasBeenCalled;
     public boolean updateContactHasBeenCalled;
     public boolean deleteContactHasBeenCalled;
@@ -12,7 +12,7 @@ public class DatabaseSpy extends Database implements Storage {
     Connection connection;
 
     public DatabaseSpy (ConsoleIO consoleIO, String database, String dbName) {
-        super(consoleIO, Constants.testContactManagerDB, Constants.testDBName);
+        super(consoleIO, Constants.testContactManagerDB, Constants.DBName);
         this.consoleIO = consoleIO;
         try {
             Class.forName("org.postgresql.Driver");
@@ -37,17 +37,12 @@ public class DatabaseSpy extends Database implements Storage {
 
     }
 
-    @Override
-    public void showContact(int index) {
-
-    }
-
     public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
         updateContactHasBeenCalled = true;
     }
 
-    public void showContacts() {
-        displayContactsHasBeenCalled = true;
+    public void getContact() {
+        getContactHasBeenCalled = true;
     }
 
     public boolean contactsExist() {

@@ -26,7 +26,4 @@
 
 ## Changelog
 
-- More ContactManager testing
-- Refactor screen clearing placement
-- Refactor displayContacts method in ContactManager to be testable
-- DB catch message if bad data input
+- Tests DB create contact and get contact

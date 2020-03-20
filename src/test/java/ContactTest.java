@@ -1,14 +1,24 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
 import static org.junit.Assert.assertEquals;
 
 public class ContactTest {
 
     Contact contact;
+    ConsoleIO consoleIO;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
     public void initialize() {
-        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        String testString = "Testing";
+        InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
+        consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
     }
 
     @Test

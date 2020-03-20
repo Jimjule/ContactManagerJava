@@ -15,11 +15,6 @@ public class ContactList implements Storage {
     }
 
     @Override
-    public void showContact(int index) {
-
-    }
-
-    @Override
     public void showContacts() {
 
     }
@@ -37,19 +32,9 @@ public class ContactList implements Storage {
         if (contactsExist()) {
             for (int i = 0; i < contactArray.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                printContactDetails((Contact) contactArray.get(i));
+                ((Contact) contactArray.get(i)).printContactDetails();
             }
         }
-    }
-
-    public void printContactDetails(Contact contact) {
-        consoleIO.display(Contact.getFieldName(1) + ": " + contact.getFieldValue(1) + "\n" +
-                Contact.getFieldName(2) + ": " + contact.getFieldValue(2) + "\n" +
-                Contact.getFieldName(3) + ": " + contact.getFieldValue(3) + "\n" +
-                Contact.getFieldName(4) + ": " + contact.getFieldValue(4) + "\n" +
-                Contact.getFieldName(5) + ": " + contact.getFieldValue(5) + "\n" +
-                Contact.getFieldName(6) + ": " + contact.getFieldValue(6)
-        );
     }
 
     public void updateContact() {
@@ -60,6 +45,12 @@ public class ContactList implements Storage {
         } catch (Exception e) {
             consoleIO.display("No such contact");
         }
+    }
+
+    @Override
+    public Contact getContact(int index) throws Exception {
+        Contact contact = null;
+        return contact;
     }
 
     private void updateContactFields(Contact contact) {

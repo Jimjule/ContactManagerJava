@@ -50,12 +50,26 @@ public class ContactManager {
                     displayContacts();
                     break;
                 }
+                case 5: {
+                    getContact();
+                    break;
+                }
                 default:
                     complete = true;
                     break;
             }
         }
         consoleIO.clearScreen();
+    }
+
+    public void getContact() {
+        int id = consoleIO.getNumberInput();
+        try {
+            storage.getContact(id);
+        } catch (Exception e) {
+            consoleIO.display("No such contact: ID = " + id);
+            e.printStackTrace();
+        }
     }
 
     public void newContact() {
@@ -65,8 +79,9 @@ public class ContactManager {
                 consoleIO.getStringInput(2, Contact.getFieldName(2)),
                 consoleIO.getStringInput(3, Contact.getFieldName(3)),
                 consoleIO.getStringInput(4, Contact.getFieldName(4)),
-                consoleIO.getStringInput(5, Contact.getFieldName(5)) ,
-                consoleIO.getStringInput(6, Contact.getFieldName(6))
+                consoleIO.getStringInput(5, Contact.getFieldName(5)),
+                consoleIO.getStringInput(6, Contact.getFieldName(6)),
+                consoleIO
         );
         storage.createContact(contact);
     }

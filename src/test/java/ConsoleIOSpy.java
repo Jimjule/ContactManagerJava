@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 public class ConsoleIOSpy extends ConsoleIO {
 
     public final PrintStream printer;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
     public boolean getInputHasBeenCalled = false;
     public boolean getNumberInputHasBeenCalled = false;
     public boolean getStringInputHasBeenCalled = false;
@@ -14,7 +16,7 @@ public class ConsoleIOSpy extends ConsoleIO {
     public ConsoleIOSpy(InputStream input, OutputStream output) {
         super(input, output);
         BufferedReader bufferedReader = org.mockito.Mockito.mock(BufferedReader.class);
-        this.printer = new PrintStream(output);
+        this.printer = new PrintStream(outputStream);
         try {
             when(bufferedReader.readLine()).thenReturn("Firstname").thenReturn("Lastname").thenReturn("Address").thenReturn("012345").thenReturn("01/02/1934").thenReturn("test@place.org");
         } catch (IOException e) {

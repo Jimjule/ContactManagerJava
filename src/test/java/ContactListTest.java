@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -12,15 +13,16 @@ public class ContactListTest {
     ContactList contactList;
     ConsoleIOSpy consoleIO;
     Contact contact;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
-        consoleIO = new ConsoleIOSpy(fixedInput, System.out);
+        consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList arrayList = new ArrayList<Contact>();
         contactList = new ContactList(arrayList, consoleIO);
-        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
     }
 
     @Test
