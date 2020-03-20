@@ -44,14 +44,32 @@ public class DatabaseTest {
     @Test
     public void createsNewContact() throws SQLException {
         database.createContact(contact);
-        String sql = "SELECT count(*) FROM contactmanagerdb";
-        ResultSet set = statement.executeQuery(sql);
-        set.next();
-        assertEquals(1, set.getRow());
+        database.createContact(updateContact);
+        String getCount = "SELECT * FROM contactmanagerdb";
+        ResultSet countAll = statement.executeQuery(getCount);
+        countAll.next();
+        assertEquals(1, countAll.getRow());
     }
 
     @Test
-    public void testShowContact() throws Exception {
+    public void deletesContact() throws SQLException {
+        database.createContact(contact);
+
+        String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = 'Jamey'";
+        ResultSet set = statement.executeQuery(getCreatedContactID);
+        set.next();
+        int contactID = Integer.parseInt(set.getString(1));
+
+        database.deleteContact(contactID);
+
+        String getCount = "SELECT * FROM contactmanagerdb";
+        ResultSet countAll = statement.executeQuery(getCount);
+        countAll.next();
+        assertEquals(0, countAll.getRow());
+    }
+
+    @Test
+    public void showContact() throws Exception {
         database.createContact(contact);
 
         String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = 'Jamey'";
@@ -72,7 +90,7 @@ public class DatabaseTest {
     }
 
     @Test(expected = PSQLException.class)
-    public void testShowContactFails() throws SQLException {
+    public void showContactFails() throws SQLException {
         database.createContact(contact);
 
         String getHighestID = "SELECT id FROM contactmanagerdb ORDER BY id DESC LIMIT 1";

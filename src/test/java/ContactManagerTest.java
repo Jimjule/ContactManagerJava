@@ -57,4 +57,11 @@ public class ContactManagerTest {
         contactManager.displayContacts();
         assertEquals(true, contactList.displayContactsHasBeenCalled);
     }
+
+    @Test
+    public void getContact() {
+        contactManager.storage = contactList;
+        contactManager.getContact();
+        assertEquals(true, contactList.getContactHasBeenCalled);
+    }
 }

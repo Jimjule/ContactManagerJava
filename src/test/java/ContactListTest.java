@@ -38,6 +38,13 @@ public class ContactListTest {
     }
 
     @Test
+    public void testGetContact() {
+        contactList.createContact(contact);
+        Contact retrievedContact = contactList.getContact(1);
+        assertTrue(contact.equals(retrievedContact));
+    }
+
+    @Test
     public void deletesNewContact() {
         contactList.createContact(contact);
         contactList.deleteContact(0);

@@ -1,3 +1,5 @@
+import java.sql.SQLException;
+
 public class ContactManager {
 
     private ConsoleIO consoleIO;
@@ -6,17 +8,22 @@ public class ContactManager {
     public Storage storage;
 
     public ContactManager(ConsoleIO consoleIO, ContactList contactList, Database database) {
-       this.consoleIO = consoleIO;
-       this.database = database;
-       this.contactList = contactList;
-       this.storage = selectStorageDestination();
+        this.consoleIO = consoleIO;
+        this.database = database;
+        this.contactList = contactList;
+        this.storage = selectStorageDestination();
     }
 
     public Storage selectStorageDestination() {
         consoleIO.clearScreen();
+        consoleIO.display("Welcome to Contact Manager");
         consoleIO.display("Would you like to save to the database? (y/N)");
-        boolean useDatabase = consoleIO.getBoolean();
         consoleIO.clearScreen();
+        return getStorage();
+    }
+
+    public Storage getStorage() {
+        boolean useDatabase = consoleIO.getBoolean();
         if(useDatabase == true) {
             return database;
         } else {
@@ -63,12 +70,14 @@ public class ContactManager {
     }
 
     public void getContact() {
+        consoleIO.display("Please enter an id to search");
         int id = consoleIO.getNumberInput();
         try {
-            storage.getContact(id);
+            Contact contact = storage.getContact(id);
+            contact.printContactDetails();
         } catch (Exception e) {
+            consoleIO.clearScreen();
             consoleIO.display("No such contact: ID = " + id);
-            e.printStackTrace();
         }
     }
 
@@ -100,8 +109,13 @@ public class ContactManager {
         if (storage.contactsExist()) {
             storage.showContacts();
             consoleIO.display("Please select a contact");
-            int index = this.consoleIO.getNumberInput();
-            storage.deleteContact(index - 1);
+            int id = this.consoleIO.getNumberInput();
+            try {
+                storage.deleteContact(id - 1);
+            } catch (SQLException e) {
+                consoleIO.clearScreen();
+                consoleIO.display("No such contact: ID = " + id);
+            }
         }
     }
 

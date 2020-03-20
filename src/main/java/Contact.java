@@ -63,12 +63,14 @@ public class Contact {
     }
 
     public void printContactDetails() {
-        consoleIO.display(Contact.getFieldName(1) + ": " + getFieldValue(1) + "\n" +
+        consoleIO.display("-----\n" +
+                Contact.getFieldName(1) + ": " + getFieldValue(1) + "\n" +
                 Contact.getFieldName(2) + ": " + getFieldValue(2) + "\n" +
                 Contact.getFieldName(3) + ": " + getFieldValue(3) + "\n" +
                 Contact.getFieldName(4) + ": " + getFieldValue(4) + "\n" +
                 Contact.getFieldName(5) + ": " + getFieldValue(5) + "\n" +
-                Contact.getFieldName(6) + ": " + getFieldValue(6)
+                Contact.getFieldName(6) + ": " + getFieldValue(6) + "\n" +
+                "-----\n"
         );
     }
 

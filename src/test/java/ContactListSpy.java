@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class ContactListSpy extends ContactList {
+public class ContactListSpy extends ContactList implements Storage {
 
     private ArrayList contactArray;
     private ConsoleIO consoleIO;
@@ -9,7 +9,8 @@ public class ContactListSpy extends ContactList {
     public boolean createContactHasBeenCalled = false;
     public boolean updateContactHasBeenCalled = false;
     public boolean deleteContactHasBeenCalled = false;
-    public boolean contactsExistHasBeenCalled;
+    public boolean contactsExistHasBeenCalled = false;
+    public boolean getContactHasBeenCalled = false;
 
     public ContactListSpy(ArrayList contactArray, ConsoleIO consoleIO) {
         super(contactArray, consoleIO);
@@ -42,4 +43,8 @@ public class ContactListSpy extends ContactList {
         this.deleteContactHasBeenCalled = true;
     }
 
+    public Contact getContact(int index) {
+        this.getContactHasBeenCalled = true;
+        return null;
+    }
 }

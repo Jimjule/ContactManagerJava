@@ -48,8 +48,8 @@ public class ContactList implements Storage {
     }
 
     @Override
-    public Contact getContact(int index) throws Exception {
-        Contact contact = null;
+    public Contact getContact(int index) throws IndexOutOfBoundsException {
+        Contact contact = (Contact) contactArray.get(index - 1);
         return contact;
     }
 

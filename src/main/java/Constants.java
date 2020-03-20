@@ -2,13 +2,13 @@ public final class Constants {
 
     private Constants() {}
 
-    public static final String menuOptions = "Welcome to Contact Manager\n" +
-            "Please select an option:\n" +
+    public static final String menuOptions = "Please select an option:\n" +
             "1. New Contact\n" +
             "2. Update Contact\n" +
             "3. Delete Contact\n" +
             "4. View Contacts\n" +
-            "5. Exit";
+            "5. Get Contact\n" +
+            "6. Exit";
     public static final String updateFields = "Select a field to update:\n" +
             "1. First name\n" +
             "2. Last name\n" +

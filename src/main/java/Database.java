@@ -22,10 +22,10 @@ public class Database implements Storage {
     public void createContact(Contact contact) {
         try {
             statement = connection.createStatement();
-            String sql = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
+            String addContact = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
                     contact.getFieldValue(1) + "', '" + contact.getFieldValue(2) + "', '" + contact.getFieldValue(3) + "', '" + contact.getFieldValue(4) + "', '" + contact.getFieldValue(5) + "', '" + contact.getFieldValue(6) +
                     "');";
-            statement.execute(sql);
+            statement.execute(addContact);
             statement.close();
         } catch (SQLException e) {
             consoleIO.clearScreen();
@@ -34,16 +34,16 @@ public class Database implements Storage {
     }
 
     public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
-        if (connection != null) {
-           this.consoleIO.display("Not yet implemented for DB");
-        }
+        this.consoleIO.display("Not yet implemented for DB");
     }
 
     @Override
-    public void deleteContact(int index) {
-        consoleIO.clearScreen();
-        consoleIO.display("Not yet implemented for DB");
-
+    public void deleteContact(int index) throws SQLException {
+        statement = connection.createStatement();
+        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = " + index + ";";
+        statement.execute(deleteAtIndex);
+        statement.close();
+        consoleIO.display("Contact Deleted");
     }
 
     @Override

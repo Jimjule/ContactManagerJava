@@ -26,4 +26,6 @@
 
 ## Changelog
 
-- Tests DB create contact and get contact
+- Adds delete functionality fo DB storage
+- Adds getContact to ContactManager class
+

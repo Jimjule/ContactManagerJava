@@ -1,8 +1,10 @@
+import java.sql.SQLException;
+
 public interface Storage {
 
     void createContact(Contact contact);
 
-    void deleteContact(int index);
+    void deleteContact(int index) throws SQLException;
 
     void updateContact();
 
