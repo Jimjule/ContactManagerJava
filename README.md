@@ -17,8 +17,8 @@
 
 ## Running
 
-- Type gradle clean build or ./gradlew clean build to compile.
-- Type gradle --console plain run or ./gradlew --console plain run to run the game. 
+- Type `gradle clean build` or `./gradlew clean build` to compile.
+- Type `gradle --console plain run` or `./gradlew --console plain run` to run the game. 
 
 ## Contributing
 
@@ -26,5 +26,7 @@
 
 ## Changelog
 
-- Adds Constant class
-- Options strings now constants
+- More ContactManager testing
+- Refactor screen clearing placement
+- Refactor displayContacts method in ContactManager to be testable
+- DB catch message if bad data input

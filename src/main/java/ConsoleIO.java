@@ -3,7 +3,7 @@ import java.io.*;
 public class ConsoleIO {
 
     private final BufferedReader reader;
-    public final PrintStream printer;
+    private final PrintStream printer;
 
     public ConsoleIO(InputStream input, OutputStream output) {
         this.reader = new BufferedReader(new InputStreamReader(input));
@@ -48,5 +48,21 @@ public class ConsoleIO {
     public void clearScreen() {
         display("\033[H\033[2J");
         printer.flush();
+    }
+
+    public boolean getBoolean() {
+        String userInput;
+        try {
+            userInput = reader.readLine();
+            if (userInput.equals("y")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            userInput = "error";
+        }
+        return userInput == "y";
     }
 }

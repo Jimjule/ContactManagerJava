@@ -1,5 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -7,27 +10,48 @@ import static org.junit.Assert.*;
 public class ContactManagerTest {
 
     ContactManager contactManager;
-    ArrayList<Contact> contactList;
-    ConsoleIO consoleIO;
-    Contact contact;
+    ContactListSpy contactList;
+    ConsoleIOSpy consoleIO;
+    DatabaseSpy database;
 
     @Before
-    public void initialize() {
-        contactList = new ArrayList<>();
-        contactManager = new ContactManager(consoleIO, contactList);
-        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
-        this.contactList.add(contact);
+    public void setUp() {
+        String testString = "Testing";
+        InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
+        consoleIO = new ConsoleIOSpy(fixedInput, System.out);
+        ArrayList arrayList = new ArrayList<Contact>();
+        contactList = new ContactListSpy(arrayList, consoleIO);
+
+        contactManager = new ContactManager(consoleIO, contactList, database);
     }
 
     @Test
-    public void canReadNewContact() {
-        assertEquals("email@email.com", contact.getFieldValue(6));
+    public void newContactGetsInputs() {
+        contactManager.storage = contactList;
+        contactManager.newContact();
+        assertEquals(true, contactList.newContactHasBeenCalled);
     }
 
     @Test
-    public void canDeleteNewContact() {
-        this.contactList.remove(0);
-        assertTrue(this.contactList.size() == 0);
+    public void updateCallsGetNumberInput() {
+        contactManager.storage = contactList;
+        contactManager.newContact();
+        contactManager.updateContact();
+        assertEquals(true, contactList.updateContactHasBeenCalled);
     }
 
+    @Test
+    public void deleteAsksForNumberInput() {
+        contactManager.storage = contactList;
+        contactManager.newContact();
+        contactManager.deleteContact();
+        assertEquals(true, contactList.deleteContactHasBeenCalled);
+    }
+
+    @Test
+    public void viewContactsCallsCorrectMethods() {
+        contactManager.storage = contactList;
+        contactManager.displayContacts();
+        assertEquals(true, contactList.displayContactsHasBeenCalled);
+    }
 }

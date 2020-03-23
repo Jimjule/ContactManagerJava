@@ -1,13 +1,27 @@
-import java.util.ArrayList;
-
 public class ContactManager {
 
     private ConsoleIO consoleIO;
-    private ArrayList<Contact> contactList;
+    private ContactList contactList;
+    private Database database;
+    public ContactList storage;
 
-    public ContactManager(ConsoleIO consoleIO, ArrayList<Contact> contactList) {
+    public ContactManager(ConsoleIO consoleIO, ContactList contactList, Database database) {
        this.consoleIO = consoleIO;
+       this.database = database;
        this.contactList = contactList;
+       this.storage = selectStorageDestination();
+    }
+
+    public ContactList selectStorageDestination() {
+        consoleIO.clearScreen();
+        consoleIO.display("Would you like to save to the database? (y/N)");
+        boolean useDatabase = consoleIO.getBoolean();
+        consoleIO.clearScreen();
+        if(useDatabase == true) {
+            return database;
+        } else {
+            return contactList;
+        }
     }
 
     public void printMenuOptions() {
@@ -46,95 +60,37 @@ public class ContactManager {
 
     public void newContact() {
         consoleIO.clearScreen();
-        Contact contact = new Contact(
+        storage.newContact(
                 consoleIO.getStringInput(1, Contact.getFieldName(1)),
                 consoleIO.getStringInput(2, Contact.getFieldName(2)),
                 consoleIO.getStringInput(3, Contact.getFieldName(3)),
                 consoleIO.getStringInput(4, Contact.getFieldName(4)),
                 consoleIO.getStringInput(5, Contact.getFieldName(5)) ,
-                consoleIO.getStringInput(6, Contact.getFieldName(6)
-                ));
-        contactList.add(contact);
-        consoleIO.clearScreen();
+                consoleIO.getStringInput(6, Contact.getFieldName(6))
+        );
     }
 
     public void updateContact() {
-        if (contactsExist()) {
-            displayContacts();
+        consoleIO.clearScreen();
+        if (storage.contactsExist()) {
+            storage.displayContacts();
             consoleIO.display("Please select a contact to update");
-            try {
-                int contactNumber = consoleIO.getNumberInput();
-                Contact contact = contactList.get((contactNumber) - 1);
-                updateContactFields(contact);
-            } catch (Exception e) {
-                consoleIO.clearScreen();
-                consoleIO.display("No such contact");
-            }
+            storage.updateContact();
         }
     }
 
-    public void updateContactFields(Contact contact) {
+    public void deleteContact() {
         consoleIO.clearScreen();
-        consoleIO.display(Constants.updateFields);
-
-        int field = consoleIO.getNumberInput();
-        consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
-        String input = consoleIO.getStringInput(field, Contact.getFieldName(field));
-        contact.updateField(input, field);
-
-        consoleIO.clearScreen();
-    }
-
-    public boolean contactsExist() {
-        consoleIO.clearScreen();
-        if (contactList.size() == 0) {
-            consoleIO.display("There are no contacts yet");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private void deleteContact() {
-        if (contactsExist()) {
-            displayContacts();
+        if (storage.contactsExist()) {
+            storage.displayContacts();
             consoleIO.display("Please select a contact");
-            deleteSelectedContact();
+            int index = this.consoleIO.getNumberInput();
+            storage.deleteContact(index - 1);
         }
-    }
-
-    public void deleteSelectedContact() {
-        int index = this.consoleIO.getNumberInput();
-        consoleIO.clearScreen();
-        try {
-            this.contactList.remove(index - 1);
-            consoleIO.display("Contact deleted");
-        } catch (Exception e) {
-            consoleIO.display("No such contact");
-        }
-    }
-
-    public void printContactDetails(Contact contact) {
-        consoleIO.display(Contact.getFieldName(1) + ": " + contact.getFieldValue(1) + "\n" +
-                Contact.getFieldName(2) + ": " + contact.getFieldValue(2) + "\n" +
-                Contact.getFieldName(3) + ": " + contact.getFieldValue(3) + "\n" +
-                Contact.getFieldName(4) + ": " + contact.getFieldValue(4) + "\n" +
-                Contact.getFieldName(5) + ": " + contact.getFieldValue(5) + "\n" +
-                Contact.getFieldName(6) + ": " + contact.getFieldValue(6)
-                );
     }
 
     public void displayContacts() {
         consoleIO.clearScreen();
-        if (contactsExist()) {
-            displayContactsLoop();
-        }
-    }
-
-    public void displayContactsLoop() {
-        for (int i = 0; i < contactList.size(); i++) {
-            consoleIO.display(String.valueOf(i + 1));
-            printContactDetails(contactList.get(i));
-        }
+        storage.displayContacts();
     }
 }
