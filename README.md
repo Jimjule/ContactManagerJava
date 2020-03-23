@@ -26,6 +26,7 @@
 
 ## Changelog
 
-- Adds delete functionality fo DB storage
-- Adds getContact to ContactManager class
+- Removes unused methods in ContactList
+- Cleans up use of clear method 
+- Validation called from Contact, not ConsoleIO
 

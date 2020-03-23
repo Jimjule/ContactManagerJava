@@ -32,12 +32,6 @@ public class ContactListTest {
     }
 
     @Test
-    public void updateCallsGetNumberInput() {
-        contactList.updateContact();
-        assertTrue(consoleIO.getNumberInputHasBeenCalled);
-    }
-
-    @Test
     public void testGetContact() {
         contactList.createContact(contact);
         Contact retrievedContact = contactList.getContact(1);

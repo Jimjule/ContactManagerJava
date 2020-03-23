@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsoleIOTest {
 
-    ConsoleIO consoleFixString;
     ConsoleIO consoleFixNumber;
     ConsoleIO consoleFixBoolean;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -16,16 +15,8 @@ public class ConsoleIOTest {
     @Test
     public void getStringInputCallsGetInput() {
         ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(System.in, outputStream);
-        consoleIOSpy.getStringInput(1, "first name");
+        consoleIOSpy.getInput("first name");
         assertEquals(true, consoleIOSpy.getInputHasBeenCalled);
-    }
-
-    @Test
-    public void getStringInputReturnsInput() {
-        String fixedString = "Fixed";
-        InputStream fixedInputString = new ByteArrayInputStream(fixedString.getBytes());
-        consoleFixString = new ConsoleIO(fixedInputString, outputStream);
-        assertEquals("Fixed", consoleFixString.getStringInput(1, "first name"));
     }
 
     @Test

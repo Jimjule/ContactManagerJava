@@ -1,9 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -15,16 +13,20 @@ public class ContactManagerTest {
     ContactListSpy contactList;
     ConsoleIOSpy consoleIO;
     DatabaseSpy database;
+    Contact contact;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
+
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList arrayList = new ArrayList<Contact>();
         contactList = new ContactListSpy(arrayList, consoleIO);
 
+        contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email", consoleIO);
+        arrayList.add(contact);
         contactManager = new ContactManager(consoleIO, contactList, database);
     }
 
@@ -35,13 +37,6 @@ public class ContactManagerTest {
         assertEquals(true, contactList.createContactHasBeenCalled);
     }
 
-    @Test
-    public void updateCallsStorageUpdate() {
-        contactManager.storage = contactList;
-        contactManager.newContact();
-        contactManager.updateContact();
-        assertTrue(contactList.updateContactHasBeenCalled);
-    }
 
     @Test
     public void deleteAsksForNumberInput() {
@@ -49,6 +44,13 @@ public class ContactManagerTest {
         contactManager.newContact();
         contactManager.deleteContact();
         assertEquals(true, contactList.deleteContactHasBeenCalled);
+    }
+
+    @Test
+    public void updateCallsGetNumberInput() {
+        contactManager.storage = contactList;
+        contactManager.updateContact();
+        assertTrue(consoleIO.getNumberInputHasBeenCalled);
     }
 
     @Test

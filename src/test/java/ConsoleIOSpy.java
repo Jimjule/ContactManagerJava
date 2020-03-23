@@ -9,7 +9,6 @@ public class ConsoleIOSpy extends ConsoleIO {
 
     public boolean getInputHasBeenCalled = false;
     public boolean getNumberInputHasBeenCalled = false;
-    public boolean getStringInputHasBeenCalled = false;
     public boolean getBooleanHasBeenCalled = false;
 
 
@@ -26,17 +25,6 @@ public class ConsoleIOSpy extends ConsoleIO {
 
     public void display(String message) {
         printer.println(message);
-    }
-
-    public String getStringInput(int field, String fieldName) {
-        this.getStringInputHasBeenCalled = true;
-        Boolean validInput = false;
-        String userInput = null;
-        while (!validInput) {
-            userInput = getInput(fieldName);
-            validInput = ValidateInput.validateInput(field, userInput);
-        }
-        return userInput;
     }
 
     public int getNumberInput() {

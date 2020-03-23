@@ -27,22 +27,17 @@ public class DatabaseSpy extends Database implements Storage {
         this.newContactHasBeenCalled = true;
     }
 
-
     public void deleteContact(int index) {
         deleteContactHasBeenCalled = true;
     }
 
-    @Override
-    public void updateContact() {
-
-    }
-
-    public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
+    public void updateContact(Contact contact, int field, String input) {
         updateContactHasBeenCalled = true;
     }
 
-    public void getContact() {
+    public Contact getContact(int id) {
         getContactHasBeenCalled = true;
+        return null;
     }
 
     public boolean contactsExist() {

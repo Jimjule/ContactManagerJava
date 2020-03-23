@@ -74,6 +74,10 @@ public class Contact {
         );
     }
 
+    public static boolean validateInput(int field, String input) {
+        return ValidateInput.validateInput(field, input);
+    }
+
     private boolean notBlank(String value) {
         return !value.matches(String.valueOf(ValidateInput.blankString));
     }

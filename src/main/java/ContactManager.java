@@ -84,15 +84,25 @@ public class ContactManager {
     public void newContact() {
         consoleIO.clearScreen();
         Contact contact = new Contact(
-                consoleIO.getStringInput(1, Contact.getFieldName(1)),
-                consoleIO.getStringInput(2, Contact.getFieldName(2)),
-                consoleIO.getStringInput(3, Contact.getFieldName(3)),
-                consoleIO.getStringInput(4, Contact.getFieldName(4)),
-                consoleIO.getStringInput(5, Contact.getFieldName(5)),
-                consoleIO.getStringInput(6, Contact.getFieldName(6)),
+                getInputLoop(1, Contact.getFieldName(1)),
+                getInputLoop(2, Contact.getFieldName(2)),
+                getInputLoop(3, Contact.getFieldName(3)),
+                getInputLoop(4, Contact.getFieldName(4)),
+                getInputLoop(5, Contact.getFieldName(5)),
+                getInputLoop(6, Contact.getFieldName(6)),
                 consoleIO
         );
         storage.createContact(contact);
+    }
+
+    public String getInputLoop(int field, String fieldName) {
+        Boolean validInput = false;
+        String userInput = null;
+        while (!validInput) {
+            userInput = consoleIO.getInput(fieldName);
+            validInput = Contact.validateInput(field, userInput);
+        }
+        return userInput;
     }
 
     public void updateContact() {
@@ -100,8 +110,23 @@ public class ContactManager {
         if (storage.contactsExist()) {
             storage.showContacts();
             consoleIO.display("Please select a contact to update");
-            storage.updateContact();
+            int contactNumber = consoleIO.getNumberInput();
+
+            try {
+                Contact contact = storage.getContact(contactNumber);
+
+                consoleIO.display(Constants.updateFields);
+                int field = consoleIO.getNumberInput();
+
+                consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
+                String input = getInputLoop(field, Contact.getFieldName(field));
+
+                storage.updateContact(contact, field, input);
+            } catch (Exception e) {
+                consoleIO.display("No such contact");
+            }
         }
+        consoleIO.clearScreen();
     }
 
     public void deleteContact() {

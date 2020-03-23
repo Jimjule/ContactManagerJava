@@ -35,7 +35,7 @@ public class ContactListSpy extends ContactList implements Storage {
         this.printContactsDetailsHasBeenCalled = true;
     }
 
-    public void updateContact() {
+    public void updateContact(Contact contact, int field, String input) {
         this.updateContactHasBeenCalled = true;
     }
 

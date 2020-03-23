@@ -33,10 +33,6 @@ public class Database implements Storage {
         }
     }
 
-    public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
-        this.consoleIO.display("Not yet implemented for DB");
-    }
-
     @Override
     public void deleteContact(int index) throws SQLException {
         statement = connection.createStatement();
@@ -47,7 +43,7 @@ public class Database implements Storage {
     }
 
     @Override
-    public void updateContact() {
+    public void updateContact(Contact contact, int field, String input) {
 
     }
 
@@ -73,13 +69,10 @@ public class Database implements Storage {
 
     @Override
     public void showContacts() {
-        consoleIO.clearScreen();
         consoleIO.display("Not yet implemented for DB");
     }
 
     public boolean contactsExist() {
-        consoleIO.clearScreen();
-        consoleIO.display("Not yet implemented");
-        return false;
+        return true;
     }
 }
