@@ -48,7 +48,7 @@ public class ContactList implements Storage {
     public void deleteContact(int index) {
         consoleIO.clearScreen();
         try {
-            contactArray.remove(index);
+            contactArray.remove(index - 1);
             consoleIO.display("Contact deleted");
         } catch (Exception e) {
             consoleIO.display("No such contact");

@@ -41,7 +41,7 @@ public class ContactListTest {
     @Test
     public void deletesNewContact() {
         contactList.createContact(contact);
-        contactList.deleteContact(0);
+        contactList.deleteContact(1);
         assertEquals(false, contactList.contactsExist());
     }
 }

@@ -21,6 +21,17 @@ public class Database implements Storage {
         }
     }
 
+    public static String getDBColumnName(int field) {
+        switch (field) {
+            case 1: return "first_name";
+            case 2: return "last_name";
+            case 3: return "address";
+            case 4: return "phone_number";
+            case 5: return "dob";
+            default: return "email";
+        }
+    }
+
     @Override
     public void createContact(Contact contact) {
         try {
@@ -39,15 +50,21 @@ public class Database implements Storage {
     @Override
     public void deleteContact(int index) throws SQLException {
         statement = connection.createStatement();
-        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = " + index + ";";
+        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = (SELECT id FROM " + dbName + " OFFSET " + index + " LIMIT 1)";
         statement.execute(deleteAtIndex);
         statement.close();
         consoleIO.display("Contact Deleted");
     }
 
     @Override
-    public void updateContact(Contact contact, int field, String input) {
-
+    public void updateContact(Contact contact, int field, String input) throws SQLException {
+        if(Contact.validateInput(field, input)) {
+            statement = connection.createStatement();
+            String updateEntry = "UPDATE " + dbName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getFieldValue(6) + "';";
+            statement.execute(updateEntry);
+        } else {
+            consoleIO.display("Invalid input for this field.");
+        }
     }
 
     @Override
@@ -87,6 +104,7 @@ public class Database implements Storage {
             statement = connection.createStatement();
             String getAllContacts = "SELECT * FROM " + dbName + " ;";
             ResultSet allContacts = statement.executeQuery(getAllContacts);
+            contactArray.removeAll(contactArray);
             while(allContacts.next()) {
                 contact = new Contact(
                         allContacts.getString("first_name"),
@@ -99,7 +117,6 @@ public class Database implements Storage {
                 );
                 contactArray.add(contact);
             }
-            consoleIO.display("Not yet implemented for DB");
         } catch (SQLException e) {
             consoleIO.display("Can't display contacts");
         }

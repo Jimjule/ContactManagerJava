@@ -17,10 +17,13 @@ public class DatabaseTest {
 
     Database database;
     Contact contact;
-    Contact updateContact;
+    Contact secondContact;
     Connection connection;
     Statement statement;
     ArrayList<Contact> contactArray;
+
+    public static String defaultFirstName = "Jamey";
+
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
@@ -29,9 +32,10 @@ public class DatabaseTest {
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         ConsoleIOSpy consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
 
-        contactArray = new ArrayList<Contact>();
-        contact = new Contact("Jamey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
-        updateContact = new Contact("Update First", "Change Last", "Change of Address", "5550123", "30/12/2015", "much@improved.email", consoleIO);
+        contact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
+        secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com", consoleIO);
+
+        contactArray = new ArrayList<>();
         database = new Database(contactArray, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         connection = DriverManager.getConnection(Constants.testContactManagerDB, "postgres", "contactManager1");
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -47,7 +51,6 @@ public class DatabaseTest {
     @Test
     public void createsNewContact() throws SQLException {
         database.createContact(contact);
-        database.createContact(updateContact);
         String getCount = "SELECT * FROM contactmanagerdb";
         ResultSet countAll = statement.executeQuery(getCount);
         countAll.next();
@@ -55,17 +58,12 @@ public class DatabaseTest {
     }
 
     @Test
-    public void deletesContact() throws SQLException {
+    public void deletesContact() throws Exception {
         database.createContact(contact);
+        int contactID = getContactID(defaultFirstName);
+        database.deleteContact(0);
 
-        String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = 'Jamey'";
-        ResultSet set = statement.executeQuery(getCreatedContactID);
-        set.next();
-        int contactID = Integer.parseInt(set.getString(1));
-
-        database.deleteContact(contactID);
-
-        String getCount = "SELECT * FROM contactmanagerdb";
+        String getCount = "SELECT * FROM contactmanagerdb;";
         ResultSet countAll = statement.executeQuery(getCount);
         countAll.next();
         assertEquals(0, countAll.getRow());
@@ -75,10 +73,7 @@ public class DatabaseTest {
     public void getContact() throws Exception {
         database.createContact(contact);
 
-        String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = 'Jamey'";
-        ResultSet getID = statement.executeQuery(getCreatedContactID);
-        getID.next();
-        int contactID = Integer.parseInt(getID.getString(1));
+        int contactID = getContactID(defaultFirstName);
 
         String getContactByID = "SELECT * FROM contactmanagerdb WHERE id = " + contactID + ";";
         ResultSet setContact = statement.executeQuery(getContactByID);
@@ -95,12 +90,10 @@ public class DatabaseTest {
     @Test
     public void showContacts() {
         database.createContact(contact);
-        database.createContact(contact);
-        database.createContact(contact);
-        database.createContact(contact);
+        database.createContact(secondContact);
         database.showContacts();
         System.out.println(database.contactArray.size());
-        assertEquals(4, database.contactArray.size());
+        assertEquals(2, database.contactArray.size());
     }
 
     @Test(expected = PSQLException.class)
@@ -116,7 +109,26 @@ public class DatabaseTest {
     }
 
     @Test
-    public void updateContact() {
+    public void updateContact() throws Exception {
         database.createContact(contact);
+        database.updateContact(contact, 1, "Updatename");
+        Contact updatedContact = database.getContact(getContactID("Updatename"));
+        assertEquals("Updatename", updatedContact.getFieldValue(1));
+    }
+
+    @Test
+    public void updateContactFails() throws Exception {
+        database.createContact(contact);
+        database.updateContact(contact, 1, "lowercase");
+        Contact updatedContact = database.getContact(getContactID(defaultFirstName));
+        assertEquals(defaultFirstName, updatedContact.getFieldValue(1));
+    }
+
+    public int getContactID(String name) throws Exception {
+        String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = '"+ name + "'";
+        ResultSet getID = statement.executeQuery(getCreatedContactID);
+        getID.next();
+        int contactID = Integer.parseInt(getID.getString(1));
+        return contactID;
     }
 }

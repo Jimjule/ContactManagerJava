@@ -90,7 +90,7 @@ public class ContactTest {
 
     @Test
     public void emailValue() {
-        assertEquals(Contact.getFieldName(6), "Email");
+        assertEquals(Contact.getFieldName(6), "Unique Email Address");
 
     }
 }

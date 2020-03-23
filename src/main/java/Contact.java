@@ -14,7 +14,7 @@ public class Contact {
     public static final String AddressField = "Address";
     public static final String PhoneNumberField = "Phone Number (no spaces)";
     public static final String DOBField = "Date of Birth (dd/MM/yyyy)";
-    public static final String EmailField = "Email";
+    public static final String EmailField = "Unique Email Address";
 
     public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email, ConsoleIO consoleIO) {
         this.consoleIO = consoleIO;

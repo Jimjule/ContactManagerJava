@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Retrieves and displays all DB contacts
+- Implements update Contact for DB
 

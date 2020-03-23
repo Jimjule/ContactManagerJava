@@ -6,7 +6,7 @@ public interface Storage {
 
     void deleteContact(int index) throws SQLException;
 
-    void updateContact(Contact contact, int field, String input);
+    void updateContact(Contact contact, int field, String input) throws SQLException;
 
     Contact getContact(int index) throws Exception;
 

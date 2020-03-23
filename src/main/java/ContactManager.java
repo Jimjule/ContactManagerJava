@@ -133,13 +133,14 @@ public class ContactManager {
         consoleIO.clearScreen();
         if (storage.contactsExist()) {
             storage.showContacts();
-            consoleIO.display("Please select a contact");
-            int id = this.consoleIO.getNumberInput();
+            consoleIO.display("Please select a contact to delete");
+            int contactNumber = consoleIO.getNumberInput();
+
             try {
-                storage.deleteContact(id - 1);
-            } catch (SQLException e) {
+                storage.deleteContact(contactNumber - 1);
+            } catch (Exception e) {
                 consoleIO.clearScreen();
-                consoleIO.display("No such contact: ID = " + id);
+                consoleIO.display("No such contact: ID = " + contactNumber);
             }
         }
     }
