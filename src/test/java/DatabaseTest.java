@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,6 +20,7 @@ public class DatabaseTest {
     Contact updateContact;
     Connection connection;
     Statement statement;
+    ArrayList<Contact> contactArray;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
@@ -27,9 +29,10 @@ public class DatabaseTest {
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         ConsoleIOSpy consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
 
+        contactArray = new ArrayList<Contact>();
         contact = new Contact("Jamey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
         updateContact = new Contact("Update First", "Change Last", "Change of Address", "5550123", "30/12/2015", "much@improved.email", consoleIO);
-        database = new Database(consoleIO, Constants.testContactManagerDB, Constants.DBName);
+        database = new Database(contactArray, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         connection = DriverManager.getConnection(Constants.testContactManagerDB, "postgres", "contactManager1");
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
@@ -69,7 +72,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void showContact() throws Exception {
+    public void getContact() throws Exception {
         database.createContact(contact);
 
         String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = 'Jamey'";
@@ -89,6 +92,17 @@ public class DatabaseTest {
         assertEquals(database.getContact(contactID).getFieldValue(6), setContact.getString("email"));
     }
 
+    @Test
+    public void showContacts() {
+        database.createContact(contact);
+        database.createContact(contact);
+        database.createContact(contact);
+        database.createContact(contact);
+        database.showContacts();
+        System.out.println(database.contactArray.size());
+        assertEquals(4, database.contactArray.size());
+    }
+
     @Test(expected = PSQLException.class)
     public void showContactFails() throws SQLException {
         database.createContact(contact);
@@ -99,5 +113,10 @@ public class DatabaseTest {
         int noSuchID = maxID + 1000;
 
         assertThrows(Exception.class, (Executable) database.getContact(noSuchID));
+    }
+
+    @Test
+    public void updateContact() {
+        database.createContact(contact);
     }
 }

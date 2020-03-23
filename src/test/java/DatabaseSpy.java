@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 public class DatabaseSpy extends Database implements Storage {
 
@@ -11,8 +12,8 @@ public class DatabaseSpy extends Database implements Storage {
     ConsoleIO consoleIO;
     Connection connection;
 
-    public DatabaseSpy (ConsoleIO consoleIO, String database, String dbName) {
-        super(consoleIO, Constants.testContactManagerDB, Constants.DBName);
+    public DatabaseSpy (ArrayList contactList, ConsoleIO consoleIO, String database, String dbName) {
+        super(contactList, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         this.consoleIO = consoleIO;
         try {
             Class.forName("org.postgresql.Driver");

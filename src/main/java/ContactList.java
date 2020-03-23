@@ -22,7 +22,6 @@ public class ContactList implements Storage {
                 ((Contact) contactArray.get(i)).printContactDetails();
             }
         }
-
     }
 
     public boolean contactsExist() {
@@ -45,17 +44,6 @@ public class ContactList implements Storage {
         return contact;
     }
 
-//    private void updateContactFields(Contact contact) {
-//        consoleIO.clearScreen();
-//
-//        consoleIO.display(Constants.updateFields);
-//        int field = consoleIO.getNumberInput();
-//        consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
-//        String input = consoleIO.getStringInput(field, Contact.getFieldName(field));
-//        contact.updateField(input, field);
-//
-//        consoleIO.clearScreen();
-//    }
 
     public void deleteContact(int index) {
         consoleIO.clearScreen();

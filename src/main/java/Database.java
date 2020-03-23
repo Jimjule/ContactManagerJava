@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database implements Storage {
 
@@ -6,8 +7,10 @@ public class Database implements Storage {
     Connection connection;
     Statement statement;
     String dbName;
+    ArrayList<Contact> contactArray;
 
-    public Database(ConsoleIO consoleIO, String databaseConnection, String dbName) {
+    public Database(ArrayList contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
+        this.contactArray = contactArray;
         this.consoleIO = consoleIO;
         this.dbName = dbName;
         try {
@@ -69,7 +72,37 @@ public class Database implements Storage {
 
     @Override
     public void showContacts() {
-        consoleIO.display("Not yet implemented for DB");
+        getContacts();
+        if (contactsExist()) {
+            for (int i = 0; i < contactArray.size(); i++) {
+                consoleIO.display(String.valueOf(i + 1));
+                contactArray.get(i).printContactDetails();
+            }
+        }
+    }
+
+    public void getContacts() {
+        try {
+            Contact contact;
+            statement = connection.createStatement();
+            String getAllContacts = "SELECT * FROM " + dbName + " ;";
+            ResultSet allContacts = statement.executeQuery(getAllContacts);
+            while(allContacts.next()) {
+                contact = new Contact(
+                        allContacts.getString("first_name"),
+                        allContacts.getString("last_name"),
+                        allContacts.getString("address"),
+                        allContacts.getString("phone_number"),
+                        allContacts.getString("dob"),
+                        allContacts.getString("email"),
+                        consoleIO
+                );
+                contactArray.add(contact);
+            }
+            consoleIO.display("Not yet implemented for DB");
+        } catch (SQLException e) {
+            consoleIO.display("Can't display contacts");
+        }
     }
 
     public boolean contactsExist() {

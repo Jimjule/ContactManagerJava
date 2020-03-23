@@ -26,7 +26,5 @@
 
 ## Changelog
 
-- Removes unused methods in ContactList
-- Cleans up use of clear method 
-- Validation called from Contact, not ConsoleIO
+- Retrieves and displays all DB contacts
 
