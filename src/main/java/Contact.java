@@ -26,17 +26,6 @@ public class Contact {
         this.Email = email;
     }
 
-//    public String getFieldValue(int field) {
-//        switch (field) {
-//            case 1: return FirstName;
-//            case 2: return LastName;
-//            case 3: return Address;
-//            case 4: return PhoneNumber;
-//            case 5: return DOB;
-//            default: return Email;
-//        }
-//    }
-
     public String getFirstName() {
         return FirstName;
     }

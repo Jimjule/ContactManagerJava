@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- DB tests use getContact method
+- Makes spy variables private
 

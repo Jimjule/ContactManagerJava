@@ -1,11 +1,11 @@
 public class ContactManager {
 
     private ConsoleIO consoleIO;
-    private ContactList contactList;
-    private Database database;
+    private Storage contactList;
+    private Storage database;
     public Storage storage;
 
-    public ContactManager(ConsoleIO consoleIO, ContactList contactList, Database database) {
+    public ContactManager(ConsoleIO consoleIO, Storage contactList, Storage database) {
         this.consoleIO = consoleIO;
         this.database = database;
         this.contactList = contactList;
@@ -28,7 +28,7 @@ public class ContactManager {
         }
     }
 
-    public void printMenuOptions() {
+    private void printMenuOptions() {
         consoleIO.display(Constants.menuOptions);
     }
 
@@ -51,7 +51,7 @@ public class ContactManager {
                     break;
                 }
                 case 4: {
-                    displayContacts();
+                    showContacts();
                     break;
                 }
                 case 5: {
@@ -142,7 +142,7 @@ public class ContactManager {
         }
     }
 
-    public void displayContacts() {
+    public void showContacts() {
         consoleIO.clearScreen();
         storage.showContacts();
     }

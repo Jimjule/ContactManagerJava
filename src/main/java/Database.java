@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class Database implements Storage {
 
-    ConsoleIO consoleIO;
-    Connection connection;
-    Statement statement;
-    String dbName;
-    ArrayList<Contact> contactArray;
+    private ConsoleIO consoleIO;
+    private Connection connection;
+    private Statement statement;
+    private String dbName;
+    public ArrayList<Contact> contactArray;
 
     public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
         this.contactArray = contactArray;

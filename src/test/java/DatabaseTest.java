@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
 
-    Database database;
-    Contact contact;
-    Contact secondContact;
-    Connection connection;
-    Statement statement;
-    ArrayList<Contact> contactArray;
+    private Database database;
+    private Contact contact;
+    private Contact secondContact;
+    private Connection connection;
+    private Statement statement;
+    public ArrayList<Contact> contactArray;
 
     public static String defaultFirstName = "Jamey";
 
@@ -32,7 +32,7 @@ public class DatabaseTest {
         contact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
         secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com", consoleIO);
 
-        contactArray = new ArrayList<>();
+        contactArray = new ArrayList<Contact>();
         database = new Database(contactArray, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         connection = DriverManager.getConnection(Constants.testContactManagerDB, "postgres", "contactManager1");
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -82,7 +82,6 @@ public class DatabaseTest {
         database.createContact(contact);
         database.createContact(secondContact);
         database.showContacts();
-        System.out.println(database.contactArray.size());
         assertEquals(2, database.contactArray.size());
     }
 

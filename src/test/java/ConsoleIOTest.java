@@ -15,9 +15,11 @@ public class ConsoleIOTest {
 
     @Test
     public void getStringInputCallsGetInput() {
-        ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(System.in, outputStream);
+        String fixedString = "y";
+        InputStream fixedInputString = new ByteArrayInputStream(fixedString.getBytes());
+        ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(fixedInputString, outputStream);
         consoleIOSpy.getInput("first name");
-        assertTrue(consoleIOSpy.getInputHasBeenCalled);
+        assertTrue(consoleIOSpy.returnGetInputHasBeenCalled());
     }
 
     @Test

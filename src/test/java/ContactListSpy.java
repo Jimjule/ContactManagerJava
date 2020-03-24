@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
-public class ContactListSpy extends ContactList implements Storage {
+public class ContactListSpy implements Storage {
 
     private ArrayList<Contact> contactArray;
     private ConsoleIO consoleIO;
-    public boolean displayContactsHasBeenCalled = false;
-    public boolean printContactsDetailsHasBeenCalled = false;
-    public boolean createContactHasBeenCalled = false;
-    public boolean updateContactHasBeenCalled = false;
-    public boolean deleteContactHasBeenCalled = false;
-    public boolean contactsExistHasBeenCalled = false;
-    public boolean getContactHasBeenCalled = false;
+
+    private boolean displayContactsHasBeenCalled = false;
+    private boolean printContactsDetailsHasBeenCalled = false;
+    private boolean createContactHasBeenCalled = false;
+    private boolean updateContactHasBeenCalled = false;
+    private boolean deleteContactHasBeenCalled = false;
+    private boolean contactsExistHasBeenCalled = false;
+    private boolean getContactHasBeenCalled = false;
 
     public ContactListSpy(ArrayList<Contact> contactArray, ConsoleIO consoleIO) {
-        super(contactArray, consoleIO);
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
     }
@@ -46,5 +46,25 @@ public class ContactListSpy extends ContactList implements Storage {
     public Contact getContact(int index) {
         this.getContactHasBeenCalled = true;
         return null;
+    }
+
+    public boolean returnCreateContactHasBeenCalled() {
+        return createContactHasBeenCalled;
+    }
+
+    public boolean returnDeleteContactHasBeenCalled() {
+        return deleteContactHasBeenCalled;
+    }
+
+    public boolean returnDisplayContactsHasBeenCalled() {
+        return displayContactsHasBeenCalled;
+    }
+
+    public boolean returnGetContactHasBeenCalled() {
+        return getContactHasBeenCalled;
+    }
+
+    public boolean returnUpdateContactHasBeenCalled() {
+        return updateContactHasBeenCalled;
     }
 }
