@@ -16,7 +16,6 @@ public class ContactManager {
         consoleIO.clearScreen();
         consoleIO.display("Welcome to Contact Manager");
         consoleIO.display("Would you like to save to the database? (y/N)");
-        consoleIO.clearScreen();
         return getStorage();
     }
 
@@ -70,6 +69,7 @@ public class ContactManager {
     public void getContact() {
         consoleIO.display("Please enter an id to search");
         int id = consoleIO.getNumberInput();
+        consoleIO.clearScreen();
         try {
             Contact contact = storage.getContact(id);
             contact.printContactDetails();
@@ -91,6 +91,8 @@ public class ContactManager {
                 consoleIO
         );
         storage.createContact(contact);
+        consoleIO.clearScreen();
+        consoleIO.display("New contact created");
     }
 
     public String getInputLoop(int field, String fieldName) {

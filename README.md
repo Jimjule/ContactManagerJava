@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Specifies ArrayList type to remove unsafe operations
+- DB tests use getContact method
 

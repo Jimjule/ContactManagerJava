@@ -50,9 +50,10 @@ public class Database implements Storage {
     @Override
     public void deleteContact(int index) throws SQLException {
         statement = connection.createStatement();
-        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = (SELECT id FROM " + dbName + " OFFSET " + index + " LIMIT 1)";
+        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = (SELECT id FROM " + dbName + " OFFSET " + (index - 1) + " LIMIT 1)";
         statement.execute(deleteAtIndex);
         statement.close();
+        consoleIO.clearScreen();
         consoleIO.display("Contact Deleted");
     }
 
@@ -71,7 +72,7 @@ public class Database implements Storage {
     public Contact getContact(int index) throws SQLException {
         Contact contact;
             statement = connection.createStatement();
-            String getAtIndex = "SELECT * FROM " + dbName + " WHERE id = " + index + ";";
+            String getAtIndex = "SELECT * FROM " + dbName + " OFFSET " + (index - 1) + " LIMIT 1;";
             ResultSet setContact = statement.executeQuery(getAtIndex);
             setContact.next();
             contact = new Contact(

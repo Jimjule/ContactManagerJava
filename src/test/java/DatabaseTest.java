@@ -57,7 +57,7 @@ public class DatabaseTest {
     @Test
     public void deletesContact() throws Exception {
         database.createContact(contact);
-        database.deleteContact(0);
+        database.deleteContact(1);
 
         String getCount = "SELECT * FROM contactmanagerdb;";
         ResultSet countAll = statement.executeQuery(getCount);
@@ -70,17 +70,11 @@ public class DatabaseTest {
     public void getContact() throws Exception {
         database.createContact(contact);
 
-        int contactID = getContactID(defaultFirstName);
-
-        String getContactByID = "SELECT * FROM contactmanagerdb WHERE id = " + contactID + ";";
-        ResultSet setContact = statement.executeQuery(getContactByID);
-        setContact.next();
-
-        assertEquals(database.getContact(contactID).getFirstName(), "Jamey");
-        assertEquals(database.getContact(contactID).getLastName(), "Namerson");
-        assertEquals(database.getContact(contactID).getAddress(), "A Palace");
-        assertEquals(database.getContact(contactID).getPhoneNumber(), "130077");
-        assertEquals(database.getContact(contactID).getEmail(), "email@email.com");
+        assertEquals(database.getContact(1).getFirstName(), "Jamey");
+        assertEquals(database.getContact(1).getLastName(), "Namerson");
+        assertEquals(database.getContact(1).getAddress(), "A Palace");
+        assertEquals(database.getContact(1).getPhoneNumber(), "130077");
+        assertEquals(database.getContact(1).getEmail(), "email@email.com");
     }
 
     @Test
@@ -96,7 +90,7 @@ public class DatabaseTest {
     public void updateContact() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "Updatename");
-        Contact updatedContact = database.getContact(getContactID("Updatename"));
+        Contact updatedContact = database.getContact(1);
         assertEquals("Updatename", updatedContact.getFirstName());
     }
 
@@ -104,15 +98,7 @@ public class DatabaseTest {
     public void updateContactFails() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "lowercase");
-        Contact updatedContact = database.getContact(getContactID(defaultFirstName));
+        Contact updatedContact = database.getContact(1);
         assertEquals(defaultFirstName, updatedContact.getFirstName());
-    }
-
-    public int getContactID(String name) throws Exception {
-        String getCreatedContactID = "SELECT id FROM contactmanagerdb WHERE first_name = '"+ name + "'";
-        ResultSet getID = statement.executeQuery(getCreatedContactID);
-        getID.next();
-        int contactID = Integer.parseInt(getID.getString(1));
-        return contactID;
     }
 }
