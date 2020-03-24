@@ -60,12 +60,12 @@ public class DatabaseTest {
     @Test
     public void deletesContact() throws Exception {
         database.createContact(contact);
-        int contactID = getContactID(defaultFirstName);
         database.deleteContact(0);
 
         String getCount = "SELECT * FROM contactmanagerdb;";
         ResultSet countAll = statement.executeQuery(getCount);
         countAll.next();
+
         assertEquals(0, countAll.getRow());
     }
 
@@ -79,9 +79,9 @@ public class DatabaseTest {
         ResultSet setContact = statement.executeQuery(getContactByID);
         setContact.next();
 
-        assertEquals(database.getContact(contactID).getFieldValue(1), setContact.getString("first_name"));
-        assertEquals(database.getContact(contactID).getFieldValue(2), setContact.getString("last_name"));
-        assertEquals(database.getContact(contactID).getFieldValue(3), setContact.getString("address"));
+        assertEquals(database.getContact(contactID).getFieldValue(1), contact.getFieldValue(1));
+        assertEquals(database.getContact(contactID).getFieldValue(2), contact.getFieldValue(2));
+        assertEquals(database.getContact(contactID).getFieldValue(3), contact.getFieldValue(3));
         assertEquals(database.getContact(contactID).getFieldValue(4), setContact.getString("phone_number"));
         assertEquals(database.getContact(contactID).getFieldValue(5), setContact.getString("dob"));
         assertEquals(database.getContact(contactID).getFieldValue(6), setContact.getString("email"));

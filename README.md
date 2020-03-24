@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Implements update Contact for DB
+- Re-adds update contact test for memory
 

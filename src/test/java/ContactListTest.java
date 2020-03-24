@@ -44,4 +44,11 @@ public class ContactListTest {
         contactList.deleteContact(1);
         assertEquals(false, contactList.contactsExist());
     }
+
+    @Test
+    public void updateContact() {
+        contactList.createContact(contact);
+        contactList.updateContact(contact, 1, "Updatedfirstname");
+        assertEquals("Updatedfirstname", contact.getFieldValue(1));
+    }
 }
