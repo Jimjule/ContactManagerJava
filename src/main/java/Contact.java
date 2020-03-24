@@ -1,5 +1,7 @@
 public class Contact {
 
+    private ConsoleIO consoleIO;
+
     private String FirstName;
     private String LastName;
     private String Address;
@@ -14,13 +16,14 @@ public class Contact {
     public static final String DOBField = "Date of Birth (dd/MM/yyyy)";
     public static final String EmailField = "Email";
 
-    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
-       this.FirstName = firstName;
-       this.LastName = lastName;
-       this.Address = address;
-       this.PhoneNumber = phoneNumber;
-       this.DOB = dOB;
-       this.Email = email;
+    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email, ConsoleIO consoleIO) {
+        this.consoleIO = consoleIO;
+        this.FirstName = firstName;
+        this.LastName = lastName;
+        this.Address = address;
+        this.PhoneNumber = phoneNumber;
+        this.DOB = dOB;
+        this.Email = email;
     }
 
     public String getFieldValue(int field) {
@@ -57,6 +60,18 @@ public class Contact {
                 default: Email = value; break;
             }
         }
+    }
+
+    public void printContactDetails() {
+        consoleIO.display("-----\n" +
+                Contact.getFieldName(1) + ": " + getFieldValue(1) + "\n" +
+                Contact.getFieldName(2) + ": " + getFieldValue(2) + "\n" +
+                Contact.getFieldName(3) + ": " + getFieldValue(3) + "\n" +
+                Contact.getFieldName(4) + ": " + getFieldValue(4) + "\n" +
+                Contact.getFieldName(5) + ": " + getFieldValue(5) + "\n" +
+                Contact.getFieldName(6) + ": " + getFieldValue(6) + "\n" +
+                "-----\n"
+        );
     }
 
     private boolean notBlank(String value) {

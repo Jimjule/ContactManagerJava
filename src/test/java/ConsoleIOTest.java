@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
@@ -10,10 +11,11 @@ public class ConsoleIOTest {
     ConsoleIO consoleFixString;
     ConsoleIO consoleFixNumber;
     ConsoleIO consoleFixBoolean;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Test
     public void getStringInputCallsGetInput() {
-        ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(System.in, System.out);
+        ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(System.in, outputStream);
         consoleIOSpy.getStringInput(1, "first name");
         assertEquals(true, consoleIOSpy.getInputHasBeenCalled);
     }
@@ -22,7 +24,7 @@ public class ConsoleIOTest {
     public void getStringInputReturnsInput() {
         String fixedString = "Fixed";
         InputStream fixedInputString = new ByteArrayInputStream(fixedString.getBytes());
-        consoleFixString = new ConsoleIO(fixedInputString, System.out);
+        consoleFixString = new ConsoleIO(fixedInputString, outputStream);
         assertEquals("Fixed", consoleFixString.getStringInput(1, "first name"));
     }
 
@@ -30,7 +32,7 @@ public class ConsoleIOTest {
     public void getBooleanReturnsTrue() {
         String fixedString = "y";
         InputStream fixedInputString = new ByteArrayInputStream(fixedString.getBytes());
-        consoleFixBoolean = new ConsoleIO(fixedInputString, System.out);
+        consoleFixBoolean = new ConsoleIO(fixedInputString, outputStream);
         assertEquals(true, consoleFixBoolean.getBoolean());
     }
 
@@ -38,7 +40,7 @@ public class ConsoleIOTest {
     public void getNumberReturnsNumber() {
         String fixedNumber = "7";
         InputStream fixedInputNumber = new ByteArrayInputStream(fixedNumber.getBytes());
-        consoleFixNumber = new ConsoleIO(fixedInputNumber, System.out);
+        consoleFixNumber = new ConsoleIO(fixedInputNumber, outputStream);
         assertEquals(7, consoleFixNumber.getNumberInput());
     }
 }

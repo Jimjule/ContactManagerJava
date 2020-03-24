@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -11,19 +12,22 @@ public class ContactListTest {
 
     ContactList contactList;
     ConsoleIOSpy consoleIO;
+    Contact contact;
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Before
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
-        consoleIO = new ConsoleIOSpy(fixedInput, System.out);
+        consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList arrayList = new ArrayList<Contact>();
-        contactList = new ContactListSpy(arrayList, consoleIO);
+        contactList = new ContactList(arrayList, consoleIO);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
     }
 
     @Test
     public void savesNewContact() {
-        contactList.newContact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contactList.createContact(contact);
         assertTrue(contactList.contactsExist());
     }
 
@@ -34,8 +38,15 @@ public class ContactListTest {
     }
 
     @Test
+    public void testGetContact() {
+        contactList.createContact(contact);
+        Contact retrievedContact = contactList.getContact(1);
+        assertTrue(contact.equals(retrievedContact));
+    }
+
+    @Test
     public void deletesNewContact() {
-        contactList.newContact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        contactList.createContact(contact);
         contactList.deleteContact(0);
         assertEquals(false, contactList.contactsExist());
     }
