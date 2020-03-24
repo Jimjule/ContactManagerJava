@@ -19,7 +19,7 @@ public class ContactManager {
         return getStorage();
     }
 
-    public Storage getStorage() {
+    private Storage getStorage() {
         boolean useDatabase = consoleIO.getBoolean();
         if(useDatabase == true) {
             return database;
@@ -95,7 +95,7 @@ public class ContactManager {
         consoleIO.display("New contact created");
     }
 
-    public String getInputLoop(int field, String fieldName) {
+    private String getInputLoop(int field, String fieldName) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
@@ -119,6 +119,7 @@ public class ContactManager {
                 int field = consoleIO.getNumberInput();
                 String input = getInputLoop(field, Contact.getFieldName(field));
                 storage.updateContact(contact, field, input);
+                consoleIO.display("Contact updated");
             } catch (Exception e) {
                 consoleIO.display("No such contact");
             }
