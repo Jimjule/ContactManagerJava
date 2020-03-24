@@ -12,7 +12,7 @@ public class DatabaseSpy extends Database implements Storage {
     ConsoleIO consoleIO;
     Connection connection;
 
-    public DatabaseSpy (ArrayList contactList, ConsoleIO consoleIO, String database, String dbName) {
+    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, String dbName) {
         super(contactList, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         this.consoleIO = consoleIO;
         try {

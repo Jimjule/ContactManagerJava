@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Removes JUnit4, standardises to JUnit5
+- Specifies ArrayList type to remove unsafe operations
 

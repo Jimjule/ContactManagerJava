@@ -9,7 +9,7 @@ public class Database implements Storage {
     String dbName;
     ArrayList<Contact> contactArray;
 
-    public Database(ArrayList contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
+    public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
         this.dbName = dbName;

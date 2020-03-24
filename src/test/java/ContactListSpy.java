@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class ContactListSpy extends ContactList implements Storage {
 
-    private ArrayList contactArray;
+    private ArrayList<Contact> contactArray;
     private ConsoleIO consoleIO;
     public boolean displayContactsHasBeenCalled = false;
     public boolean printContactsDetailsHasBeenCalled = false;
@@ -12,7 +12,7 @@ public class ContactListSpy extends ContactList implements Storage {
     public boolean contactsExistHasBeenCalled = false;
     public boolean getContactHasBeenCalled = false;
 
-    public ContactListSpy(ArrayList contactArray, ConsoleIO consoleIO) {
+    public ContactListSpy(ArrayList<Contact> contactArray, ConsoleIO consoleIO) {
         super(contactArray, consoleIO);
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;

@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class ContactList implements Storage {
 
-    private ArrayList contactArray;
+    private ArrayList<Contact> contactArray;
     private ConsoleIO consoleIO;
 
-    public ContactList(ArrayList contactArray, ConsoleIO consoleIO) {
+    public ContactList(ArrayList<Contact> contactArray, ConsoleIO consoleIO) {
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
     }

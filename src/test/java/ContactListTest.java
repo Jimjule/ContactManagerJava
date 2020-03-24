@@ -21,7 +21,7 @@ public class ContactListTest {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
-        ArrayList arrayList = new ArrayList<Contact>();
+        ArrayList<Contact> arrayList = new ArrayList<Contact>();
         contactList = new ContactList(arrayList, consoleIO);
         contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
     }
