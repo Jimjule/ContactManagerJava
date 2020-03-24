@@ -1,8 +1,6 @@
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.function.Executable;
-import org.postgresql.util.PSQLException;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,8 +8,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
 
@@ -26,7 +23,7 @@ public class DatabaseTest {
 
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    @Before
+    @BeforeEach
     public void setUp() throws SQLException {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
@@ -41,7 +38,7 @@ public class DatabaseTest {
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws SQLException {
         String sql = "DELETE FROM contactmanagerdb";
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -79,12 +76,11 @@ public class DatabaseTest {
         ResultSet setContact = statement.executeQuery(getContactByID);
         setContact.next();
 
-        assertEquals(database.getContact(contactID).getFieldValue(1), contact.getFieldValue(1));
-        assertEquals(database.getContact(contactID).getFieldValue(2), contact.getFieldValue(2));
-        assertEquals(database.getContact(contactID).getFieldValue(3), contact.getFieldValue(3));
-        assertEquals(database.getContact(contactID).getFieldValue(4), setContact.getString("phone_number"));
-        assertEquals(database.getContact(contactID).getFieldValue(5), setContact.getString("dob"));
-        assertEquals(database.getContact(contactID).getFieldValue(6), setContact.getString("email"));
+        assertEquals(database.getContact(contactID).getFirstName(), "Jamey");
+        assertEquals(database.getContact(contactID).getLastName(), "Namerson");
+        assertEquals(database.getContact(contactID).getAddress(), "A Palace");
+        assertEquals(database.getContact(contactID).getPhoneNumber(), "130077");
+        assertEquals(database.getContact(contactID).getEmail(), "email@email.com");
     }
 
     @Test
@@ -96,24 +92,12 @@ public class DatabaseTest {
         assertEquals(2, database.contactArray.size());
     }
 
-    @Test(expected = PSQLException.class)
-    public void showContactFails() throws SQLException {
-        database.createContact(contact);
-
-        String getHighestID = "SELECT id FROM contactmanagerdb ORDER BY id DESC LIMIT 1";
-        ResultSet getID = statement.executeQuery(getHighestID);
-        int maxID = Integer.parseInt(getID.getString(1));
-        int noSuchID = maxID + 1000;
-
-        assertThrows(Exception.class, (Executable) database.getContact(noSuchID));
-    }
-
     @Test
     public void updateContact() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "Updatename");
         Contact updatedContact = database.getContact(getContactID("Updatename"));
-        assertEquals("Updatename", updatedContact.getFieldValue(1));
+        assertEquals("Updatename", updatedContact.getFirstName());
     }
 
     @Test
@@ -121,7 +105,7 @@ public class DatabaseTest {
         database.createContact(contact);
         database.updateContact(contact, 1, "lowercase");
         Contact updatedContact = database.getContact(getContactID(defaultFirstName));
-        assertEquals(defaultFirstName, updatedContact.getFieldValue(1));
+        assertEquals(defaultFirstName, updatedContact.getFirstName());
     }
 
     public int getContactID(String name) throws Exception {

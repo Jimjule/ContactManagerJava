@@ -1,10 +1,11 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConsoleIOTest {
 
@@ -16,7 +17,7 @@ public class ConsoleIOTest {
     public void getStringInputCallsGetInput() {
         ConsoleIOSpy consoleIOSpy = new ConsoleIOSpy(System.in, outputStream);
         consoleIOSpy.getInput("first name");
-        assertEquals(true, consoleIOSpy.getInputHasBeenCalled);
+        assertTrue(consoleIOSpy.getInputHasBeenCalled);
     }
 
     @Test
@@ -24,7 +25,7 @@ public class ConsoleIOTest {
         String fixedString = "y";
         InputStream fixedInputString = new ByteArrayInputStream(fixedString.getBytes());
         consoleFixBoolean = new ConsoleIO(fixedInputString, outputStream);
-        assertEquals(true, consoleFixBoolean.getBoolean());
+        assertTrue(consoleFixBoolean.getBoolean());
     }
 
     @Test

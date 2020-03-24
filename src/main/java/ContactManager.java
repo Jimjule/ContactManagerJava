@@ -1,5 +1,3 @@
-import java.sql.SQLException;
-
 public class ContactManager {
 
     private ConsoleIO consoleIO;
@@ -117,10 +115,7 @@ public class ContactManager {
 
                 consoleIO.display(Constants.updateFields);
                 int field = consoleIO.getNumberInput();
-
-                consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
                 String input = getInputLoop(field, Contact.getFieldName(field));
-
                 storage.updateContact(contact, field, input);
             } catch (Exception e) {
                 consoleIO.display("No such contact");
@@ -137,7 +132,7 @@ public class ContactManager {
             int contactNumber = consoleIO.getNumberInput();
 
             try {
-                storage.deleteContact(contactNumber - 1);
+                storage.deleteContact(contactNumber);
             } catch (Exception e) {
                 consoleIO.clearScreen();
                 consoleIO.display("No such contact: ID = " + contactNumber);

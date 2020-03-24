@@ -26,15 +26,39 @@ public class Contact {
         this.Email = email;
     }
 
-    public String getFieldValue(int field) {
-        switch (field) {
-            case 1: return FirstName;
-            case 2: return LastName;
-            case 3: return Address;
-            case 4: return PhoneNumber;
-            case 5: return DOB;
-            default: return Email;
-        }
+//    public String getFieldValue(int field) {
+//        switch (field) {
+//            case 1: return FirstName;
+//            case 2: return LastName;
+//            case 3: return Address;
+//            case 4: return PhoneNumber;
+//            case 5: return DOB;
+//            default: return Email;
+//        }
+//    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public String getDOB() {
+        return DOB;
+    }
+
+    public String getEmail() {
+        return Email;
     }
 
     public static String getFieldName(int field) {
@@ -64,12 +88,12 @@ public class Contact {
 
     public void printContactDetails() {
         consoleIO.display("-----\n" +
-                Contact.getFieldName(1) + ": " + getFieldValue(1) + "\n" +
-                Contact.getFieldName(2) + ": " + getFieldValue(2) + "\n" +
-                Contact.getFieldName(3) + ": " + getFieldValue(3) + "\n" +
-                Contact.getFieldName(4) + ": " + getFieldValue(4) + "\n" +
-                Contact.getFieldName(5) + ": " + getFieldValue(5) + "\n" +
-                Contact.getFieldName(6) + ": " + getFieldValue(6) + "\n" +
+                Contact.FirstNameField + ": " + getFirstName() + "\n" +
+                Contact.LastNameField + ": " + getLastName() + "\n" +
+                Contact.AddressField + ": " + getAddress() + "\n" +
+                Contact.PhoneNumberField + ": " + getPhoneNumber() + "\n" +
+                Contact.DOBField + ": " + getDOB() + "\n" +
+                Contact.EmailField + ": " + getEmail() + "\n" +
                 "-----\n"
         );
     }

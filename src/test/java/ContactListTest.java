@@ -1,12 +1,13 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContactListTest {
 
@@ -15,7 +16,7 @@ public class ContactListTest {
     Contact contact;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
@@ -49,6 +50,6 @@ public class ContactListTest {
     public void updateContact() {
         contactList.createContact(contact);
         contactList.updateContact(contact, 1, "Updatedfirstname");
-        assertEquals("Updatedfirstname", contact.getFieldValue(1));
+        assertEquals("Updatedfirstname", contact.getFirstName());
     }
 }

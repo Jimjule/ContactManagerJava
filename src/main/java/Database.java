@@ -37,7 +37,7 @@ public class Database implements Storage {
         try {
             statement = connection.createStatement();
             String addContact = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
-                    contact.getFieldValue(1) + "', '" + contact.getFieldValue(2) + "', '" + contact.getFieldValue(3) + "', '" + contact.getFieldValue(4) + "', '" + contact.getFieldValue(5) + "', '" + contact.getFieldValue(6) +
+                    contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getAddress() + "', '" + contact.getPhoneNumber() + "', '" + contact.getDOB() + "', '" + contact.getEmail() +
                     "');";
             statement.execute(addContact);
             statement.close();
@@ -60,7 +60,7 @@ public class Database implements Storage {
     public void updateContact(Contact contact, int field, String input) throws SQLException {
         if(Contact.validateInput(field, input)) {
             statement = connection.createStatement();
-            String updateEntry = "UPDATE " + dbName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getFieldValue(6) + "';";
+            String updateEntry = "UPDATE " + dbName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
             statement.execute(updateEntry);
         } else {
             consoleIO.display("Invalid input for this field.");

@@ -1,11 +1,11 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContactManagerTest {
 
@@ -16,7 +16,7 @@ public class ContactManagerTest {
     Contact contact;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());

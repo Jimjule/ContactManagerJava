@@ -26,5 +26,5 @@
 
 ## Changelog
 
-- Re-adds update contact test for memory
+- Removes JUnit4, standardises to JUnit5
 
