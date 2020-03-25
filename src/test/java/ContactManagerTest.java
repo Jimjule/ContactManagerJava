@@ -23,7 +23,7 @@ public class ContactManagerTest {
 
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList<Contact> arrayList = new ArrayList<Contact>();
-        database = new DatabaseSpy(arrayList, consoleIO, Constants.testContactManagerDB, Constants.DBName);
+        database = new DatabaseSpy(arrayList, consoleIO, Constants.TESTCONTACTMANAGERDB, Constants.DBNAME);
         contactList = new ContactListSpy(arrayList, consoleIO);
 
         contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email", consoleIO);

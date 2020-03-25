@@ -9,16 +9,11 @@ public class Database implements Storage {
     private String dbName;
     public ArrayList<Contact> contactArray;
 
-    public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
+    public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String dbName, Connection connection) {
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
         this.dbName = dbName;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(databaseConnection, "postgres", "contactManager1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.connection = connection;
     }
 
     public static String getDBColumnName(int field) {

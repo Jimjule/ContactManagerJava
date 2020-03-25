@@ -26,6 +26,6 @@
 
 ## Changelog
 
-- Recases variables
-- 
+- Recases constants
+- Connects to database on startup
 
