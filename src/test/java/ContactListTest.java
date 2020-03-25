@@ -33,7 +33,7 @@ public class ContactListTest {
     }
 
     @Test
-    public void testGetContact() {
+    public void getContact() {
         contactList.createContact(contact);
         Contact retrievedContact = contactList.getContact(1);
         assertTrue(contact.equals(retrievedContact));

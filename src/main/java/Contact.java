@@ -2,62 +2,62 @@ public class Contact {
 
     private ConsoleIO consoleIO;
 
-    private String FirstName;
-    private String LastName;
-    private String Address;
-    private String PhoneNumber;
-    private String DOB;
-    private String Email;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String phoneNumber;
+    private String dOB;
+    private String email;
 
-    public static final String FirstNameField = "First Name";
-    public static final String LastNameField = "Last Name";
-    public static final String AddressField = "Address";
-    public static final String PhoneNumberField = "Phone Number (no spaces)";
-    public static final String DOBField = "Date of Birth (dd/MM/yyyy)";
-    public static final String EmailField = "Unique Email Address";
+    public static final String firstNameField = "First Name";
+    public static final String lastNameField = "Last Name";
+    public static final String addressField = "Address";
+    public static final String phoneNumberField = "Phone Number (no spaces)";
+    public static final String dOBField = "Date of Birth (dd/MM/yyyy)";
+    public static final String emailField = "Unique Email Address";
 
     public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email, ConsoleIO consoleIO) {
         this.consoleIO = consoleIO;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Address = address;
-        this.PhoneNumber = phoneNumber;
-        this.DOB = dOB;
-        this.Email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.dOB = dOB;
+        this.email = email;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
     }
 
-    public String getDOB() {
-        return DOB;
+    public String getdOB() {
+        return dOB;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public static String getFieldName(int field) {
         switch (field) {
-            case 1: return FirstNameField;
-            case 2: return LastNameField;
-            case 3: return AddressField;
-            case 4: return PhoneNumberField;
-            case 5: return DOBField;
-            default: return EmailField;
+            case 1: return firstNameField;
+            case 2: return lastNameField;
+            case 3: return addressField;
+            case 4: return phoneNumberField;
+            case 5: return dOBField;
+            default: return emailField;
         }
     }
 
@@ -65,24 +65,24 @@ public class Contact {
         if (notBlank(value)) {
         if (ValidateInput.validateInput(field, value))
             switch (field) {
-                case 1: FirstName = value; break;
-                case 2: LastName = value; break;
-                case 3: Address = value; break;
-                case 4: PhoneNumber = value; break;
-                case 5: DOB = value; break;
-                default: Email = value; break;
+                case 1: firstName = value; break;
+                case 2: lastName = value; break;
+                case 3: address = value; break;
+                case 4: phoneNumber = value; break;
+                case 5: dOB = value; break;
+                default: email = value; break;
             }
         }
     }
 
     public void printContactDetails() {
         consoleIO.display("-----\n" +
-                Contact.FirstNameField + ": " + getFirstName() + "\n" +
-                Contact.LastNameField + ": " + getLastName() + "\n" +
-                Contact.AddressField + ": " + getAddress() + "\n" +
-                Contact.PhoneNumberField + ": " + getPhoneNumber() + "\n" +
-                Contact.DOBField + ": " + getDOB() + "\n" +
-                Contact.EmailField + ": " + getEmail() + "\n" +
+                Contact.firstNameField + ": " + getFirstName() + "\n" +
+                Contact.lastNameField + ": " + getLastName() + "\n" +
+                Contact.addressField + ": " + getAddress() + "\n" +
+                Contact.phoneNumberField + ": " + getPhoneNumber() + "\n" +
+                Contact.dOBField + ": " + getdOB() + "\n" +
+                Contact.emailField + ": " + getEmail() + "\n" +
                 "-----\n"
         );
     }

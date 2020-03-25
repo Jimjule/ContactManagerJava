@@ -37,7 +37,7 @@ public class Database implements Storage {
         try {
             statement = connection.createStatement();
             String addContact = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
-                    contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getAddress() + "', '" + contact.getPhoneNumber() + "', '" + contact.getDOB() + "', '" + contact.getEmail() +
+                    contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getAddress() + "', '" + contact.getPhoneNumber() + "', '" + contact.getdOB() + "', '" + contact.getEmail() +
                     "');";
             statement.execute(addContact);
             statement.close();
