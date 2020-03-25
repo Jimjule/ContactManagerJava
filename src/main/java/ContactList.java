@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class ContactList implements Storage {
 
-    private ArrayList contactArray;
+    private ArrayList<Contact> contactArray;
     private ConsoleIO consoleIO;
 
-    public ContactList(ArrayList contactArray, ConsoleIO consoleIO) {
+    public ContactList(ArrayList<Contact> contactArray, ConsoleIO consoleIO) {
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
     }
@@ -16,7 +16,12 @@ public class ContactList implements Storage {
 
     @Override
     public void showContacts() {
-
+        if (contactsExist()) {
+            for (int i = 0; i < contactArray.size(); i++) {
+                consoleIO.display(String.valueOf(i + 1));
+                ((Contact) contactArray.get(i)).printContactDetails();
+            }
+        }
     }
 
     public boolean contactsExist() {
@@ -28,23 +33,9 @@ public class ContactList implements Storage {
         }
     }
 
-    public void displayContacts() {
-        if (contactsExist()) {
-            for (int i = 0; i < contactArray.size(); i++) {
-                consoleIO.display(String.valueOf(i + 1));
-                ((Contact) contactArray.get(i)).printContactDetails();
-            }
-        }
-    }
-
-    public void updateContact() {
-        try {
-            int contactNumber = consoleIO.getNumberInput();
-            Contact contact = (Contact) contactArray.get((contactNumber) - 1);
-            updateContactFields(contact);
-        } catch (Exception e) {
-            consoleIO.display("No such contact");
-        }
+    @Override
+    public void updateContact(Contact contact, int field, String input) {
+        contact.updateField(input, field);
     }
 
     @Override
@@ -53,22 +44,11 @@ public class ContactList implements Storage {
         return contact;
     }
 
-    private void updateContactFields(Contact contact) {
-        consoleIO.clearScreen();
-        consoleIO.display(Constants.updateFields);
-
-        int field = consoleIO.getNumberInput();
-        consoleIO.display(Contact.getFieldName(field) + " is currently: " + contact.getFieldValue(field));
-        String input = consoleIO.getStringInput(field, Contact.getFieldName(field));
-        contact.updateField(input, field);
-
-        consoleIO.clearScreen();
-    }
 
     public void deleteContact(int index) {
         consoleIO.clearScreen();
         try {
-            contactArray.remove(index);
+            contactArray.remove(index - 1);
             consoleIO.display("Contact deleted");
         } catch (Exception e) {
             consoleIO.display("No such contact");

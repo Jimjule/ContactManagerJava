@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 public class DatabaseSpy extends Database implements Storage {
 
@@ -11,8 +12,8 @@ public class DatabaseSpy extends Database implements Storage {
     ConsoleIO consoleIO;
     Connection connection;
 
-    public DatabaseSpy (ConsoleIO consoleIO, String database, String dbName) {
-        super(consoleIO, Constants.testContactManagerDB, Constants.DBName);
+    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, String dbName) {
+        super(contactList, consoleIO, Constants.testContactManagerDB, Constants.DBName);
         this.consoleIO = consoleIO;
         try {
             Class.forName("org.postgresql.Driver");
@@ -27,22 +28,17 @@ public class DatabaseSpy extends Database implements Storage {
         this.newContactHasBeenCalled = true;
     }
 
-
     public void deleteContact(int index) {
         deleteContactHasBeenCalled = true;
     }
 
-    @Override
-    public void updateContact() {
-
-    }
-
-    public void updateContact(String id, String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
+    public void updateContact(Contact contact, int field, String input) {
         updateContactHasBeenCalled = true;
     }
 
-    public void getContact() {
+    public Contact getContact(int id) {
         getContactHasBeenCalled = true;
+        return null;
     }
 
     public boolean contactsExist() {

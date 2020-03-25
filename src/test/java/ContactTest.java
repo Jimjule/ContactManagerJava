@@ -1,11 +1,12 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ContactTest {
 
@@ -13,7 +14,7 @@ public class ContactTest {
     ConsoleIO consoleIO;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    @Before
+    @BeforeEach
     public void initialize() {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
@@ -23,44 +24,38 @@ public class ContactTest {
 
     @Test
     public void canUpdateFirstName() {
-        assertEquals("Namey", contact.getFieldValue(1));
         contact.updateField("Elnamo", 1);
-        assertEquals("Elnamo", contact.getFieldValue(1));
+        assertEquals("Elnamo", contact.getFirstName());
     }
 
     @Test
     public void canUpdateLastName() {
-        assertEquals("Namerson", contact.getFieldValue(2));
         contact.updateField("Sir", 2);
-        assertEquals("Sir", contact.getFieldValue(2));
+        assertEquals("Sir", contact.getLastName());
     }
 
     @Test
     public void canUpdateAddress() {
-        assertEquals("A Palace", contact.getFieldValue(3));
         contact.updateField("7 Palace place", 3);
-        assertEquals("7 Palace place", contact.getFieldValue(3));
+        assertEquals("7 Palace place", contact.getAddress());
     }
 
     @Test
     public void canUpdatePhoneNumber() {
-        assertEquals("130077", contact.getFieldValue(4));
         contact.updateField("01", 4);
-        assertEquals("01", contact.getFieldValue(4));
+        assertEquals("01", contact.getPhoneNumber());
     }
 
     @Test
     public void canUpdateDOB() {
-        assertEquals("01/01/1999", contact.getFieldValue(5));
         contact.updateField("30/01/2013", 5);
-        assertEquals("30/01/2013", contact.getFieldValue(5));
+        assertEquals("30/01/2013", contact.getDOB());
     }
 
     @Test
     public void canUpdateEmail() {
-        assertEquals("email@email.com", contact.getFieldValue(6));
         contact.updateField("new@email.com", 6);
-        assertEquals("new@email.com", contact.getFieldValue(6));
+        assertEquals("new@email.com", contact.getEmail());
     }
 
     @Test
@@ -90,7 +85,7 @@ public class ContactTest {
 
     @Test
     public void emailValue() {
-        assertEquals(Contact.getFieldName(6), "Email");
+        assertEquals(Contact.getFieldName(6), "Unique Email Address");
 
     }
 }

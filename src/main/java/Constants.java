@@ -7,7 +7,7 @@ public final class Constants {
             "2. Update Contact\n" +
             "3. Delete Contact\n" +
             "4. View Contacts\n" +
-            "5. Get Contact\n" +
+            "5. View Specific Contact\n" +
             "6. Exit";
     public static final String updateFields = "Select a field to update:\n" +
             "1. First name\n" +

@@ -1,5 +1,3 @@
-import java.sql.SQLException;
-
 public class ContactManager {
 
     private ConsoleIO consoleIO;
@@ -18,7 +16,6 @@ public class ContactManager {
         consoleIO.clearScreen();
         consoleIO.display("Welcome to Contact Manager");
         consoleIO.display("Would you like to save to the database? (y/N)");
-        consoleIO.clearScreen();
         return getStorage();
     }
 
@@ -72,6 +69,7 @@ public class ContactManager {
     public void getContact() {
         consoleIO.display("Please enter an id to search");
         int id = consoleIO.getNumberInput();
+        consoleIO.clearScreen();
         try {
             Contact contact = storage.getContact(id);
             contact.printContactDetails();
@@ -84,15 +82,27 @@ public class ContactManager {
     public void newContact() {
         consoleIO.clearScreen();
         Contact contact = new Contact(
-                consoleIO.getStringInput(1, Contact.getFieldName(1)),
-                consoleIO.getStringInput(2, Contact.getFieldName(2)),
-                consoleIO.getStringInput(3, Contact.getFieldName(3)),
-                consoleIO.getStringInput(4, Contact.getFieldName(4)),
-                consoleIO.getStringInput(5, Contact.getFieldName(5)),
-                consoleIO.getStringInput(6, Contact.getFieldName(6)),
+                getInputLoop(1, Contact.getFieldName(1)),
+                getInputLoop(2, Contact.getFieldName(2)),
+                getInputLoop(3, Contact.getFieldName(3)),
+                getInputLoop(4, Contact.getFieldName(4)),
+                getInputLoop(5, Contact.getFieldName(5)),
+                getInputLoop(6, Contact.getFieldName(6)),
                 consoleIO
         );
         storage.createContact(contact);
+        consoleIO.clearScreen();
+        consoleIO.display("New contact created");
+    }
+
+    public String getInputLoop(int field, String fieldName) {
+        Boolean validInput = false;
+        String userInput = null;
+        while (!validInput) {
+            userInput = consoleIO.getInput(fieldName);
+            validInput = Contact.validateInput(field, userInput);
+        }
+        return userInput;
     }
 
     public void updateContact() {
@@ -100,21 +110,34 @@ public class ContactManager {
         if (storage.contactsExist()) {
             storage.showContacts();
             consoleIO.display("Please select a contact to update");
-            storage.updateContact();
+            int contactNumber = consoleIO.getNumberInput();
+
+            try {
+                Contact contact = storage.getContact(contactNumber);
+
+                consoleIO.display(Constants.updateFields);
+                int field = consoleIO.getNumberInput();
+                String input = getInputLoop(field, Contact.getFieldName(field));
+                storage.updateContact(contact, field, input);
+            } catch (Exception e) {
+                consoleIO.display("No such contact");
+            }
         }
+        consoleIO.clearScreen();
     }
 
     public void deleteContact() {
         consoleIO.clearScreen();
         if (storage.contactsExist()) {
             storage.showContacts();
-            consoleIO.display("Please select a contact");
-            int id = this.consoleIO.getNumberInput();
+            consoleIO.display("Please select a contact to delete");
+            int contactNumber = consoleIO.getNumberInput();
+
             try {
-                storage.deleteContact(id - 1);
-            } catch (SQLException e) {
+                storage.deleteContact(contactNumber);
+            } catch (Exception e) {
                 consoleIO.clearScreen();
-                consoleIO.display("No such contact: ID = " + id);
+                consoleIO.display("No such contact: ID = " + contactNumber);
             }
         }
     }

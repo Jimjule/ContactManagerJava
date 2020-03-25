@@ -14,16 +14,6 @@ public class ConsoleIO {
         printer.println(message);
     }
 
-    public String getStringInput(int field, String fieldName) {
-        Boolean validInput = false;
-        String userInput = null;
-        while (!validInput) {
-            userInput = getInput(fieldName);
-            validInput = ValidateInput.validateInput(field, userInput);
-        }
-        return userInput;
-    }
-
     public int getNumberInput() {
         String userInput;
         try {
