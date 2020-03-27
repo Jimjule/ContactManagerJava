@@ -17,21 +17,15 @@ public final class Constants {
             "5. DOB\n" +
             "6. Email";
 
+    public static final String[] CREATEUSER = {"psql", "CREATE ROLE postgres WITH createdb login"};
+
     public static final String LOCALCONNECTION = "jdbc:postgresql://localhost:5432/";
 
     public static final String PRODCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/contactmanagerdb";
 
-    public static final String LOCALDATABASE = "local_contact_manager";
-
-    public static final String TESTCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/testContactManager";
-
-    public static final String DBNAME = "contactmanagerdb";
-
-    public static final String USERNAME = "postgres";
-
-    public static final String PASSWORD = "contactManager1";
-
     public static final String CREATEDB = "CREATE DATABASE local_contact_manager";
+
+    public static final String LOCALDATABASE = "local_contact_manager";
 
     public static final String CREATETABLE = "CREATE TABLE contactmanagerdb(" +
             "ID SERIAL," +
@@ -42,5 +36,13 @@ public final class Constants {
             "DOB DATE NOT NULL," +
             "EMAIL VARCHAR(50) UNIQUE" +
             ");";
+
+    public static final String DBNAME = "contactmanagerdb";
+
+    public static final String TESTCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/testContactManager";
+
+    public static final String USERNAME = "postgres";
+
+    public static final String PASSWORD = "contactManager1";
 
 }
