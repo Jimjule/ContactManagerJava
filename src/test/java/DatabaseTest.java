@@ -36,7 +36,7 @@ public class DatabaseTest {
         contactArray = new ArrayList<Contact>();
 
         connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
-        database = new Database(consoleIO, Constants.DBNAME, connection);
+        database = new Database(consoleIO, connection);
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
@@ -72,11 +72,14 @@ public class DatabaseTest {
     public void getContact() throws Exception {
         database.createContact(contact);
 
-        assertEquals(database.getContact(1).getFirstName(), "Jamey");
-        assertEquals(database.getContact(1).getLastName(), "Namerson");
-        assertEquals(database.getContact(1).getAddress(), "A Palace");
-        assertEquals(database.getContact(1).getPhoneNumber(), "130077");
-        assertEquals(database.getContact(1).getEmail(), "email@email.com");
+        Contact contact = database.getContact(1);
+
+        assertNotNull(contact);
+        assertEquals(contact.getFirstName(), "Jamey");
+        assertEquals(contact.getLastName(), "Namerson");
+        assertEquals(contact.getAddress(), "A Palace");
+        assertEquals(contact.getPhoneNumber(), "130077");
+        assertEquals(contact.getEmail(), "email@email.com");
     }
 
     @Test

@@ -36,8 +36,6 @@ public final class Constants {
             "EMAIL VARCHAR(50) UNIQUE" +
             ");";
 
-    public static final String DBNAME = "contactmanagerdb";
-
     public static final String TESTCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/testContactManager";
 
 }
