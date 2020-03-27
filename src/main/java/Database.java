@@ -1,5 +1,6 @@
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Database implements Storage {
 
@@ -7,10 +8,8 @@ public class Database implements Storage {
     private Connection connection;
     private Statement statement;
     private String dbName;
-    public ArrayList<Contact> contactArray;
 
-    public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String dbName, Connection connection) {
-        this.contactArray = contactArray;
+    public Database(ConsoleIO consoleIO, String dbName, Connection connection) {
         this.consoleIO = consoleIO;
         this.dbName = dbName;
         this.connection = connection;
@@ -85,22 +84,23 @@ public class Database implements Storage {
 
     @Override
     public void showContacts() {
-        getContacts();
+        List<Contact> contacts = getContacts();
         if (contactsExist()) {
-            for (int i = 0; i < contactArray.size(); i++) {
+            for (int i = 0; i < contacts.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                contactArray.get(i).printContactDetails();
+                contacts.get(i).printContactDetails();
             }
         }
     }
 
-    public void getContacts() {
+    @Override
+    public List<Contact> getContacts() {
+        List<Contact> contactArray = new LinkedList<>();
         try {
             Contact contact;
             statement = connection.createStatement();
             String getAllContacts = "SELECT * FROM " + dbName + " ;";
             ResultSet allContacts = statement.executeQuery(getAllContacts);
-            contactArray.removeAll(contactArray);
             while(allContacts.next()) {
                 contact = new Contact(
                         allContacts.getString("first_name"),
@@ -116,6 +116,7 @@ public class Database implements Storage {
         } catch (SQLException e) {
             consoleIO.display("Can't display contacts");
         }
+        return contactArray;
     }
 
     public boolean contactsExist() {

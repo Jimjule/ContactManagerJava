@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.List;
 
 public interface Storage {
 
@@ -9,6 +10,8 @@ public interface Storage {
     void updateContact(Contact contact, int field, String input) throws SQLException;
 
     Contact getContact(int index) throws Exception;
+
+    List<Contact> getContacts();
 
     void showContacts();
 

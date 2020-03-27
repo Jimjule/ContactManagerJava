@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactList implements Storage {
 
@@ -42,6 +43,11 @@ public class ContactList implements Storage {
     public Contact getContact(int index) throws IndexOutOfBoundsException {
         Contact contact = contactArray.get(index - 1);
         return contact;
+    }
+
+    @Override
+    public List<Contact> getContacts() {
+        return contactArray;
     }
 
     public void deleteContact(int index) {

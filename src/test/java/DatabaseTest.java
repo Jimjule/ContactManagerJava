@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,10 +35,8 @@ public class DatabaseTest {
 
         contactArray = new ArrayList<Contact>();
 
-
-
         connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
-        database = new Database(contactArray, consoleIO, Constants.DBNAME, connection);
+        database = new Database(consoleIO, Constants.DBNAME, connection);
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
@@ -84,8 +83,8 @@ public class DatabaseTest {
     public void showContacts() {
         database.createContact(contact);
         database.createContact(secondContact);
-        database.showContacts();
-        assertEquals(2, database.contactArray.size());
+        List<Contact> contacts = database.getContacts();
+        assertEquals(2, contacts.size());
     }
 
     @Test

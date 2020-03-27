@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseSpy implements Storage {
 
@@ -27,6 +28,11 @@ public class DatabaseSpy implements Storage {
 
     public Contact getContact(int id) {
         getContactHasBeenCalled = true;
+        return null;
+    }
+
+    @Override
+    public List<Contact> getContacts() {
         return null;
     }
 
