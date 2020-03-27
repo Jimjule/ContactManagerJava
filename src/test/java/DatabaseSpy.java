@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 
 public class DatabaseSpy implements Storage {
@@ -10,17 +9,7 @@ public class DatabaseSpy implements Storage {
     private boolean deleteContactHasBeenCalled;
     private boolean displayContactsHasBeenCalled;
 
-    private ConsoleIO consoleIO;
-    private Connection connection;
-
-    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, String dbName) {
-        this.consoleIO = consoleIO;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(database, "postgres", "contactManager1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, Connection connection) {
     }
 
     @Override

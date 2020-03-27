@@ -1,7 +1,5 @@
 public final class Constants {
 
-    private Constants() {}
-
     public static final String MENUOPTIONS = "Please select an option:\n" +
             "1. New Contact\n" +
             "2. Update Contact\n" +
@@ -9,6 +7,7 @@ public final class Constants {
             "4. View Contacts\n" +
             "5. View Specific Contact\n" +
             "6. Exit";
+
     public static final String UPDATEFIELDS = "Select a field to update:\n" +
             "1. First name\n" +
             "2. Last name\n" +
@@ -17,15 +16,15 @@ public final class Constants {
             "5. DOB\n" +
             "6. Email";
 
-    public static final String[] CREATEUSER = {"psql", "CREATE ROLE postgres WITH createdb login"};
-
     public static final String LOCALCONNECTION = "jdbc:postgresql://localhost:5432/";
 
-    public static final String PRODCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/contactmanagerdb";
+    public static final String CREATEDB = "CREATE DATABASE prod_contact_manager";
 
-    public static final String CREATEDB = "CREATE DATABASE local_contact_manager";
+    public static final String CREATETESTDB = "CREATE DATABASE test_contact_manager";
 
-    public static final String LOCALDATABASE = "local_contact_manager";
+    public static final String PRODDATABASE = "prod_contact_manager";
+
+    public static final String TESTDATABASE = "test_contact_manager";
 
     public static final String CREATETABLE = "CREATE TABLE contactmanagerdb(" +
             "ID SERIAL," +
@@ -40,9 +39,5 @@ public final class Constants {
     public static final String DBNAME = "contactmanagerdb";
 
     public static final String TESTCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/testContactManager";
-
-    public static final String USERNAME = "postgres";
-
-    public static final String PASSWORD = "contactManager1";
 
 }

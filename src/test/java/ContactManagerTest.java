@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,16 +15,26 @@ public class ContactManagerTest {
     private ConsoleIOSpy consoleIO;
     private DatabaseSpy database;
     private Contact contact;
+    private Connection connection;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+    public ContactManagerTest() {
+        Run.startPostgres();
+        Run.startDatabaseCluster();
+        connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
+    }
 
     @BeforeEach
     public void setUp() {
+
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
 
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList<Contact> arrayList = new ArrayList<Contact>();
-        database = new DatabaseSpy(arrayList, consoleIO, Constants.TESTCONTACTMANAGERDB, Constants.DBNAME);
+
+
+        database = new DatabaseSpy(arrayList, consoleIO, Constants.TESTCONTACTMANAGERDB, connection);
         contactList = new ContactListSpy(arrayList, consoleIO);
 
         contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email", consoleIO);
@@ -37,7 +48,6 @@ public class ContactManagerTest {
         contactManager.newContact();
         assertEquals(true, contactList.returnCreateContactHasBeenCalled());
     }
-
 
     @Test
     public void deleteAsksForNumberInput() {
@@ -95,7 +105,6 @@ public class ContactManagerTest {
         contactManager.newContact();
         assertEquals(true, database.returnCreateContactHasBeenCalled());
     }
-
 
     @Test
     public void dbDeleteAsksForNumberInput() {

@@ -33,7 +33,10 @@ public class DatabaseTest {
         secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com", consoleIO);
 
         contactArray = new ArrayList<Contact>();
-        connection = DriverManager.getConnection(Constants.TESTCONTACTMANAGERDB, "postgres", "contactManager1");
+
+
+
+        connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
         database = new Database(contactArray, consoleIO, Constants.DBNAME, connection);
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
