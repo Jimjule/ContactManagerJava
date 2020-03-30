@@ -30,8 +30,8 @@ public class DatabaseTest {
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         ConsoleIOSpy consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
 
-        contact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
-        secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com", consoleIO);
+        contact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
+        secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com");
 
         contactArray = new ArrayList<Contact>();
 

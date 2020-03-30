@@ -72,7 +72,7 @@ public class ContactManager {
         consoleIO.clearScreen();
         try {
             Contact contact = storage.getContact(id);
-            contact.printContactDetails();
+            consoleIO.display(contact.printContactDetails());
         } catch (Exception e) {
             consoleIO.clearScreen();
             consoleIO.display("No such contact: ID = " + id);
@@ -87,8 +87,7 @@ public class ContactManager {
                 getInputLoop(3, Contact.getFieldName(3)),
                 getInputLoop(4, Contact.getFieldName(4)),
                 getInputLoop(5, Contact.getFieldName(5)),
-                getInputLoop(6, Contact.getFieldName(6)),
-                consoleIO
+                getInputLoop(6, Contact.getFieldName(6))
         );
         storage.createContact(contact);
         consoleIO.clearScreen();

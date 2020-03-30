@@ -1,7 +1,5 @@
 public class Contact {
 
-    private ConsoleIO consoleIO;
-
     private String firstName;
     private String lastName;
     private String address;
@@ -16,8 +14,7 @@ public class Contact {
     public static final String dOBField = "Date of Birth (dd/MM/yyyy)";
     public static final String emailField = "Unique Email Address";
 
-    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email, ConsoleIO consoleIO) {
-        this.consoleIO = consoleIO;
+    public Contact(String firstName, String lastName, String address, String phoneNumber, String dOB, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -75,16 +72,15 @@ public class Contact {
         }
     }
 
-    public void printContactDetails() {
-        consoleIO.display("-----\n" +
+    public String printContactDetails() {
+        return "-----\n" +
                 Contact.firstNameField + ": " + getFirstName() + "\n" +
                 Contact.lastNameField + ": " + getLastName() + "\n" +
                 Contact.addressField + ": " + getAddress() + "\n" +
                 Contact.phoneNumberField + ": " + getPhoneNumber() + "\n" +
                 Contact.dOBField + ": " + getdOB() + "\n" +
                 Contact.emailField + ": " + getEmail() + "\n" +
-                "-----\n"
-        );
+                "-----\n";
     }
 
     public static boolean validateInput(int field, String input) {

@@ -37,7 +37,7 @@ public class ContactManagerTest {
         database = new DatabaseSpy(arrayList, consoleIO, connection);
         contactList = new ContactListSpy(arrayList, consoleIO);
 
-        contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email", consoleIO);
+        contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email");
         arrayList.add(contact);
         contactManager = new ContactManager(consoleIO, contactList, database);
     }

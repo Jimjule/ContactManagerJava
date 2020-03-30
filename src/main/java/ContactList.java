@@ -20,7 +20,7 @@ public class ContactList implements Storage {
         if (contactsExist()) {
             for (int i = 0; i < contactArray.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                contactArray.get(i).printContactDetails();
+                consoleIO.display(contactArray.get(i).printContactDetails());
             }
         }
     }

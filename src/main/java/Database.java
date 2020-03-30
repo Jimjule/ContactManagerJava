@@ -90,8 +90,7 @@ public class Database implements Storage {
                     setContact.getString("address"),
                     setContact.getString("phone_number"),
                     setContact.getString("dob"),
-                    setContact.getString("email"),
-                    consoleIO
+                    setContact.getString("email")
             );
             getSingle.close();
             return contact;
@@ -106,7 +105,7 @@ public class Database implements Storage {
         if (contactsExist()) {
             for (int i = 0; i < contacts.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                contacts.get(i).printContactDetails();
+                consoleIO.display(contacts.get(i).printContactDetails());
             }
         }
     }
@@ -125,8 +124,7 @@ public class Database implements Storage {
                         allContacts.getString("address"),
                         allContacts.getString("phone_number"),
                         allContacts.getString("dob"),
-                        allContacts.getString("email"),
-                        consoleIO
+                        allContacts.getString("email")
                 );
                 contactArray.add(contact);
             }

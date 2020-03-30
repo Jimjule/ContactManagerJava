@@ -26,5 +26,4 @@
 
 ## Changelog
 
-- Replaces sql queries with prepared statements
-- Removes unused constant
+- Removes Contact dependency on ConsoleIO
