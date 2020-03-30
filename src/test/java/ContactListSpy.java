@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ContactListSpy implements Storage {
 
@@ -44,7 +45,7 @@ public class ContactListSpy implements Storage {
         this.deleteContactHasBeenCalled = true;
     }
 
-    public Contact getContact(int index) {
+    public Optional<Contact> getContact(int index) {
         this.getContactHasBeenCalled = true;
         return null;
     }

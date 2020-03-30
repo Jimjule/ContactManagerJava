@@ -59,13 +59,6 @@ public class ContactManagerTest {
     }
 
     @Test
-    public void updateCallsUpdateContactList() {
-        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
-        contactManager.updateContact();
-        assertTrue(contactList.returnUpdateContactHasBeenCalled());
-    }
-
-    @Test
     public void updateCallsGetNumberInput() {
         contactManager.updateContact();
         assertTrue(consoleIO.returnGetNumberInputHasBeenCalled());
@@ -108,11 +101,5 @@ public class ContactManagerTest {
         contactManager.newContact();
         contactManager.deleteContact();
         assertEquals(true, database.returnDeleteContactHasBeenCalled());
-    }
-
-    @Test
-    public void dbUpdateCallsGetNumberInput() {
-        contactManager.updateContact();
-        assertTrue(database.returnUpdateContactHasBeenCalled());
     }
 }

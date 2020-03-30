@@ -3,16 +3,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Database implements Storage {
 
     private ConsoleIO consoleIO;
     private Connection connection;
-    private String tableName;
 
     public Database(ConsoleIO consoleIO, Connection connection) {
         this.consoleIO = consoleIO;
-        this.tableName = "contactmanagerdb";
         this.connection = connection;
     }
 
@@ -29,7 +28,6 @@ public class Database implements Storage {
 
     @Override
     public void createContact(Contact contact) {
-
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         java.util.Date parsed;
         try {
@@ -81,7 +79,7 @@ public class Database implements Storage {
     }
 
     @Override
-    public Contact getContact(int index) throws SQLException {
+    public Optional<Contact> getContact(int index) throws SQLException {
         Contact contact;
         PreparedStatement getSingle = connection.prepareStatement("SELECT * FROM contactmanagerdb OFFSET ? LIMIT 1");
         getSingle.setInt(1, index - 1);
@@ -97,9 +95,9 @@ public class Database implements Storage {
                     setContact.getString("email")
             );
             getSingle.close();
-            return contact;
+            return Optional.of(contact);
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 

@@ -30,5 +30,4 @@
 
 ## Changelog
 
-- Makes storage private in ContactManager
-
+- Database gets Optional<Contact>

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ContactList implements Storage {
 
@@ -40,9 +41,9 @@ public class ContactList implements Storage {
     }
 
     @Override
-    public Contact getContact(int index) throws IndexOutOfBoundsException {
+    public Optional<Contact> getContact(int index) throws IndexOutOfBoundsException {
         Contact contact = contactArray.get(index - 1);
-        return contact;
+        return Optional.ofNullable(contact);
     }
 
     @Override

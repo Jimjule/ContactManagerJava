@@ -72,7 +72,7 @@ public class DatabaseTest {
     public void getContact() throws Exception {
         database.createContact(contact);
 
-        Contact contact = database.getContact(1);
+        Contact contact = database.getContact(1).get();
 
         assertNotNull(contact);
         assertEquals(contact.getFirstName(), "Jamey");
@@ -94,7 +94,7 @@ public class DatabaseTest {
     public void updateContact() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "Updatename");
-        Contact updatedContact = database.getContact(1);
+        Contact updatedContact = database.getContact(1).get();
         assertEquals("Updatename", updatedContact.getFirstName());
     }
 
@@ -102,7 +102,7 @@ public class DatabaseTest {
     public void updateContactFails() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "lowercase");
-        Contact updatedContact = database.getContact(1);
+        Contact updatedContact = database.getContact(1).get();
         assertEquals(defaultFirstName, updatedContact.getFirstName());
     }
 }

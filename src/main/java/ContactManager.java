@@ -71,7 +71,7 @@ public class ContactManager {
         int id = consoleIO.getNumberInput();
         consoleIO.clearScreen();
         try {
-            Contact contact = storage.getContact(id);
+            Contact contact = storage.getContact(id).get();
             consoleIO.display(contact.printContactDetails());
         } catch (Exception e) {
             consoleIO.clearScreen();
@@ -112,7 +112,7 @@ public class ContactManager {
             int contactNumber = consoleIO.getNumberInput();
 
             try {
-                Contact contact = storage.getContact(contactNumber);
+                Contact contact = storage.getContact(contactNumber).get();
 
                 consoleIO.display(Constants.UPDATEFIELDS);
                 int field = consoleIO.getNumberInput();
@@ -123,7 +123,6 @@ public class ContactManager {
                 consoleIO.display("No such contact");
             }
         }
-        consoleIO.clearScreen();
     }
 
     public void deleteContact() {
