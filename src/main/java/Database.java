@@ -58,10 +58,10 @@ public class Database implements Storage {
 
     @Override
     public void deleteContact(int index) throws SQLException {
-        Statement statement = connection.createStatement();
-        String deleteAtIndex = "DELETE FROM " + tableName + " WHERE id = (SELECT id FROM " + tableName + " OFFSET " + (index - 1) + " LIMIT 1)";
-        statement.execute(deleteAtIndex);
-        statement.close();
+        PreparedStatement delete = connection.prepareStatement("DELETE FROM contactmanagerdb WHERE id = (SELECT id FROM contactmanagerdb OFFSET ? LIMIT  1)");
+        delete.setInt(1, index - 1);
+        delete.execute();
+        delete.close();
         consoleIO.clearScreen();
         consoleIO.display("Contact Deleted");
     }

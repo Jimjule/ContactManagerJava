@@ -26,6 +26,6 @@
 
 ## Changelog
 
-- Recases constants
-- Connects to database on startup
+- Replaces sql queries with prepared statements
+- Removes Database arrayList
 
