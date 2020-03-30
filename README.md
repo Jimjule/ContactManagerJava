@@ -5,6 +5,10 @@
 - Save, view, and edit contact information in computer memory
 - Created in IntelliJ, with Gradle, navigate to the project root `ContactManagerJava/`
 
+## Requirements
+
+- Postgres
+
 ## Installation
 
 - Copy this repository to your target directory
@@ -26,4 +30,5 @@
 
 ## Changelog
 
-- Makes getDBColumnName private
+- Makes storage private in ContactManager
+

@@ -3,7 +3,7 @@ public class ContactManager {
     private ConsoleIO consoleIO;
     private Storage contactList;
     private Storage database;
-    public Storage storage;
+    private Storage storage;
 
     public ContactManager(ConsoleIO consoleIO, Storage contactList, Storage database) {
         this.consoleIO = consoleIO;

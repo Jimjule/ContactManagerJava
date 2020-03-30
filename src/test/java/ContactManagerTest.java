@@ -44,14 +44,15 @@ public class ContactManagerTest {
 
     @Test
     public void newContactGetsInputs() {
-        contactManager.storage = contactList;
+        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
+        contactManager.selectStorageDestination();
         contactManager.newContact();
         assertEquals(true, contactList.returnCreateContactHasBeenCalled());
     }
 
     @Test
     public void deleteAsksForNumberInput() {
-        contactManager.storage = contactList;
+        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
         contactManager.newContact();
         contactManager.deleteContact();
         assertEquals(true, contactList.returnDeleteContactHasBeenCalled());
@@ -59,56 +60,51 @@ public class ContactManagerTest {
 
     @Test
     public void updateCallsUpdateContactList() {
-        contactManager.storage = contactList;
+        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
         contactManager.updateContact();
         assertTrue(contactList.returnUpdateContactHasBeenCalled());
     }
 
     @Test
     public void updateCallsGetNumberInput() {
-        contactManager.storage = contactList;
         contactManager.updateContact();
         assertTrue(consoleIO.returnGetNumberInputHasBeenCalled());
     }
 
     @Test
     public void viewContactsCallsCorrectMethods() {
-        contactManager.storage = contactList;
+        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
         contactManager.showContacts();
         assertEquals(true, contactList.returnDisplayContactsHasBeenCalled());
     }
 
     @Test
     public void getContact() {
-        contactManager.storage = contactList;
+        ContactManager contactManager = new ContactManager(consoleIO, contactList, contactList);
         contactManager.getContact();
         assertEquals(true, contactList.returnGetContactHasBeenCalled());
     }
 
     @Test
     public void dbGetContact() {
-        contactManager.storage = database;
         contactManager.getContact();
         assertEquals(true, database.returnGetContactHasBeenCalled());
     }
 
     @Test
     public void dbViewContactsCallsCorrectMethods() {
-        contactManager.storage = database;
         contactManager.showContacts();
         assertEquals(true, database.returnDisplayContactsHasBeenCalled());
     }
 
     @Test
     public void dbNewContactGetsInputs() {
-        contactManager.storage = database;
         contactManager.newContact();
         assertEquals(true, database.returnCreateContactHasBeenCalled());
     }
 
     @Test
     public void dbDeleteAsksForNumberInput() {
-        contactManager.storage = database;
         contactManager.newContact();
         contactManager.deleteContact();
         assertEquals(true, database.returnDeleteContactHasBeenCalled());
@@ -116,7 +112,6 @@ public class ContactManagerTest {
 
     @Test
     public void dbUpdateCallsGetNumberInput() {
-        contactManager.storage = database;
         contactManager.updateContact();
         assertTrue(database.returnUpdateContactHasBeenCalled());
     }
