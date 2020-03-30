@@ -27,5 +27,3 @@
 ## Changelog
 
 - Replaces sql queries with prepared statements
-- Removes Database arrayList
-

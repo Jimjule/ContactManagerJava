@@ -70,6 +70,13 @@ public class Database implements Storage {
     public void updateContact(Contact contact, int field, String input) throws SQLException {
         if(Contact.validateInput(field, input)) {
             Statement statement = connection.createStatement();
+            PreparedStatement update = connection.prepareStatement("UPDATE contactmanagerdb SET ? = ? WHERE email = ?");
+            String databaseColumn = getDBColumnName(field);
+            update.setString(1, databaseColumn);
+            update.setString(2, input);
+            update.setString(3, contact.getEmail());
+//            update.execute();
+            update.close();
             String updateEntry = "UPDATE " + tableName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
             statement.execute(updateEntry);
         } else {
@@ -80,11 +87,11 @@ public class Database implements Storage {
     @Override
     public Contact getContact(int index) throws SQLException {
         Contact contact;
-            Statement statement = connection.createStatement();
-            String getAtIndex = "SELECT * FROM " + tableName + " OFFSET " + (index - 1) + " LIMIT 1;";
-            ResultSet setContact = statement.executeQuery(getAtIndex);
+        PreparedStatement getSingle = connection.prepareStatement("SELECT * FROM contactmanagerdb OFFSET ? LIMIT 1");
+        getSingle.setInt(1, index - 1);
+        ResultSet setContact = getSingle.executeQuery();
         boolean next = setContact.next();
-        if( next) {
+        if(next) {
             contact = new Contact(
                     setContact.getString("first_name"),
                     setContact.getString("last_name"),
@@ -94,7 +101,7 @@ public class Database implements Storage {
                     setContact.getString("email"),
                     consoleIO
             );
-            statement.close();
+            getSingle.close();
             return contact;
         } else {
             return null; // <-- this is going to catch you out sooooooooooooo bad. There is a type! Option<Contact>
@@ -117,9 +124,8 @@ public class Database implements Storage {
         List<Contact> contactArray = new LinkedList<>();
         try {
             Contact contact;
-            Statement statement = connection.createStatement();
-            String getAllContacts = "SELECT * FROM " + tableName + " ;";
-            ResultSet allContacts = statement.executeQuery(getAllContacts);
+            PreparedStatement getAll = connection.prepareStatement("SELECT * FROM contactmanagerdb");
+            ResultSet allContacts = getAll.executeQuery();
             while(allContacts.next()) {
                 contact = new Contact(
                         allContacts.getString("first_name"),
@@ -132,6 +138,7 @@ public class Database implements Storage {
                 );
                 contactArray.add(contact);
             }
+            getAll.close();
         } catch (SQLException e) {
             consoleIO.display("Can't display contacts");
         }
