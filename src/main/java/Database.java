@@ -67,10 +67,14 @@ public class Database implements Storage {
 
     @Override
     public void updateContact(Contact contact, int field, String input) throws SQLException {
+        consoleIO.clearScreen();
         if(Contact.validateInput(field, input)) {
-            Statement statement = connection.createStatement();
-            String updateEntry = "UPDATE " + tableName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
-            statement.execute(updateEntry);
+            PreparedStatement update = connection.prepareStatement("UPDATE contactmanagerdb SET " + getDBColumnName(field) + "  = ? WHERE email = ?");
+            update.setString(1, input);
+            update.setString(2, contact.getEmail());
+            update.execute();
+            update.close();
+            consoleIO.display("Contact Updated");
         } else {
             consoleIO.display("Invalid input for this field.");
         }

@@ -26,4 +26,4 @@
 
 ## Changelog
 
-- Removes Contact dependency on ConsoleIO
+- Implements a database prepared statement for update contact
