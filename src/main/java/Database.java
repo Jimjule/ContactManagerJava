@@ -36,7 +36,6 @@ public class Database implements Storage {
             parsed = format.parse(contact.getdOB());
         } catch (ParseException e) {
             throw new RuntimeException(e);
-            // this is giant faff that needs fixing somewhere else...
         }
 
         try {
@@ -70,13 +69,6 @@ public class Database implements Storage {
     public void updateContact(Contact contact, int field, String input) throws SQLException {
         if(Contact.validateInput(field, input)) {
             Statement statement = connection.createStatement();
-            PreparedStatement update = connection.prepareStatement("UPDATE contactmanagerdb SET ? = ? WHERE email = ?");
-            String databaseColumn = getDBColumnName(field);
-            update.setString(1, databaseColumn);
-            update.setString(2, input);
-            update.setString(3, contact.getEmail());
-//            update.execute();
-            update.close();
             String updateEntry = "UPDATE " + tableName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
             statement.execute(updateEntry);
         } else {
@@ -104,7 +96,7 @@ public class Database implements Storage {
             getSingle.close();
             return contact;
         } else {
-            return null; // <-- this is going to catch you out sooooooooooooo bad. There is a type! Option<Contact>
+            return null;
         }
     }
 

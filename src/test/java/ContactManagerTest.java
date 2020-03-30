@@ -34,7 +34,7 @@ public class ContactManagerTest {
         ArrayList<Contact> arrayList = new ArrayList<Contact>();
 
 
-        database = new DatabaseSpy(arrayList, consoleIO, Constants.TESTCONTACTMANAGERDB, connection);
+        database = new DatabaseSpy(arrayList, consoleIO, connection);
         contactList = new ContactListSpy(arrayList, consoleIO);
 
         contact = new Contact("Name", "Lastname", "Yep", "812739", "10/11/1987", "first@email", consoleIO);

@@ -10,7 +10,7 @@ public class DatabaseSpy implements Storage {
     private boolean deleteContactHasBeenCalled;
     private boolean displayContactsHasBeenCalled;
 
-    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, Connection connection) {
+    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, Connection connection) {
     }
 
     @Override
