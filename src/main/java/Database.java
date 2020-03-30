@@ -16,7 +16,7 @@ public class Database implements Storage {
         this.connection = connection;
     }
 
-    public static String getDBColumnName(int field) {
+    private static String getDBColumnName(int field) {
         switch (field) {
             case 1: return "first_name";
             case 2: return "last_name";

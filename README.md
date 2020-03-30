@@ -26,4 +26,4 @@
 
 ## Changelog
 
-- Implements a database prepared statement for update contact
+- Makes getDBColumnName private
