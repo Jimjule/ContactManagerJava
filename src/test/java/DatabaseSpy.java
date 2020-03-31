@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +10,7 @@ public class DatabaseSpy implements Storage {
     private boolean deleteContactHasBeenCalled;
     private boolean displayContactsHasBeenCalled;
 
-    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, Connection connection) {
+    public DatabaseSpy (Connection connection) {
     }
 
     @Override
@@ -38,8 +37,9 @@ public class DatabaseSpy implements Storage {
     }
 
     @Override
-    public void showContacts() {
+    public Optional<List<Contact>> showContacts() {
         this.displayContactsHasBeenCalled = true;
+        return Optional.empty();
     }
 
     public boolean contactsExist() {

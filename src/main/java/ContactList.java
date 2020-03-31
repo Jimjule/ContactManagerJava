@@ -1,13 +1,12 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ContactList implements Storage {
 
-    private ArrayList<Contact> contactArray;
+    private List<Contact> contactArray;
     private ConsoleIO consoleIO;
 
-    public ContactList(ArrayList<Contact> contactArray, ConsoleIO consoleIO) {
+    public ContactList(List<Contact> contactArray, ConsoleIO consoleIO) {
         this.contactArray = contactArray;
         this.consoleIO = consoleIO;
     }
@@ -17,13 +16,11 @@ public class ContactList implements Storage {
     }
 
     @Override
-    public void showContacts() {
+    public Optional<List<Contact>> showContacts() {
         if (contactsExist()) {
-            for (int i = 0; i < contactArray.size(); i++) {
-                consoleIO.display(String.valueOf(i + 1));
-                consoleIO.display(contactArray.get(i).printContactDetails());
-            }
+            return Optional.of(contactArray);
         }
+        return Optional.empty();
     }
 
     public boolean contactsExist() {

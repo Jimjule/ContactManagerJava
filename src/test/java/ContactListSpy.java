@@ -29,8 +29,9 @@ public class ContactListSpy implements Storage {
         return true;
     }
 
-    public void showContacts() {
+    public Optional<List<Contact>> showContacts() {
         this.displayContactsHasBeenCalled = true;
+        return Optional.empty();
     }
 
     public void printContactDetails(Contact contact) {
@@ -47,7 +48,7 @@ public class ContactListSpy implements Storage {
 
     public Optional<Contact> getContact(int index) {
         this.getContactHasBeenCalled = true;
-        return null;
+        return Optional.empty();
     }
 
     @Override

@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Optional;
+
 public class ContactManager {
 
     private ConsoleIO consoleIO;
@@ -147,6 +150,13 @@ public class ContactManager {
 
     public void showContacts() {
         consoleIO.clearScreen();
-        storage.showContacts();
+        Optional<List<Contact>> contactsOptional = storage.showContacts();
+        if (contactsOptional.isPresent()) {
+            List<Contact> contacts = contactsOptional.get();
+            for (int i = 0; i < contacts.size(); i++) {
+                consoleIO.display(String.valueOf(i + 1));
+                consoleIO.display(contacts.get(i).printContactDetails());
+            }
+        }
     }
 }

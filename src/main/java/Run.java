@@ -19,7 +19,7 @@ public class Run {
 
         ArrayList<Contact> arrayList = new ArrayList<>();
         ContactList contactList = new ContactList(arrayList, consoleIO);
-        Database database = new Database(consoleIO, connection);
+        Database database = new Database(connection);
         ContactManager contactManager = new ContactManager(consoleIO, contactList, database);
 
         consoleIO.clearScreen();

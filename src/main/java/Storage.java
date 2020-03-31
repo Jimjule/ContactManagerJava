@@ -14,7 +14,7 @@ public interface Storage {
 
     List<Contact> getContacts();
 
-    void showContacts();
+    Optional<List<Contact>> showContacts();
 
     boolean contactsExist();
 }

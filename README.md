@@ -37,5 +37,6 @@ Future features may include:
 
 ## Changelog
 
-- Underscore constants
-- Switch statements do not default to email, get correct input from loop
+- showContacts() returns Optional
+- Removes ConsoleIO from Database
+- ContactList uses List, not ArrayList

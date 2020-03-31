@@ -7,11 +7,9 @@ import java.util.Optional;
 
 public class Database implements Storage {
 
-    private ConsoleIO consoleIO;
     private Connection connection;
 
-    public Database(ConsoleIO consoleIO, Connection connection) {
-        this.consoleIO = consoleIO;
+    public Database(Connection connection) {
         this.connection = connection;
     }
 
@@ -47,9 +45,6 @@ public class Database implements Storage {
             create.execute();
             create.close();
         } catch (SQLException e) {
-            System.out.println(e);
-            consoleIO.clearScreen();
-            consoleIO.display("Invalid data, please try again");
         }
     }
 
@@ -59,21 +54,16 @@ public class Database implements Storage {
         delete.setInt(1, index - 1);
         delete.execute();
         delete.close();
-        consoleIO.clearScreen();
-        consoleIO.display("Contact Deleted");
     }
 
     @Override
     public void updateContact(Contact contact, int field, String input) throws SQLException {
-        consoleIO.clearScreen();
         if(Contact.validateInput(field, input)) {
             PreparedStatement update = connection.prepareStatement("UPDATE contactmanagerdb SET " + getDBColumnName(field) + "  = ? WHERE email = ?");
             update.setString(1, input);
             update.setString(2, contact.getEmail());
             update.execute();
             update.close();
-        } else {
-            consoleIO.display("Invalid input for this field.");
         }
     }
 
@@ -101,13 +91,12 @@ public class Database implements Storage {
     }
 
     @Override
-    public void showContacts() {
-        List<Contact> contacts = getContacts();
-        if (contactsExist()) {
-            for (int i = 0; i < contacts.size(); i++) {
-                consoleIO.display(String.valueOf(i + 1));
-                consoleIO.display(contacts.get(i).printContactDetails());
-            }
+    public Optional<List<Contact>> showContacts() {
+        if (getContacts().size() > 0) {
+            List<Contact> contacts = getContacts();
+            return Optional.of(contacts);
+        } else {
+            return Optional.empty();
         }
     }
 
@@ -131,7 +120,7 @@ public class Database implements Storage {
             }
             getAll.close();
         } catch (SQLException e) {
-            consoleIO.display("Can't display contacts");
+            e.printStackTrace();
         }
         return contactArray;
     }

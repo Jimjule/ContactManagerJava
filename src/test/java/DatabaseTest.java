@@ -18,7 +18,6 @@ public class DatabaseTest {
     private Contact secondContact;
     private Connection connection;
     private Statement statement;
-    private ArrayList<Contact> contactArray;
 
     public static String defaultFirstName = "Jamey";
 
@@ -33,10 +32,8 @@ public class DatabaseTest {
         contact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
         secondContact = new Contact(defaultFirstName, "Namerson", "A Palace", "130077", "01/01/1999", "secondemail@email.com");
 
-        contactArray = new ArrayList<Contact>();
-
         connection = Run.getConnection(Constants.CREATE_TEST_DB, Constants.TEST_DATABASE);
-        database = new Database(consoleIO, connection);
+        database = new Database(connection);
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
 
