@@ -19,7 +19,7 @@ public class ContactTest {
         String testString = "Testing";
         InputStream fixedInput = new ByteArrayInputStream(testString.getBytes());
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
-        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
     }
 
     @Test

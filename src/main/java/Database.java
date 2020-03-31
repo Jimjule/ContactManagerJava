@@ -3,20 +3,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Database implements Storage {
 
     private ConsoleIO consoleIO;
     private Connection connection;
-    private String tableName;
 
     public Database(ConsoleIO consoleIO, Connection connection) {
         this.consoleIO = consoleIO;
-        this.tableName = "contactmanagerdb";
         this.connection = connection;
     }
 
-    public static String getDBColumnName(int field) {
+    private static String getDBColumnName(int field) {
         switch (field) {
             case 1: return "first_name";
             case 2: return "last_name";
@@ -29,14 +28,12 @@ public class Database implements Storage {
 
     @Override
     public void createContact(Contact contact) {
-
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         java.util.Date parsed;
         try {
             parsed = format.parse(contact.getdOB());
         } catch (ParseException e) {
             throw new RuntimeException(e);
-            // this is giant faff that needs fixing somewhere else...
         }
 
         try {
@@ -68,36 +65,39 @@ public class Database implements Storage {
 
     @Override
     public void updateContact(Contact contact, int field, String input) throws SQLException {
+        consoleIO.clearScreen();
         if(Contact.validateInput(field, input)) {
-            Statement statement = connection.createStatement();
-            String updateEntry = "UPDATE " + tableName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
-            statement.execute(updateEntry);
+            PreparedStatement update = connection.prepareStatement("UPDATE contactmanagerdb SET " + getDBColumnName(field) + "  = ? WHERE email = ?");
+            update.setString(1, input);
+            update.setString(2, contact.getEmail());
+            update.execute();
+            update.close();
+            consoleIO.display("Contact Updated");
         } else {
             consoleIO.display("Invalid input for this field.");
         }
     }
 
     @Override
-    public Contact getContact(int index) throws SQLException {
+    public Optional<Contact> getContact(int index) throws SQLException {
         Contact contact;
-            Statement statement = connection.createStatement();
-            String getAtIndex = "SELECT * FROM " + tableName + " OFFSET " + (index - 1) + " LIMIT 1;";
-            ResultSet setContact = statement.executeQuery(getAtIndex);
+        PreparedStatement getSingle = connection.prepareStatement("SELECT * FROM contactmanagerdb OFFSET ? LIMIT 1");
+        getSingle.setInt(1, index - 1);
+        ResultSet setContact = getSingle.executeQuery();
         boolean next = setContact.next();
-        if( next) {
+        if(next) {
             contact = new Contact(
                     setContact.getString("first_name"),
                     setContact.getString("last_name"),
                     setContact.getString("address"),
                     setContact.getString("phone_number"),
                     setContact.getString("dob"),
-                    setContact.getString("email"),
-                    consoleIO
+                    setContact.getString("email")
             );
-            statement.close();
-            return contact;
+            getSingle.close();
+            return Optional.of(contact);
         } else {
-            return null; // <-- this is going to catch you out sooooooooooooo bad. There is a type! Option<Contact>
+            return Optional.empty();
         }
     }
 
@@ -107,7 +107,7 @@ public class Database implements Storage {
         if (contactsExist()) {
             for (int i = 0; i < contacts.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                contacts.get(i).printContactDetails();
+                consoleIO.display(contacts.get(i).printContactDetails());
             }
         }
     }
@@ -117,9 +117,8 @@ public class Database implements Storage {
         List<Contact> contactArray = new LinkedList<>();
         try {
             Contact contact;
-            Statement statement = connection.createStatement();
-            String getAllContacts = "SELECT * FROM " + tableName + " ;";
-            ResultSet allContacts = statement.executeQuery(getAllContacts);
+            PreparedStatement getAll = connection.prepareStatement("SELECT * FROM contactmanagerdb");
+            ResultSet allContacts = getAll.executeQuery();
             while(allContacts.next()) {
                 contact = new Contact(
                         allContacts.getString("first_name"),
@@ -127,11 +126,11 @@ public class Database implements Storage {
                         allContacts.getString("address"),
                         allContacts.getString("phone_number"),
                         allContacts.getString("dob"),
-                        allContacts.getString("email"),
-                        consoleIO
+                        allContacts.getString("email")
                 );
                 contactArray.add(contact);
             }
+            getAll.close();
         } catch (SQLException e) {
             consoleIO.display("Can't display contacts");
         }

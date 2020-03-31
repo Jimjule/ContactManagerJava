@@ -18,13 +18,13 @@ public final class Constants {
 
     public static final String LOCALCONNECTION = "jdbc:postgresql://localhost:5432/";
 
-    public static final String CREATEDB = "CREATE DATABASE prod_contact_manager";
-
-    public static final String CREATETESTDB = "CREATE DATABASE test_contact_manager";
-
     public static final String PRODDATABASE = "prod_contact_manager";
 
     public static final String TESTDATABASE = "test_contact_manager";
+
+    public static final String CREATEDB = "CREATE DATABASE " + Constants.PRODDATABASE;
+
+    public static final String CREATETESTDB = "CREATE DATABASE " + Constants.TESTDATABASE;
 
     public static final String CREATETABLE = "CREATE TABLE contactmanagerdb(" +
             "ID SERIAL," +
@@ -35,7 +35,4 @@ public final class Constants {
             "DOB DATE NOT NULL," +
             "EMAIL VARCHAR(50) UNIQUE" +
             ");";
-
-    public static final String TESTCONTACTMANAGERDB = "jdbc:postgresql://localhost:5432/testContactManager";
-
 }

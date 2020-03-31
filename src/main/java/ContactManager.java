@@ -3,7 +3,7 @@ public class ContactManager {
     private ConsoleIO consoleIO;
     private Storage contactList;
     private Storage database;
-    public Storage storage;
+    private Storage storage;
 
     public ContactManager(ConsoleIO consoleIO, Storage contactList, Storage database) {
         this.consoleIO = consoleIO;
@@ -71,8 +71,8 @@ public class ContactManager {
         int id = consoleIO.getNumberInput();
         consoleIO.clearScreen();
         try {
-            Contact contact = storage.getContact(id);
-            contact.printContactDetails();
+            Contact contact = storage.getContact(id).get();
+            consoleIO.display(contact.printContactDetails());
         } catch (Exception e) {
             consoleIO.clearScreen();
             consoleIO.display("No such contact: ID = " + id);
@@ -87,8 +87,7 @@ public class ContactManager {
                 getInputLoop(3, Contact.getFieldName(3)),
                 getInputLoop(4, Contact.getFieldName(4)),
                 getInputLoop(5, Contact.getFieldName(5)),
-                getInputLoop(6, Contact.getFieldName(6)),
-                consoleIO
+                getInputLoop(6, Contact.getFieldName(6))
         );
         storage.createContact(contact);
         consoleIO.clearScreen();
@@ -113,7 +112,7 @@ public class ContactManager {
             int contactNumber = consoleIO.getNumberInput();
 
             try {
-                Contact contact = storage.getContact(contactNumber);
+                Contact contact = storage.getContact(contactNumber).get();
 
                 consoleIO.display(Constants.UPDATEFIELDS);
                 int field = consoleIO.getNumberInput();
@@ -124,7 +123,6 @@ public class ContactManager {
                 consoleIO.display("No such contact");
             }
         }
-        consoleIO.clearScreen();
     }
 
     public void deleteContact() {

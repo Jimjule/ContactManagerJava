@@ -23,7 +23,7 @@ public class ContactListTest {
         consoleIO = new ConsoleIOSpy(fixedInput, outputStream);
         ArrayList<Contact> arrayList = new ArrayList<Contact>();
         contactList = new ContactList(arrayList, consoleIO);
-        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com", consoleIO);
+        contact = new Contact("Namey", "Namerson", "A Palace", "130077", "01/01/1999", "email@email.com");
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ContactListTest {
     @Test
     public void getContact() {
         contactList.createContact(contact);
-        Contact retrievedContact = contactList.getContact(1);
+        Contact retrievedContact = contactList.getContact(1).get();
         assertTrue(contact.equals(retrievedContact));
     }
 
