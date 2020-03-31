@@ -72,7 +72,6 @@ public class Database implements Storage {
             update.setString(2, contact.getEmail());
             update.execute();
             update.close();
-            consoleIO.display("Contact Updated");
         } else {
             consoleIO.display("Invalid input for this field.");
         }

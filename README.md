@@ -28,6 +28,13 @@
 
 - Feel free to contribute by creating a new branch and opening a pull request on GitHub
 
+## Todo
+
+Future features may include:
+- Environment Variables
+- Database Migration
+
 ## Changelog
 
-- Database gets Optional<Contact>
+- Underscore constants
+- Switch statements do not default to email, get correct input from loop

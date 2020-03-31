@@ -13,9 +13,9 @@ public class Run {
         ConsoleIO consoleIO = new ConsoleIO(System.in, System.out);
 
         startPostgres();
-        startDatabaseCluster();
+        runCreateDB();
 
-        Connection connection = getConnection(Constants.CREATEDB, Constants.PRODDATABASE);
+        Connection connection = getConnection(Constants.CREATE_DB, Constants.PROD_DATABASE);
 
         ArrayList<Contact> arrayList = new ArrayList<>();
         ContactList contactList = new ContactList(arrayList, consoleIO);
@@ -37,10 +37,10 @@ public class Run {
         }
     }
 
-    public static void startDatabaseCluster() {
+    public static void runCreateDB() {
         try {
-            String[] arguments = {"createdb"};
-            Process proc = new ProcessBuilder(arguments).start();
+            String createdb = "createdb";
+            Process proc = new ProcessBuilder(createdb).start();
             proc.waitFor();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class Run {
         Connection connection = connectLocalhost();
 
         createDatabase(connection, createDB);
-        connection = connectDatabase(connection, Constants.LOCALCONNECTION, databaseName);
+        connection = connectDatabase(connection, Constants.LOCAL_CONNECTION, databaseName);
         createTable(connection);
 
         return connection;
@@ -61,7 +61,7 @@ public class Run {
         Connection connection = null;
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(Constants.LOCALCONNECTION);
+            connection = DriverManager.getConnection(Constants.LOCAL_CONNECTION);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             exit(1);
@@ -92,7 +92,7 @@ public class Run {
         Statement statement;
         try {
             statement = connection.createStatement();
-            statement.executeUpdate(Constants.CREATETABLE);
+            statement.executeUpdate(Constants.CREATE_TABLE);
         } catch (SQLException e) {
         }
     }

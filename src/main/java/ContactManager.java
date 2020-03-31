@@ -29,7 +29,7 @@ public class ContactManager {
     }
 
     private void printMenuOptions() {
-        consoleIO.display(Constants.MENUOPTIONS);
+        consoleIO.display(Constants.MENU_OPTIONS);
     }
 
     public void showMenu() {
@@ -114,8 +114,12 @@ public class ContactManager {
             try {
                 Contact contact = storage.getContact(contactNumber).get();
 
-                consoleIO.display(Constants.UPDATEFIELDS);
-                int field = consoleIO.getNumberInput();
+                int field = 0;
+                while (field < 1 || field > Contact.NUMBER_OF_FIELDS) {
+                    consoleIO.clearScreen();
+                    consoleIO.display(Constants.UPDATE_FIELDS);
+                    field = consoleIO.getNumberInput();
+                }
                 String input = getInputLoop(field, Contact.getFieldName(field));
                 storage.updateContact(contact, field, input);
                 consoleIO.display("Contact updated");

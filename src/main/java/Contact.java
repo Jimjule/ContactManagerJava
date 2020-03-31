@@ -7,6 +7,7 @@ public class Contact {
     private String dOB;
     private String email;
 
+    public static final int NUMBER_OF_FIELDS = 6;
     public static final String firstNameField = "First Name";
     public static final String lastNameField = "Last Name";
     public static final String addressField = "Address";
@@ -54,8 +55,9 @@ public class Contact {
             case 3: return addressField;
             case 4: return phoneNumberField;
             case 5: return dOBField;
-            default: return emailField;
+            case 6: return emailField;
         }
+        return "invalid field";
     }
 
     public void updateField(String value, int field) {
@@ -67,7 +69,8 @@ public class Contact {
                 case 3: address = value; break;
                 case 4: phoneNumber = value; break;
                 case 5: dOB = value; break;
-                default: email = value; break;
+                case 6: email = value; break;
+                default: break;
             }
         }
     }

@@ -20,8 +20,8 @@ public class ContactManagerTest {
 
     public ContactManagerTest() {
         Run.startPostgres();
-        Run.startDatabaseCluster();
-        connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
+        Run.runCreateDB();
+        connection = Run.getConnection(Constants.CREATE_TEST_DB, Constants.TEST_DATABASE);
     }
 
     @BeforeEach

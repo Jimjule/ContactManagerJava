@@ -18,7 +18,7 @@ public class DatabaseTest {
     private Contact secondContact;
     private Connection connection;
     private Statement statement;
-    public ArrayList<Contact> contactArray;
+    private ArrayList<Contact> contactArray;
 
     public static String defaultFirstName = "Jamey";
 
@@ -35,7 +35,7 @@ public class DatabaseTest {
 
         contactArray = new ArrayList<Contact>();
 
-        connection = Run.getConnection(Constants.CREATETESTDB, Constants.TESTDATABASE);
+        connection = Run.getConnection(Constants.CREATE_TEST_DB, Constants.TEST_DATABASE);
         database = new Database(consoleIO, connection);
         statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
