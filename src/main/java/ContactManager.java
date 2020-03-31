@@ -1,11 +1,11 @@
 public class ContactManager {
 
     private ConsoleIO consoleIO;
-    private ContactList contactList;
-    private Database database;
+    private Storage contactList;
+    private Storage database;
     public Storage storage;
 
-    public ContactManager(ConsoleIO consoleIO, ContactList contactList, Database database) {
+    public ContactManager(ConsoleIO consoleIO, Storage contactList, Storage database) {
         this.consoleIO = consoleIO;
         this.database = database;
         this.contactList = contactList;
@@ -19,7 +19,7 @@ public class ContactManager {
         return getStorage();
     }
 
-    public Storage getStorage() {
+    private Storage getStorage() {
         boolean useDatabase = consoleIO.getBoolean();
         if(useDatabase == true) {
             return database;
@@ -28,8 +28,8 @@ public class ContactManager {
         }
     }
 
-    public void printMenuOptions() {
-        consoleIO.display(Constants.menuOptions);
+    private void printMenuOptions() {
+        consoleIO.display(Constants.MENUOPTIONS);
     }
 
     public void showMenu() {
@@ -51,7 +51,7 @@ public class ContactManager {
                     break;
                 }
                 case 4: {
-                    displayContacts();
+                    showContacts();
                     break;
                 }
                 case 5: {
@@ -95,7 +95,7 @@ public class ContactManager {
         consoleIO.display("New contact created");
     }
 
-    public String getInputLoop(int field, String fieldName) {
+    private String getInputLoop(int field, String fieldName) {
         Boolean validInput = false;
         String userInput = null;
         while (!validInput) {
@@ -115,10 +115,11 @@ public class ContactManager {
             try {
                 Contact contact = storage.getContact(contactNumber);
 
-                consoleIO.display(Constants.updateFields);
+                consoleIO.display(Constants.UPDATEFIELDS);
                 int field = consoleIO.getNumberInput();
                 String input = getInputLoop(field, Contact.getFieldName(field));
                 storage.updateContact(contact, field, input);
+                consoleIO.display("Contact updated");
             } catch (Exception e) {
                 consoleIO.display("No such contact");
             }
@@ -142,7 +143,7 @@ public class ContactManager {
         }
     }
 
-    public void displayContacts() {
+    public void showContacts() {
         consoleIO.clearScreen();
         storage.showContacts();
     }

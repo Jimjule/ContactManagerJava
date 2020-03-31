@@ -4,12 +4,12 @@ import static org.mockito.Mockito.when;
 
 public class ConsoleIOSpy extends ConsoleIO {
 
-    public final PrintStream printer;
+    private final PrintStream printer;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-    public boolean getInputHasBeenCalled = false;
-    public boolean getNumberInputHasBeenCalled = false;
-    public boolean getBooleanHasBeenCalled = false;
+    private boolean getInputHasBeenCalled = false;
+    private boolean getNumberInputHasBeenCalled = false;
+    private boolean getBooleanHasBeenCalled = false;
 
 
     public ConsoleIOSpy(InputStream input, OutputStream output) {
@@ -45,5 +45,13 @@ public class ConsoleIOSpy extends ConsoleIO {
     public boolean getBoolean() {
         this.getBooleanHasBeenCalled = true;
         return true;
+    }
+
+    public boolean returnGetNumberInputHasBeenCalled() {
+        return getNumberInputHasBeenCalled;
+    }
+
+    public boolean returnGetInputHasBeenCalled() {
+        return getInputHasBeenCalled;
     }
 }

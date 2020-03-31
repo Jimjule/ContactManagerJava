@@ -1,24 +1,19 @@
 import java.sql.*;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Database implements Storage {
 
-    ConsoleIO consoleIO;
-    Connection connection;
-    Statement statement;
-    String dbName;
-    ArrayList<Contact> contactArray;
+    private ConsoleIO consoleIO;
+    private Connection connection;
+    private String tableName;
 
-    public Database(ArrayList<Contact> contactArray, ConsoleIO consoleIO, String databaseConnection, String dbName) {
-        this.contactArray = contactArray;
+    public Database(ConsoleIO consoleIO, Connection connection) {
         this.consoleIO = consoleIO;
-        this.dbName = dbName;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(databaseConnection, "postgres", "contactManager1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.tableName = "contactmanagerdb";
+        this.connection = connection;
     }
 
     public static String getDBColumnName(int field) {
@@ -34,14 +29,28 @@ public class Database implements Storage {
 
     @Override
     public void createContact(Contact contact) {
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
+        java.util.Date parsed;
         try {
-            statement = connection.createStatement();
-            String addContact = "INSERT INTO " + dbName + " VALUES(DEFAULT, '" +
-                    contact.getFirstName() + "', '" + contact.getLastName() + "', '" + contact.getAddress() + "', '" + contact.getPhoneNumber() + "', '" + contact.getDOB() + "', '" + contact.getEmail() +
-                    "');";
-            statement.execute(addContact);
-            statement.close();
+            parsed = format.parse(contact.getdOB());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+            // this is giant faff that needs fixing somewhere else...
+        }
+
+        try {
+            PreparedStatement create = connection.prepareStatement("INSERT INTO contactmanagerdb VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)");
+            create.setString(1, contact.getFirstName());
+            create.setString(2, contact.getLastName());
+            create.setString(3, contact.getAddress());
+            create.setString(4, contact.getPhoneNumber());
+            create.setDate(5, new Date(parsed.getTime()));
+            create.setString(6, contact.getEmail());
+            create.execute();
+            create.close();
         } catch (SQLException e) {
+            System.out.println(e);
             consoleIO.clearScreen();
             consoleIO.display("Invalid data, please try again");
         }
@@ -49,10 +58,10 @@ public class Database implements Storage {
 
     @Override
     public void deleteContact(int index) throws SQLException {
-        statement = connection.createStatement();
-        String deleteAtIndex = "DELETE FROM " + dbName + " WHERE id = (SELECT id FROM " + dbName + " OFFSET " + (index - 1) + " LIMIT 1)";
-        statement.execute(deleteAtIndex);
-        statement.close();
+        PreparedStatement delete = connection.prepareStatement("DELETE FROM contactmanagerdb WHERE id = (SELECT id FROM contactmanagerdb OFFSET ? LIMIT  1)");
+        delete.setInt(1, index - 1);
+        delete.execute();
+        delete.close();
         consoleIO.clearScreen();
         consoleIO.display("Contact Deleted");
     }
@@ -60,8 +69,8 @@ public class Database implements Storage {
     @Override
     public void updateContact(Contact contact, int field, String input) throws SQLException {
         if(Contact.validateInput(field, input)) {
-            statement = connection.createStatement();
-            String updateEntry = "UPDATE " + dbName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
+            Statement statement = connection.createStatement();
+            String updateEntry = "UPDATE " + tableName + " SET " + getDBColumnName(field) + " = '" + input + "' WHERE email = '" + contact.getEmail() + "';";
             statement.execute(updateEntry);
         } else {
             consoleIO.display("Invalid input for this field.");
@@ -71,10 +80,11 @@ public class Database implements Storage {
     @Override
     public Contact getContact(int index) throws SQLException {
         Contact contact;
-            statement = connection.createStatement();
-            String getAtIndex = "SELECT * FROM " + dbName + " OFFSET " + (index - 1) + " LIMIT 1;";
+            Statement statement = connection.createStatement();
+            String getAtIndex = "SELECT * FROM " + tableName + " OFFSET " + (index - 1) + " LIMIT 1;";
             ResultSet setContact = statement.executeQuery(getAtIndex);
-            setContact.next();
+        boolean next = setContact.next();
+        if( next) {
             contact = new Contact(
                     setContact.getString("first_name"),
                     setContact.getString("last_name"),
@@ -84,28 +94,32 @@ public class Database implements Storage {
                     setContact.getString("email"),
                     consoleIO
             );
-        statement.close();
-        return contact;
+            statement.close();
+            return contact;
+        } else {
+            return null; // <-- this is going to catch you out sooooooooooooo bad. There is a type! Option<Contact>
+        }
     }
 
     @Override
     public void showContacts() {
-        getContacts();
+        List<Contact> contacts = getContacts();
         if (contactsExist()) {
-            for (int i = 0; i < contactArray.size(); i++) {
+            for (int i = 0; i < contacts.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                contactArray.get(i).printContactDetails();
+                contacts.get(i).printContactDetails();
             }
         }
     }
 
-    public void getContacts() {
+    @Override
+    public List<Contact> getContacts() {
+        List<Contact> contactArray = new LinkedList<>();
         try {
             Contact contact;
-            statement = connection.createStatement();
-            String getAllContacts = "SELECT * FROM " + dbName + " ;";
+            Statement statement = connection.createStatement();
+            String getAllContacts = "SELECT * FROM " + tableName + " ;";
             ResultSet allContacts = statement.executeQuery(getAllContacts);
-            contactArray.removeAll(contactArray);
             while(allContacts.next()) {
                 contact = new Contact(
                         allContacts.getString("first_name"),
@@ -121,6 +135,7 @@ public class Database implements Storage {
         } catch (SQLException e) {
             consoleIO.display("Can't display contacts");
         }
+        return contactArray;
     }
 
     public boolean contactsExist() {

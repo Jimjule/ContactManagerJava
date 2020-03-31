@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContactListTest {
 
-    ContactList contactList;
-    ConsoleIOSpy consoleIO;
-    Contact contact;
+    private ContactList contactList;
+    private ConsoleIOSpy consoleIO;
+    private Contact contact;
     private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @BeforeEach
@@ -33,7 +33,7 @@ public class ContactListTest {
     }
 
     @Test
-    public void testGetContact() {
+    public void getContact() {
         contactList.createContact(contact);
         Contact retrievedContact = contactList.getContact(1);
         assertTrue(contact.equals(retrievedContact));

@@ -49,7 +49,7 @@ public class ContactTest {
     @Test
     public void canUpdateDOB() {
         contact.updateField("30/01/2013", 5);
-        assertEquals("30/01/2013", contact.getDOB());
+        assertEquals("30/01/2013", contact.getdOB());
     }
 
     @Test

@@ -26,5 +26,6 @@
 
 ## Changelog
 
-- DB tests use getContact method
+- Replaces sql queries with prepared statements
+- Removes Database arrayList
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactList implements Storage {
 
@@ -19,7 +20,7 @@ public class ContactList implements Storage {
         if (contactsExist()) {
             for (int i = 0; i < contactArray.size(); i++) {
                 consoleIO.display(String.valueOf(i + 1));
-                ((Contact) contactArray.get(i)).printContactDetails();
+                contactArray.get(i).printContactDetails();
             }
         }
     }
@@ -40,10 +41,14 @@ public class ContactList implements Storage {
 
     @Override
     public Contact getContact(int index) throws IndexOutOfBoundsException {
-        Contact contact = (Contact) contactArray.get(index - 1);
+        Contact contact = contactArray.get(index - 1);
         return contact;
     }
 
+    @Override
+    public List<Contact> getContacts() {
+        return contactArray;
+    }
 
     public void deleteContact(int index) {
         consoleIO.clearScreen();

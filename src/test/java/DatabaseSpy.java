@@ -1,26 +1,16 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DatabaseSpy extends Database implements Storage {
+public class DatabaseSpy implements Storage {
 
-    public boolean getContactHasBeenCalled;
-    public boolean newContactHasBeenCalled;
-    public boolean updateContactHasBeenCalled;
-    public boolean deleteContactHasBeenCalled;
+    private boolean getContactHasBeenCalled;
+    private boolean newContactHasBeenCalled;
+    private boolean updateContactHasBeenCalled;
+    private boolean deleteContactHasBeenCalled;
+    private boolean displayContactsHasBeenCalled;
 
-    ConsoleIO consoleIO;
-    Connection connection;
-
-    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, String dbName) {
-        super(contactList, consoleIO, Constants.testContactManagerDB, Constants.DBName);
-        this.consoleIO = consoleIO;
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(database, "postgres", "contactManager1");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public DatabaseSpy (ArrayList<Contact> contactList, ConsoleIO consoleIO, String database, Connection connection) {
     }
 
     @Override
@@ -41,9 +31,37 @@ public class DatabaseSpy extends Database implements Storage {
         return null;
     }
 
+    @Override
+    public List<Contact> getContacts() {
+        return null;
+    }
+
+    @Override
+    public void showContacts() {
+        this.displayContactsHasBeenCalled = true;
+    }
+
     public boolean contactsExist() {
-        consoleIO.clearScreen();
-        consoleIO.display("Not yet implemented");
-        return false;
+        return true;
+    }
+
+    public boolean returnGetContactHasBeenCalled() {
+        return getContactHasBeenCalled;
+    }
+
+    public boolean returnDisplayContactsHasBeenCalled() {
+        return displayContactsHasBeenCalled;
+    }
+
+    public boolean returnCreateContactHasBeenCalled() {
+        return newContactHasBeenCalled;
+    }
+
+    public boolean returnDeleteContactHasBeenCalled() {
+        return deleteContactHasBeenCalled;
+    }
+
+    public boolean returnUpdateContactHasBeenCalled() {
+        return updateContactHasBeenCalled;
     }
 }
