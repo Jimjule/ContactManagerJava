@@ -33,6 +33,7 @@
 Future features may include:
 - Environment Variables
 - Database Migration
+- Search functionality
 
 ## Changelog
 
