@@ -38,9 +38,9 @@ public class ContactList implements Storage {
     }
 
     @Override
-    public Optional<Contact> getContact(int index) throws IndexOutOfBoundsException {
+    public Result<Optional<Contact>, Exception> getContact(int index) throws IndexOutOfBoundsException {
         Contact contact = contactArray.get(index - 1);
-        return Optional.ofNullable(contact);
+        return Result.ok(Optional.ofNullable(contact));
     }
 
     @Override

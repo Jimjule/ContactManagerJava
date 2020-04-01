@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,8 +36,9 @@ public class ContactListTest {
     @Test
     public void getContact() {
         contactList.createContact(contact);
-        Contact retrievedContact = contactList.getContact(1).get();
-        assertTrue(contact.equals(retrievedContact));
+        Result<Optional<Contact>, Exception> retrievedContact = contactList.getContact(1);
+        Contact foundContact = retrievedContact.getValue().get();
+        assertTrue(contact.equals(foundContact));
     }
 
     @Test

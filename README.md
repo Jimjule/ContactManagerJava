@@ -37,6 +37,4 @@ Future features may include:
 
 ## Changelog
 
-- showContacts() returns Optional
-- Removes ConsoleIO from Database
-- ContactList uses List, not ArrayList
+- Result interface for error handling

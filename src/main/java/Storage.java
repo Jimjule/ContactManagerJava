@@ -10,7 +10,7 @@ public interface Storage {
 
     void updateContact(Contact contact, int field, String input) throws SQLException;
 
-    Optional<Contact> getContact(int index) throws Exception;
+    Result<Optional <Contact>, Exception> getContact(int index);
 
     List<Contact> getContacts();
 

@@ -6,8 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,7 +69,7 @@ public class DatabaseTest {
     public void getContact() throws Exception {
         database.createContact(contact);
 
-        Contact contact = database.getContact(1).get();
+        Contact contact = database.getContact(1).getValue().get();
 
         assertNotNull(contact);
         assertEquals(contact.getFirstName(), "Jamey");
@@ -91,7 +91,7 @@ public class DatabaseTest {
     public void updateContact() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "Updatename");
-        Contact updatedContact = database.getContact(1).get();
+        Contact updatedContact = database.getContact(1).getValue().get();
         assertEquals("Updatename", updatedContact.getFirstName());
     }
 
@@ -99,7 +99,8 @@ public class DatabaseTest {
     public void updateContactFails() throws Exception {
         database.createContact(contact);
         database.updateContact(contact, 1, "lowercase");
-        Contact updatedContact = database.getContact(1).get();
-        assertEquals(defaultFirstName, updatedContact.getFirstName());
+        Result<Optional<Contact>, Exception> updatedContact = database.getContact(1);
+        Contact contact = updatedContact.getValue().get();
+        assertEquals(defaultFirstName, contact.getFirstName());
     }
 }

@@ -68,25 +68,30 @@ public class Database implements Storage {
     }
 
     @Override
-    public Optional<Contact> getContact(int index) throws SQLException {
+    public Result<Optional<Contact>, Exception> getContact(int index) {
         Contact contact;
-        PreparedStatement getSingle = connection.prepareStatement("SELECT * FROM contactmanagerdb OFFSET ? LIMIT 1");
-        getSingle.setInt(1, index - 1);
-        ResultSet setContact = getSingle.executeQuery();
-        boolean next = setContact.next();
-        if(next) {
-            contact = new Contact(
-                    setContact.getString("first_name"),
-                    setContact.getString("last_name"),
-                    setContact.getString("address"),
-                    setContact.getString("phone_number"),
-                    setContact.getString("dob"),
-                    setContact.getString("email")
-            );
-            getSingle.close();
-            return Optional.of(contact);
-        } else {
-            return Optional.empty();
+        PreparedStatement getSingle;
+        try {
+            getSingle = connection.prepareStatement("SELECT * FROM contactmanagerdb OFFSET ? LIMIT 1");
+            getSingle.setInt(1, index - 1);
+            ResultSet setContact = getSingle.executeQuery();
+            boolean next = setContact.next();
+            if(next) {
+                contact = new Contact(
+                        setContact.getString("first_name"),
+                        setContact.getString("last_name"),
+                        setContact.getString("address"),
+                        setContact.getString("phone_number"),
+                        setContact.getString("dob"),
+                        setContact.getString("email")
+                );
+                getSingle.close();
+                return Result.ok(Optional.of(contact));
+            } else {
+                return Result.ok(Optional.empty());
+            }
+        } catch (SQLException e) {
+            return Result.error(e);
         }
     }
 

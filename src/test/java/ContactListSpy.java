@@ -46,9 +46,9 @@ public class ContactListSpy implements Storage {
         this.deleteContactHasBeenCalled = true;
     }
 
-    public Optional<Contact> getContact(int index) {
+    public Result getContact(int index) {
         this.getContactHasBeenCalled = true;
-        return Optional.empty();
+        return new Result.Ok(Optional.empty());
     }
 
     @Override

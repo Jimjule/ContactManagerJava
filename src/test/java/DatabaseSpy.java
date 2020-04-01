@@ -26,9 +26,9 @@ public class DatabaseSpy implements Storage {
         updateContactHasBeenCalled = true;
     }
 
-    public Optional<Contact> getContact(int id) {
+    public Result getContact(int id) {
         getContactHasBeenCalled = true;
-        return Optional.empty();
+        return new Result.Ok(Optional.empty());
     }
 
     @Override

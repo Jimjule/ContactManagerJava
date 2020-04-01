@@ -73,12 +73,18 @@ public class ContactManager {
         consoleIO.display("Please enter an id to search");
         int id = consoleIO.getNumberInput();
         consoleIO.clearScreen();
-        try {
-            Contact contact = storage.getContact(id).get();
-            consoleIO.display(contact.printContactDetails());
-        } catch (Exception e) {
+
+        Result<Optional <Contact>, Exception> result = storage.getContact(id);
+        if (result.isOk()) {
+            Optional<Contact> mayBeContact = result.getValue();
+            if (mayBeContact.isPresent()) {
+                consoleIO.display(mayBeContact.get().printContactDetails());
+            } else {
+                consoleIO.display("Contact not found");
+            }
+        } else {
             consoleIO.clearScreen();
-            consoleIO.display("No such contact: ID = " + id);
+            consoleIO.display(result.getError().getMessage());
         }
     }
 
@@ -115,7 +121,7 @@ public class ContactManager {
             int contactNumber = consoleIO.getNumberInput();
 
             try {
-                Contact contact = storage.getContact(contactNumber).get();
+                Contact contact = (Contact) storage.getContact(contactNumber);
 
                 int field = 0;
                 while (field < 1 || field > Contact.NUMBER_OF_FIELDS) {
